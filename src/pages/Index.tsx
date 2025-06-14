@@ -147,45 +147,45 @@ const Index = () => {
         <div className="absolute inset-0 hero-gradient opacity-50"></div>
         <div className="relative max-w-4xl mx-auto px-4 py-12 pt-28">
           {/* Welcome Banner */}
-          <div className="mb-8 p-8 card-gradient rounded-2xl shadow-lg border-l-4 border-l-momentum-500">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="bg-gradient-to-br from-momentum-400 to-momentum-600 p-3 rounded-xl">
-                <Sparkles className="h-6 w-6 text-white" />
+          <div className="mb-6 p-4 card-gradient rounded-2xl shadow-lg border-l-4 border-l-momentum-500">
+            <div className="flex items-center space-x-3 mb-3">
+              <div className="bg-gradient-to-br from-momentum-400 to-momentum-600 p-2 rounded-xl">
+                <Sparkles className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold gradient-text">
+                <h1 className="text-2xl font-bold gradient-text">
                   Welcome back, {firstName}
                 </h1>
-                <p className="text-momentum-600 text-lg font-medium">
+                <p className="text-momentum-600 font-medium">
                   Here's what professionals in {userProfile.roles.join(" & ")} are exploring recently
                 </p>
               </div>
             </div>
             
             {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-              <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4 border border-momentum-100">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
+              <div className="bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-momentum-100">
                 <div className="flex items-center space-x-2">
-                  <TrendingUp className="h-5 w-5 text-momentum-600" />
-                  <span className="text-sm font-medium text-gray-700">Trending Topics</span>
+                  <TrendingUp className="h-4 w-4 text-momentum-600" />
+                  <span className="text-xs font-medium text-gray-700">Trending Topics</span>
                 </div>
-                <p className="text-2xl font-bold text-momentum-700 mt-1">12</p>
+                <p className="text-lg font-bold text-momentum-700 mt-1">12</p>
                 <p className="text-xs text-gray-500">Active discussions</p>
               </div>
-              <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4 border border-momentum-100">
+              <div className="bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-momentum-100">
                 <div className="flex items-center space-x-2">
-                  <Users className="h-5 w-5 text-blue-600" />
-                  <span className="text-sm font-medium text-gray-700">Network</span>
+                  <Users className="h-4 w-4 text-blue-600" />
+                  <span className="text-xs font-medium text-gray-700">Network</span>
                 </div>
-                <p className="text-2xl font-bold text-blue-700 mt-1">247</p>
+                <p className="text-lg font-bold text-blue-700 mt-1">247</p>
                 <p className="text-xs text-gray-500">Professional connections</p>
               </div>
-              <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4 border border-momentum-100">
+              <div className="bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-momentum-100">
                 <div className="flex items-center space-x-2">
-                  <Sparkles className="h-5 w-5 text-purple-600" />
-                  <span className="text-sm font-medium text-gray-700">Growth</span>
+                  <Sparkles className="h-4 w-4 text-purple-600" />
+                  <span className="text-xs font-medium text-gray-700">Growth</span>
                 </div>
-                <p className="text-2xl font-bold text-purple-700 mt-1">89%</p>
+                <p className="text-lg font-bold text-purple-700 mt-1">89%</p>
                 <p className="text-xs text-gray-500">Weekly progress</p>
               </div>
             </div>
