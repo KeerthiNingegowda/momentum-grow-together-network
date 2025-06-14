@@ -1,10 +1,11 @@
+
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { TrendingUp, Users, Target, Zap, MessageCircle, Share2, TwitterIcon, ArrowRight, Brain, BarChart, ExternalLink, Building, GraduationCap, ChevronDown } from "lucide-react";
+import { TrendingUp, Handshake, Target, Zap, MessageCircle, Share2, TwitterIcon, ArrowRight, Brain, BarChart, ExternalLink, Building, GraduationCap, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 const Profile = () => {
@@ -138,7 +139,7 @@ const Profile = () => {
                   <CardHeader className="hover:bg-gray-50 transition-colors">
                     <div className="flex items-center justify-between">
                       <h2 className="text-xl font-bold text-gray-900 flex items-center">
-                        <Users className="h-6 w-6 text-momentum-600 mr-2" />
+                        <Handshake className="h-6 w-6 text-momentum-600 mr-2" />
                         Voices of Trust
                       </h2>
                       <ChevronDown className={`h-5 w-5 text-gray-500 transition-transform ${isTestimonialsOpen ? 'rotate-180' : ''}`} />
