@@ -100,7 +100,10 @@
 
 @layer components {
   .gradient-text {
-    @apply bg-gradient-to-r from-momentum-600 via-momentum-700 to-momentum-800 bg-clip-text text-transparent;
+    background: linear-gradient(to right, #547a5a, #44644a, #39523e);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
   }
   
   .hero-gradient {
@@ -108,19 +111,25 @@
   }
 
   .card-gradient {
-    @apply bg-gradient-to-br from-white to-momentum-25 border border-momentum-100;
+    background: linear-gradient(135deg, #ffffff 0%, #f6f8f6 100%);
+    border: 1px solid #e8f0e8;
   }
 
   .nav-gradient {
-    @apply bg-gradient-to-r from-white via-momentum-25 to-white;
+    background: linear-gradient(to right, #ffffff 0%, #f6f8f6 50%, #ffffff 100%);
   }
 
   .button-gradient {
-    @apply bg-gradient-to-r from-momentum-600 to-momentum-700 hover:from-momentum-700 hover:to-momentum-800;
+    background: linear-gradient(to right, #547a5a 0%, #44644a 100%);
+  }
+  
+  .button-gradient:hover {
+    background: linear-gradient(to right, #44644a 0%, #39523e 100%);
   }
 
   .section-accent {
-    @apply bg-gradient-to-br from-momentum-50/30 to-blue-50/20 border border-momentum-100/50;
+    background: linear-gradient(135deg, rgba(246, 248, 246, 0.3) 0%, rgba(239, 246, 255, 0.2) 100%);
+    border: 1px solid rgba(232, 240, 232, 0.5);
   }
 
   .text-accent {
@@ -135,4 +144,3 @@
     @apply bg-white/80 backdrop-blur-sm border border-white/20;
   }
 }
-
