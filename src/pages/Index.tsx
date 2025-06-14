@@ -265,19 +265,24 @@ const Index = () => {
                 <Card className="border-0 shadow-sm bg-white/60 backdrop-blur-sm opacity-75">
                   <CardContent className="p-4">
                     <div className="flex items-center space-x-3 mb-3">
-                      <span className="text-lg">🎯</span>
+                      <span className="text-lg">💭</span>
                       <div>
-                        <h3 className="font-medium text-gray-900 text-sm">Week 1 Reflection</h3>
-                        <p className="text-xs text-gray-600">What's one thing you want more of in your work this week?</p>
+                        <h3 className="font-medium text-gray-900 text-sm">Personal Reflection</h3>
+                        <p className="text-xs text-gray-600">What's on your mind about work? Journal whenever you feel like it.</p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center justify-between">
                       <div className="flex space-x-1">
                         <div className="w-2 h-2 bg-momentum-200 rounded-full"></div>
                         <div className="w-2 h-2 bg-gray-200 rounded-full"></div>
                         <div className="w-2 h-2 bg-gray-200 rounded-full"></div>
                       </div>
-                      <span className="text-xs text-gray-500">Click to start your reflection</span>
+                      <span className="text-xs text-gray-500">Click to start journaling</span>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-gray-100">
+                      <p className="text-xs text-gray-500 italic">
+                        💡 Keep it general - avoid sharing specific company details or confidential information
+                      </p>
                     </div>
                   </CardContent>
                 </Card>
