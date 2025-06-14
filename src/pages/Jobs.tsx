@@ -1,11 +1,11 @@
+
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { MapPin, Clock, DollarSign, Building, TrendingUp, Zap, Brain, Code } from "lucide-react";
+import { MapPin, Clock, DollarSign, Building, TrendingUp, Brain, Code } from "lucide-react";
 import { TechStackVisualization } from "@/components/jobs/TechStackVisualization";
-import { MatchScore } from "@/components/jobs/MatchScore";
 
 const Jobs = () => {
   const jobListings = [
@@ -26,15 +26,6 @@ const Jobs = () => {
         { category: "Data", technologies: ["Python", "SQL", "Spark"], color: "#10b981" },
         { category: "Cloud", technologies: ["AWS", "Docker", "Kubernetes"], color: "#f59e0b" }
       ],
-      matchScore: {
-        score: 78,
-        factors: [
-          { name: "Skills Match", score: 85, weight: 40 },
-          { name: "Experience Level", score: 75, weight: 30 },
-          { name: "Tech Stack", score: 70, weight: 20 },
-          { name: "Location Pref", score: 80, weight: 10 }
-        ]
-      },
       companyStats: {
         totalPosted: 24,
         totalFilled: 18,
@@ -58,15 +49,6 @@ const Jobs = () => {
         { category: "Backend", technologies: ["FastAPI", "Docker", "Redis"], color: "#ef4444" },
         { category: "Cloud", technologies: ["GCP", "TPU", "Vertex AI"], color: "#f59e0b" }
       ],
-      matchScore: {
-        score: 65,
-        factors: [
-          { name: "Skills Match", score: 70, weight: 40 },
-          { name: "Experience Level", score: 60, weight: 30 },
-          { name: "Tech Stack", score: 75, weight: 20 },
-          { name: "Location Pref", score: 90, weight: 10 }
-        ]
-      },
       companyStats: {
         totalPosted: 12,
         totalFilled: 11,
@@ -90,15 +72,6 @@ const Jobs = () => {
         { category: "Data", technologies: ["SQL", "Python", "dbt"], color: "#10b981" },
         { category: "Platform", technologies: ["Snowflake", "Airflow", "Git"], color: "#6366f1" }
       ],
-      matchScore: {
-        score: 82,
-        factors: [
-          { name: "Skills Match", score: 75, weight: 40 },
-          { name: "Experience Level", score: 90, weight: 30 },
-          { name: "Tech Stack", score: 85, weight: 20 },
-          { name: "Location Pref", score: 70, weight: 10 }
-        ]
-      },
       companyStats: {
         totalPosted: 8,
         totalFilled: 4,
@@ -206,18 +179,9 @@ const Jobs = () => {
                 </CardHeader>
                 
                 <CardContent className="pt-0">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                    {/* Tech Stack */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-gray-900">Tech Stack</h4>
-                      <TechStackVisualization techStack={job.techStack} />
-                    </div>
-
-                    {/* Match Score */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-gray-900">Compatibility</h4>
-                      <MatchScore score={job.matchScore.score} factors={job.matchScore.factors} />
-                    </div>
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-gray-900 mb-3">Tech Stack</h4>
+                    <TechStackVisualization techStack={job.techStack} />
                   </div>
 
                   <p className="text-gray-700 mb-4">{job.description}</p>
