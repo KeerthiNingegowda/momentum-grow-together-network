@@ -41,8 +41,8 @@ const TrendingActivities = ({ isOpen, onToggle, activities }: TrendingActivities
               <Card key={index} className="border-0 shadow-sm bg-white/60 backdrop-blur-sm opacity-75">
                 <CardContent className="p-4">
                   <div className="flex items-start space-x-3">
-                    <div className="bg-momentum-100 p-2 rounded-full">
-                      <BookOpen className="h-4 w-4 text-momentum-600" />
+                    <div className="bg-blue-100 p-2 rounded-full">
+                      <BookOpen className="h-4 w-4 text-blue-600" />
                     </div>
                     <div className="flex-1">
                       <h3 className="font-medium text-gray-900 text-sm mb-1">
@@ -69,8 +69,8 @@ const TrendingActivities = ({ isOpen, onToggle, activities }: TrendingActivities
               <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200 bg-white/80 backdrop-blur-sm">
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
-                    <div className="bg-momentum-100 p-3 rounded-full">
-                      <BookOpen className="h-5 w-5 text-momentum-600" />
+                    <div className="bg-blue-100 p-3 rounded-full">
+                      <BookOpen className="h-5 w-5 text-blue-600" />
                     </div>
                     <div className="flex-1">
                       <h3 className="font-medium text-gray-900 mb-2">
