@@ -7,11 +7,13 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Search, UserPlus, Briefcase, Loader2 } from "lucide-react";
 import { useProfiles, Profile } from "@/hooks/useProfiles";
+import { useSendConnectionRequest } from "@/hooks/useConnectionRequests";
 import { useState, useMemo } from "react";
 import ConnectionRequestDialog from "@/components/network/ConnectionRequestDialog";
 
 const Network = () => {
   const { data: profiles, isLoading, error } = useProfiles();
+  const sendConnectionRequest = useSendConnectionRequest();
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,13 +44,22 @@ const Network = () => {
   const handleSendConnectionRequest = async (message: string) => {
     if (!selectedProfile) return;
     
-    // TODO: Implement actual connection request logic here
-    // This will save the connection request to a database table
-    console.log('Sending connection request to:', selectedProfile.name);
-    console.log('Message:', message);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      // For now, we'll use a mock sender profile ID
+      // In a real app, this would come from the authenticated user's profile
+      const mockSenderProfileId = "00000000-0000-0000-0000-000000000001";
+      
+      await sendConnectionRequest.mutateAsync({
+        receiver_profile_id: selectedProfile.id,
+        message,
+        sender_profile_id: mockSenderProfileId,
+      });
+      
+      console.log('Connection request sent successfully to:', selectedProfile.name);
+    } catch (error) {
+      console.error('Failed to send connection request:', error);
+      throw error;
+    }
   };
 
   const handleCloseDialog = () => {

@@ -20,7 +20,7 @@ interface ConnectionRequestDialogProps {
   isOpen: boolean;
   onClose: () => void;
   profile: Profile | null;
-  onSendRequest: (message: string) => void;
+  onSendRequest: (message: string) => Promise<void>;
 }
 
 const ConnectionRequestDialog = ({ 
@@ -118,11 +118,11 @@ const ConnectionRequestDialog = ({
           {/* Connection Request Message */}
           <div className="space-y-2">
             <label htmlFor="connection-message" className="text-sm font-medium text-gray-700">
-              Why would you like to connect with {firstName}?
+              Why would you like to connect with {profile.name.split(' ')[0]}?
             </label>
             <Textarea
               id="connection-message"
-              placeholder={`Hi ${firstName}, I'd love to connect with you because...`}
+              placeholder={`Hi ${profile.name.split(' ')[0]}, I'd love to connect with you because...`}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className="min-h-[120px] resize-none"
