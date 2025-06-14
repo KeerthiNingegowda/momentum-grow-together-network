@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Heart } from "lucide-react";
+import { Heart, Shield } from "lucide-react";
 import { useState } from "react";
 
 const CareerCheckIn = () => {
@@ -36,6 +36,21 @@ const CareerCheckIn = () => {
 
   return (
     <div>
+      {/* Important Disclaimer */}
+      <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+        <div className="flex items-start space-x-3">
+          <Shield className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="text-sm font-medium text-amber-900 mb-1">
+              Keep it general and confidential
+            </p>
+            <p className="text-sm text-amber-800 leading-relaxed">
+              Please avoid sharing specific company names, proprietary information, client details, or any confidential business information in your reflections.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Work Journal Section */}
       <Card className="border-0 shadow-sm bg-white/80 backdrop-blur-sm">
         <CardContent className="p-6">
