@@ -1,3 +1,4 @@
+
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -57,6 +58,32 @@ const Jobs = () => {
           vibe: "Fast-paced, collaborative",
           values: ["Innovation", "Work-life balance", "Growth mindset"]
         },
+        companyInsights: [
+          {
+            category: "Employee Satisfaction",
+            details: ["4.2/5 Glassdoor rating", "92% would recommend to friend", "Strong career growth opportunities"],
+            color: "#10b981",
+            description: "Overall employee satisfaction and workplace ratings"
+          },
+          {
+            category: "Culture & Management",
+            details: ["Flat hierarchy", "Quarterly 1:1s", "Transparent communication", "Results-focused"],
+            color: "#3b82f6", 
+            description: "Management style and company culture characteristics"
+          },
+          {
+            category: "Company Health",
+            details: ["Series C funded ($50M)", "200% revenue growth YoY", "Expanding to 3 new markets"],
+            color: "#f59e0b",
+            description: "Recent funding, growth metrics, and business trajectory"
+          },
+          {
+            category: "Benefits & Perks",
+            details: ["Equity package included", "Free meals & snacks", "$2k learning budget", "4 weeks PTO"],
+            color: "#8b5cf6",
+            description: "Compensation benefits and workplace perks"
+          }
+        ],
         perks: [
           { icon: "Coffee", label: "Free meals & snacks" },
           { icon: "Heart", label: "Comprehensive health coverage" },
@@ -123,6 +150,32 @@ const Jobs = () => {
           vibe: "Cutting-edge, research-focused",
           values: ["Innovation", "Technical excellence", "Autonomy"]
         },
+        companyInsights: [
+          {
+            category: "Employee Satisfaction",
+            details: ["4.6/5 internal rating", "High technical autonomy", "Challenging projects"],
+            color: "#10b981",
+            description: "Employee satisfaction and work environment quality"
+          },
+          {
+            category: "Culture & Management",
+            details: ["Self-managing teams", "Quarterly reviews only", "Research-first mindset", "Remote-native"],
+            color: "#3b82f6",
+            description: "Management approach and cultural characteristics"
+          },
+          {
+            category: "Company Health", 
+            details: ["Bootstrap profitable", "40+ enterprise clients", "AI consulting leader"],
+            color: "#f59e0b",
+            description: "Financial stability and market position"
+          },
+          {
+            category: "Benefits & Perks",
+            details: ["Top-tier equipment", "$5k conference budget", "Flexible PTO", "Performance bonuses"],
+            color: "#8b5cf6",
+            description: "Compensation and professional development benefits"
+          }
+        ],
         perks: [
           { icon: "Zap", label: "Top-tier equipment provided" },
           { icon: "Users", label: "Conference budget $5k/year" },
@@ -189,6 +242,32 @@ const Jobs = () => {
           vibe: "Traditional, structured",
           values: ["Reliability", "Teamwork", "Results-driven"]
         },
+        companyInsights: [
+          {
+            category: "Employee Satisfaction",
+            details: ["3.8/5 Glassdoor rating", "Stable work environment", "Good for work-life balance"],
+            color: "#10b981",
+            description: "Employee satisfaction and workplace stability"
+          },
+          {
+            category: "Culture & Management",
+            details: ["Traditional hierarchy", "Monthly team meetings", "Process-oriented", "Structured reviews"],
+            color: "#3b82f6",
+            description: "Management structure and organizational culture"
+          },
+          {
+            category: "Company Health",
+            details: ["Public company (NYSE: GROW)", "Stock: $45.20 (+2.1%)", "Dividend paying", "Fortune 500"],
+            color: "#f59e0b",
+            description: "Public company status and financial performance"
+          },
+          {
+            category: "Benefits & Perks",
+            details: ["401k matching 6%", "On-site gym & cafe", "Health insurance", "Team events"],
+            color: "#8b5cf6",
+            description: "Traditional corporate benefits package"
+          }
+        ],
         perks: [
           { icon: "Heart", label: "401k matching 6%" },
           { icon: "Coffee", label: "On-site gym & cafe" },
@@ -207,14 +286,6 @@ const Jobs = () => {
       }
     }
   ];
-
-  const getComplexityIcon = (complexity: string) => {
-    switch (complexity) {
-      case "Very High": return <Brain className="h-4 w-4 text-purple-600" />;
-      case "Medium": return <Code className="h-4 w-4 text-blue-600" />;
-      default: return <Code className="h-4 w-4 text-gray-600" />;
-    }
-  };
 
   const getConfidenceColor = (score: number) => {
     if (score >= 80) return "text-green-600";
@@ -320,40 +391,10 @@ const Jobs = () => {
                       <TechStackVisualization techStack={job.techStack} />
                     </div>
 
-                    {/* Company Culture Snapshot */}
+                    {/* Company Insights - Similar format to Tech Stack */}
                     <div className="space-y-3">
-                      <h4 className="font-semibold text-gray-900">Working Here</h4>
-                      <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-4 border border-blue-100">
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="text-sm font-medium text-gray-700">Work Style</span>
-                          <span className="text-sm text-blue-700 font-medium">{job.companyProfile.culture.workStyle}</span>
-                        </div>
-                        
-                        <div className="flex items-center space-x-3 mb-3">
-                          <Star className="h-4 w-4 text-yellow-500" />
-                          <span className="text-sm text-gray-700">
-                            <span className="font-medium">{job.companyProfile.teamInsights.satisfactionScore}/5</span> employee satisfaction
-                          </span>
-                        </div>
-
-                        <div className="text-xs text-gray-600 italic mb-3">
-                          "{job.companyProfile.recentFeedback[0].text}"
-                        </div>
-
-                        <div className="flex flex-wrap gap-1">
-                          {job.companyProfile.perks.slice(0, 2).map((perk, index) => (
-                            <Badge key={index} variant="outline" className="text-xs bg-white/50 border-blue-200 text-blue-700">
-                              {getPerkIcon(perk.icon)}
-                              <span className="ml-1">{perk.label.split(' ')[0]}</span>
-                            </Badge>
-                          ))}
-                          {job.companyProfile.perks.length > 2 && (
-                            <Badge variant="outline" className="text-xs bg-white/50 border-blue-200 text-blue-700">
-                              +{job.companyProfile.perks.length - 2} more
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
+                      <h4 className="font-semibold text-gray-900">Company Insights</h4>
+                      <TechStackVisualization techStack={job.companyProfile.companyInsights} />
                     </div>
                   </div>
                   
