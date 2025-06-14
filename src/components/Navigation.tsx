@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Sprout, User, Bell, MessageCircle, Search, Briefcase } from "lucide-react";
 import { useLocation } from "react-router-dom";
@@ -6,7 +7,6 @@ const Navigation = () => {
   const location = useLocation();
   
   const navItems = [
-    { href: "/", label: "Home", icon: Sprout },
     { href: "/jobs", label: "Jobs", icon: Briefcase },
     { href: "/messages", label: "Messages", icon: MessageCircle },
     { href: "/notifications", label: "Notifications", icon: Bell },
@@ -16,7 +16,10 @@ const Navigation = () => {
     <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-2">
+          <div 
+            className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={() => window.location.href = "/"}
+          >
             <div className="bg-momentum-100 p-2 rounded-lg">
               <Sprout className="h-6 w-6 text-momentum-600" />
             </div>
