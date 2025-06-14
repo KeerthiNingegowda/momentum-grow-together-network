@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { TrendingUp, Users, Target, Zap, MessageCircle, Share2, TwitterIcon, ArrowRight, Brain, BarChart, ExternalLink } from "lucide-react";
+import { TrendingUp, Users, Target, Zap, MessageCircle, Share2, TwitterIcon, ArrowRight, Brain, BarChart, ExternalLink, Building, GraduationCap } from "lucide-react";
 
 const Profile = () => {
   const keyWins = [
@@ -38,6 +38,17 @@ const Profile = () => {
       title: "Head of Marketing, GrowthLabs",
       avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face"
     }
+  ];
+
+  const workExperience = [
+    { company: "TechFlow Inc.", role: "Senior Data Scientist", tenure: "2022-Present" },
+    { company: "DataCorp", role: "ML Engineer", tenure: "2020-2022" },
+    { company: "StartupXYZ", role: "Data Analyst", tenure: "2018-2020" }
+  ];
+
+  const education = [
+    { school: "Stanford University", degree: "MS Computer Science", year: "2018" },
+    { school: "UC Berkeley", degree: "BS Mathematics", year: "2016" }
   ];
 
   return (
@@ -181,6 +192,38 @@ const Profile = () => {
                   </div>
                   <div className="text-gray-600">
                     <span className="font-medium text-gray-900">Open to:</span> Consulting, Leadership, Advisory
+                  </div>
+                </div>
+
+                {/* Work Experience */}
+                <div className="mb-4">
+                  <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
+                    <Building className="h-4 w-4 mr-2 text-momentum-600" />
+                    Experience
+                  </h4>
+                  <div className="space-y-2">
+                    {workExperience.map((work, index) => (
+                      <div key={index} className="text-sm">
+                        <div className="font-medium text-gray-900">{work.company}</div>
+                        <div className="text-gray-600">{work.role} • {work.tenure}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Education */}
+                <div className="mb-4">
+                  <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
+                    <GraduationCap className="h-4 w-4 mr-2 text-momentum-600" />
+                    Education
+                  </h4>
+                  <div className="space-y-2">
+                    {education.map((edu, index) => (
+                      <div key={index} className="text-sm">
+                        <div className="font-medium text-gray-900">{edu.school}</div>
+                        <div className="text-gray-600">{edu.degree} • {edu.year}</div>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 
