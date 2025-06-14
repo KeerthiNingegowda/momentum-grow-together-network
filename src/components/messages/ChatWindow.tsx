@@ -1,14 +1,13 @@
 
 import { MoreHorizontal, Send, Check, X, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 
 interface Conversation {
   id: number;
   name: string;
   title: string;
-  avatar: string;
   initials: string;
   lastMessage: string;
   timestamp: string;
@@ -57,7 +56,6 @@ const ChatWindow = ({
       <div className="p-8 border-b border-gray-200 bg-white flex items-center justify-between flex-shrink-0">
         <div className="flex items-center space-x-6 min-w-0 flex-1">
           <Avatar className="w-14 h-14 flex-shrink-0">
-            <AvatarImage src={currentConversation.avatar} />
             <AvatarFallback className="bg-momentum-100 text-momentum-600 font-semibold">
               {currentConversation.initials}
             </AvatarFallback>

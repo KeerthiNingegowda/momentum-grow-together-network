@@ -13,72 +13,66 @@ const Network = () => {
   
   const profiles = [
     {
-      id: 1,
+      id: 5,
       name: "Dr. Sarah Chen",
       title: "Senior AI Research Scientist",
       company: "Google DeepMind",
       location: "London, UK",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
       initials: "SC",
       skills: ["Machine Learning", "Computer Vision", "PyTorch"],
       mutualConnections: 12,
       isConnected: false
     },
     {
-      id: 2,
+      id: 6,
       name: "Marcus Rodriguez",
       title: "Principal ML Engineer",
       company: "Tesla",
       location: "Austin, TX",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
       initials: "MR",
       skills: ["Autonomous Systems", "Deep Learning", "Python"],
       mutualConnections: 8,
       isConnected: false
     },
     {
-      id: 3,
+      id: 7,
       name: "Dr. Aisha Patel",
       title: "Head of AI Ethics",
       company: "Microsoft",
       location: "Seattle, WA",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
       initials: "AP",
       skills: ["AI Ethics", "Policy", "Research"],
       mutualConnections: 15,
       isConnected: true
     },
     {
-      id: 4,
+      id: 8,
       name: "James Liu",
       title: "Staff Software Engineer",
       company: "OpenAI",
       location: "San Francisco, CA",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
       initials: "JL",
       skills: ["LLMs", "Distributed Systems", "Rust"],
       mutualConnections: 6,
       isConnected: false
     },
     {
-      id: 5,
+      id: 9,
       name: "Dr. Elena Kowalski",
       title: "Robotics Research Lead",
       company: "Boston Dynamics",
       location: "Boston, MA",
-      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=face",
       initials: "EK",
       skills: ["Robotics", "Control Systems", "C++"],
       mutualConnections: 4,
       isConnected: false
     },
     {
-      id: 6,
+      id: 10,
       name: "David Kim",
       title: "VP of Engineering",
       company: "Anthropic",
       location: "San Francisco, CA",
-      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face",
       initials: "DK",
       skills: ["Leadership", "AI Safety", "Scaling"],
       mutualConnections: 22,
@@ -94,7 +88,6 @@ const Network = () => {
           id: profile.id,
           name: profile.name,
           title: profile.title,
-          avatar: profile.avatar,
           initials: profile.initials
         }
       }
@@ -130,7 +123,6 @@ const Network = () => {
               <CardContent className="p-6">
                 <div className="flex items-start space-x-4 mb-4">
                   <Avatar className="w-16 h-16">
-                    <AvatarImage src={profile.avatar} />
                     <AvatarFallback className="bg-momentum-100 text-momentum-600 text-lg">
                       {profile.initials}
                     </AvatarFallback>

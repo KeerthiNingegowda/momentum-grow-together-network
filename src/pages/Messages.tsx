@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -18,7 +17,6 @@ const Messages = () => {
       id: 1,
       name: "Dr. Emily Zhang",
       title: "Research Scientist at DeepMind",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
       initials: "EZ",
       lastMessage: "The multimodal approach you described sounds promising. Would love to collaborate on the vision-language model.",
       timestamp: "1 hour ago",
@@ -30,7 +28,6 @@ const Messages = () => {
       id: 2,
       name: "Alex Thompson",
       title: "ML Engineering Lead at Hugging Face",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
       initials: "AT",
       lastMessage: "Great insights on model optimization! Our team is facing similar inference latency challenges.",
       timestamp: "3 hours ago",
@@ -42,7 +39,6 @@ const Messages = () => {
       id: 3,
       name: "Priya Sharma",
       title: "Principal Data Scientist at Microsoft",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
       initials: "PS",
       lastMessage: "The reinforcement learning paper you shared was exactly what I needed for our recommendation system.",
       timestamp: "5 hours ago",
@@ -54,7 +50,6 @@ const Messages = () => {
       id: 4,
       name: "Jordan Kim",
       title: "AI Ethics Researcher at Anthropic",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
       initials: "JK",
       lastMessage: "Your thoughts on bias mitigation in large language models would be valuable for our upcoming panel.",
       timestamp: "1 day ago",
@@ -81,7 +76,6 @@ const Messages = () => {
           id: userId,
           name: selectedUser.name,
           title: selectedUser.title,
-          avatar: selectedUser.avatar,
           initials: selectedUser.initials,
           lastMessage: "Start a conversation...",
           timestamp: "now",
@@ -95,9 +89,10 @@ const Messages = () => {
       
       setSelectedConversation(userId);
     }
-  }, [searchParams, location.state]);
+  }, [searchParams, location.state, conversations]);
 
-  const currentMessages = [
+  // Messages for existing conversations
+  const existingMessages = [
     {
       id: 1,
       sender: "Dr. Emily Zhang",
@@ -129,7 +124,30 @@ const Messages = () => {
     }
   ];
 
+  // Messages for new conversations (from Network page)
+  const getMessagesForConversation = (conversationId: number) => {
+    const conversation = conversations.find(conv => conv.id === conversationId);
+    
+    // If this is a new conversation (ID > 4), show only intro message
+    if (conversationId > 4 && conversation) {
+      return [
+        {
+          id: 1,
+          sender: conversation.name,
+          content: `Hi! I noticed your work in the field and would love to connect. I'm particularly interested in discussing potential collaboration opportunities.`,
+          timestamp: "now",
+          isOwn: false,
+          needsResponse: true
+        }
+      ];
+    }
+    
+    // Otherwise return existing messages
+    return existingMessages;
+  };
+
   const currentConversation = conversations.find(conv => conv.id === selectedConversation);
+  const currentMessages = getMessagesForConversation(selectedConversation);
 
   const handleAcceptConversation = () => {
     toast({
