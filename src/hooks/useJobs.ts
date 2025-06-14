@@ -16,9 +16,9 @@ interface JobListing {
   team_size?: string;
   confidence_score: number;
   satisfaction_score: number;
+  mentorship_program: boolean;
   avg_tenure?: string;
   diversity_score?: string;
-  mentorship_program: boolean;
   work_style?: string;
   vibe?: string;
   values?: string[];
@@ -108,8 +108,16 @@ export const useJobs = () => {
         posted: job.posted,
         description: job.description,
         complexity: job.complexity,
-        problemType: job.problem_type,
-        teamSize: job.team_size,
+        problem_type: job.problem_type,
+        team_size: job.team_size,
+        confidence_score: job.confidence_score || 50,
+        satisfaction_score: job.satisfaction_score || 3.0,
+        mentorship_program: job.mentorship_program || false,
+        avg_tenure: job.avg_tenure,
+        diversity_score: job.diversity_score,
+        work_style: job.work_style,
+        vibe: job.vibe,
+        values: job.values,
         techStack: techStackData.data
           ?.filter(ts => ts.job_id === job.id)
           .map(ts => ({
@@ -119,7 +127,7 @@ export const useJobs = () => {
             description: ts.description,
           })) || [],
         companyStats: {
-          confidenceScore: job.confidence_score,
+          confidenceScore: job.confidence_score || 50,
         },
         companyProfile: {
           culture: {
@@ -143,9 +151,9 @@ export const useJobs = () => {
             })) || [],
           teamInsights: {
             avgTenure: job.avg_tenure,
-            satisfactionScore: job.satisfaction_score,
+            satisfactionScore: job.satisfaction_score || 3.0,
             diversityScore: job.diversity_score,
-            mentorshipProgram: job.mentorship_program,
+            mentorshipProgram: job.mentorship_program || false,
           },
           recentFeedback: feedbackData.data
             ?.filter(f => f.job_id === job.id)
