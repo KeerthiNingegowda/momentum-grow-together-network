@@ -51,7 +51,7 @@ const Index = () => {
     }
   ];
 
-  // Mock YouTube insights data
+  // Mock YouTube insights data - reduced to 2 videos for more compact design
   const youtubeInsights = [
     {
       channel: "StatQuest",
@@ -59,8 +59,7 @@ const Index = () => {
       uploadTime: "2 hours ago",
       duration: "18:32",
       views: "12K views",
-      topics: ["Machine Learning", "Ensemble Methods"],
-      thumbnail: "https://i.ytimg.com/vi/J4Wdy0Wc_xQ/mqdefault.jpg"
+      topics: ["Machine Learning", "Ensemble Methods"]
     },
     {
       channel: "AI Engineer",
@@ -68,17 +67,7 @@ const Index = () => {
       uploadTime: "6 hours ago", 
       duration: "24:15",
       views: "8.3K views",
-      topics: ["RAG", "Production ML"],
-      thumbnail: "https://i.ytimg.com/vi/example/mqdefault.jpg"
-    },
-    {
-      channel: "Two Minute Papers",
-      videoTitle: "Google's New AI Breaks Physics Simulations",
-      uploadTime: "1 day ago",
-      duration: "4:42", 
-      views: "156K views",
-      topics: ["AI Research", "Physics"],
-      thumbnail: "https://i.ytimg.com/vi/example2/mqdefault.jpg"
+      topics: ["RAG", "Production ML"]
     }
   ];
 
@@ -192,59 +181,45 @@ const Index = () => {
               </div>
             </div>
 
-            {/* YouTube Insights Section */}
+            {/* YouTube Insights Section - More Compact */}
             <div className="mb-4 p-3 bg-gradient-to-r from-red-50 to-pink-50 rounded-xl border border-red-100">
-              <div className="flex items-center space-x-2 mb-3">
-                <Youtube className="h-4 w-4 text-red-600" />
-                <h3 className="text-sm font-semibold text-gray-800">New from Your Learning Channels</h3>
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center space-x-2">
+                  <Youtube className="h-4 w-4 text-red-600" />
+                  <h3 className="text-sm font-semibold text-gray-800">New from Your Learning Channels</h3>
+                </div>
                 <Badge variant="outline" className="bg-red-100 text-red-700 border-red-200 text-xs">
-                  Since yesterday
+                  {youtubeInsights.length} new
                 </Badge>
               </div>
               
               <div className="space-y-2">
                 {youtubeInsights.map((video, index) => (
-                  <div key={index} className="flex items-start space-x-3 p-2 bg-white/60 rounded-lg hover:bg-white/80 transition-colors cursor-pointer">
-                    <div className="w-16 h-12 bg-gray-200 rounded-md flex-shrink-0 overflow-hidden">
-                      <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
-                        <Youtube className="h-4 w-4 text-gray-600" />
+                  <div key={index} className="flex items-center justify-between p-2 bg-white/60 rounded-lg hover:bg-white/80 transition-colors cursor-pointer">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        {video.videoTitle}
+                      </p>
+                      <div className="flex items-center space-x-3 mt-1">
+                        <span className="text-xs text-red-600 font-medium">{video.channel}</span>
+                        <span className="text-xs text-gray-500">•</span>
+                        <span className="text-xs text-gray-500">{video.uploadTime}</span>
+                        <span className="text-xs text-gray-500">•</span>
+                        <span className="text-xs text-gray-500">{video.duration}</span>
                       </div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <p className="text-xs font-medium text-gray-900 line-clamp-2 leading-tight">
-                            {video.videoTitle}
-                          </p>
-                          <p className="text-xs text-red-600 font-medium mt-1">{video.channel}</p>
-                          <div className="flex items-center space-x-3 mt-1 text-xs text-gray-500">
-                            <div className="flex items-center space-x-1">
-                              <Clock className="h-3 w-3" />
-                              <span>{video.uploadTime}</span>
-                            </div>
-                            <span>•</span>
-                            <span>{video.duration}</span>
-                            <span>•</span>
-                            <div className="flex items-center space-x-1">
-                              <Eye className="h-3 w-3" />
-                              <span>{video.views}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex flex-wrap gap-1 mt-2">
-                        {video.topics.map((topic, topicIndex) => (
-                          <Badge key={topicIndex} variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 text-xs px-1 py-0">
-                            {topic}
-                          </Badge>
-                        ))}
-                      </div>
+                    <div className="flex space-x-1 ml-2">
+                      {video.topics.slice(0, 2).map((topic, topicIndex) => (
+                        <Badge key={topicIndex} variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 text-xs px-1 py-0">
+                          {topic}
+                        </Badge>
+                      ))}
                     </div>
                   </div>
                 ))}
               </div>
               
-              <div className="mt-3 pt-2 border-t border-red-100">
+              <div className="mt-2 pt-2 border-t border-red-100">
                 <button className="text-xs text-red-600 hover:text-red-700 font-medium">
                   View all updates • Manage subscriptions
                 </button>
