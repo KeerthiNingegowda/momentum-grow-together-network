@@ -5,26 +5,36 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Search, MessageCircle, UserPlus, Briefcase, Loader2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Search, UserPlus, Briefcase, Loader2 } from "lucide-react";
 import { useProfiles, Profile } from "@/hooks/useProfiles";
+import { useState } from "react";
+import ConnectionRequestDialog from "@/components/network/ConnectionRequestDialog";
 
 const Network = () => {
-  const navigate = useNavigate();
   const { data: profiles, isLoading, error } = useProfiles();
+  const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleStartConversation = (profile: Profile) => {
-    // Navigate to messages page with the selected user's ID
-    navigate(`/messages?user=${profile.id}`, { 
-      state: { 
-        selectedUser: {
-          id: profile.id,
-          name: profile.name,
-          title: profile.title,
-          initials: profile.initials
-        }
-      }
-    });
+    setSelectedProfile(profile);
+    setIsDialogOpen(true);
+  };
+
+  const handleSendConnectionRequest = async (message: string) => {
+    if (!selectedProfile) return;
+    
+    // TODO: Implement actual connection request logic here
+    // This could involve saving to a connections table in Supabase
+    console.log('Sending connection request to:', selectedProfile.name);
+    console.log('Message:', message);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+    setSelectedProfile(null);
   };
 
   if (isLoading) {
@@ -133,15 +143,10 @@ const Network = () => {
                 <div className="flex space-x-2">
                   <Button 
                     onClick={() => handleStartConversation(profile)}
-                    className={`flex-1 text-sm ${
-                      profile.isConnected 
-                        ? "variant-outline" 
-                        : "bg-momentum-600 hover:bg-momentum-700 text-white"
-                    }`}
-                    variant={profile.isConnected ? "outline" : "default"}
+                    className="flex-1 text-sm bg-momentum-600 hover:bg-momentum-700 text-white"
                   >
                     <UserPlus className="h-4 w-4 mr-2" />
-                    Start conversation
+                    Connect
                   </Button>
                 </div>
               </CardContent>
@@ -149,6 +154,14 @@ const Network = () => {
           ))}
         </div>
       </div>
+
+      {/* Connection Request Dialog */}
+      <ConnectionRequestDialog
+        isOpen={isDialogOpen}
+        onClose={handleCloseDialog}
+        profile={selectedProfile}
+        onSendRequest={handleSendConnectionRequest}
+      />
     </div>
   );
 };
