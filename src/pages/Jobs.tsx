@@ -1,9 +1,13 @@
+
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { MapPin, Clock, DollarSign, Building, TrendingUp } from "lucide-react";
+import { MapPin, Clock, DollarSign, Building, TrendingUp, Zap, Brain, Code } from "lucide-react";
+import { SkillRadarChart } from "@/components/jobs/SkillRadarChart";
+import { TechStackVisualization } from "@/components/jobs/TechStackVisualization";
+import { MatchScore } from "@/components/jobs/MatchScore";
 
 const Jobs = () => {
   const jobListings = [
@@ -16,7 +20,31 @@ const Jobs = () => {
       salary: "$120k - $160k",
       posted: "2 days ago",
       description: "We're looking for a senior data scientist to lead our ML initiatives and drive business insights.",
-      skills: ["Python", "Machine Learning", "SQL", "TensorFlow"],
+      complexity: "High",
+      problemType: "Recommendation Systems",
+      teamSize: "8-12 people",
+      skillsRadar: [
+        { skill: "Python", required: 9, userLevel: 8 },
+        { skill: "ML", required: 8, userLevel: 7 },
+        { skill: "SQL", required: 7, userLevel: 9 },
+        { skill: "Stats", required: 8, userLevel: 6 },
+        { skill: "AWS", required: 6, userLevel: 5 },
+        { skill: "TensorFlow", required: 8, userLevel: 7 }
+      ],
+      techStack: [
+        { category: "ML", technologies: ["TensorFlow", "PyTorch", "Scikit-learn"], color: "#3b82f6" },
+        { category: "Data", technologies: ["Python", "SQL", "Spark"], color: "#10b981" },
+        { category: "Cloud", technologies: ["AWS", "Docker", "Kubernetes"], color: "#f59e0b" }
+      ],
+      matchScore: {
+        score: 78,
+        factors: [
+          { name: "Skills Match", score: 85, weight: 40 },
+          { name: "Experience Level", score: 75, weight: 30 },
+          { name: "Tech Stack", score: 70, weight: 20 },
+          { name: "Location Pref", score: 80, weight: 10 }
+        ]
+      },
       companyStats: {
         totalPosted: 24,
         totalFilled: 18,
@@ -32,7 +60,31 @@ const Jobs = () => {
       salary: "$80 - $120/hr",
       posted: "1 week ago",
       description: "Join our team to build cutting-edge AI solutions for enterprise clients.",
-      skills: ["PyTorch", "Deep Learning", "Computer Vision", "AWS"],
+      complexity: "Very High",
+      problemType: "Computer Vision",
+      teamSize: "4-6 people",
+      skillsRadar: [
+        { skill: "Python", required: 9, userLevel: 8 },
+        { skill: "CV", required: 9, userLevel: 6 },
+        { skill: "PyTorch", required: 8, userLevel: 7 },
+        { skill: "MLOps", required: 7, userLevel: 5 },
+        { skill: "Research", required: 8, userLevel: 7 },
+        { skill: "GPU", required: 7, userLevel: 6 }
+      ],
+      techStack: [
+        { category: "AI", technologies: ["PyTorch", "OpenCV", "Transformers"], color: "#8b5cf6" },
+        { category: "Backend", technologies: ["FastAPI", "Docker", "Redis"], color: "#ef4444" },
+        { category: "Cloud", technologies: ["GCP", "TPU", "Vertex AI"], color: "#f59e0b" }
+      ],
+      matchScore: {
+        score: 65,
+        factors: [
+          { name: "Skills Match", score: 70, weight: 40 },
+          { name: "Experience Level", score: 60, weight: 30 },
+          { name: "Tech Stack", score: 75, weight: 20 },
+          { name: "Location Pref", score: 90, weight: 10 }
+        ]
+      },
       companyStats: {
         totalPosted: 12,
         totalFilled: 11,
@@ -48,7 +100,31 @@ const Jobs = () => {
       salary: "$100k - $140k",
       posted: "3 days ago",
       description: "Lead a team of data analysts and drive strategic decision-making through data insights.",
-      skills: ["SQL", "Tableau", "Python", "Leadership"],
+      complexity: "Medium",
+      problemType: "Business Analytics",
+      teamSize: "12-15 people",
+      skillsRadar: [
+        { skill: "SQL", required: 9, userLevel: 9 },
+        { skill: "Tableau", required: 8, userLevel: 7 },
+        { skill: "Python", required: 6, userLevel: 8 },
+        { skill: "Leadership", required: 9, userLevel: 5 },
+        { skill: "Statistics", required: 7, userLevel: 6 },
+        { skill: "Strategy", required: 8, userLevel: 6 }
+      ],
+      techStack: [
+        { category: "BI", technologies: ["Tableau", "PowerBI", "Looker"], color: "#06b6d4" },
+        { category: "Data", technologies: ["SQL", "Python", "dbt"], color: "#10b981" },
+        { category: "Platform", technologies: ["Snowflake", "Airflow", "Git"], color: "#6366f1" }
+      ],
+      matchScore: {
+        score: 82,
+        factors: [
+          { name: "Skills Match", score: 75, weight: 40 },
+          { name: "Experience Level", score: 90, weight: 30 },
+          { name: "Tech Stack", score: 85, weight: 20 },
+          { name: "Location Pref", score: 70, weight: 10 }
+        ]
+      },
       companyStats: {
         totalPosted: 8,
         totalFilled: 4,
@@ -56,6 +132,15 @@ const Jobs = () => {
       }
     }
   ];
+
+  const getComplexityIcon = (complexity: string) => {
+    switch (complexity) {
+      case "Very High": return <Brain className="h-4 w-4 text-purple-600" />;
+      case "High": return <Zap className="h-4 w-4 text-orange-600" />;
+      case "Medium": return <Code className="h-4 w-4 text-blue-600" />;
+      default: return <Code className="h-4 w-4 text-gray-600" />;
+    }
+  };
 
   const getConfidenceColor = (score: number) => {
     if (score >= 80) return "text-green-600";
@@ -74,22 +159,22 @@ const Jobs = () => {
       <div className="min-h-screen bg-gradient-to-br from-momentum-50 to-white">
         <Navigation />
         
-        <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold gradient-text mb-4">
-              Find Your Next Opportunity
+              Visual Job Matching
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Discover data science and AI roles that match your expertise and career goals
+              Discover AI roles through interactive visualizations and smart matching
             </p>
           </div>
 
-          <div className="grid gap-6">
+          <div className="grid gap-8">
             {jobListings.map((job) => (
-              <Card key={job.id} className="shadow-lg border-0 hover:shadow-xl transition-shadow">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <div>
+              <Card key={job.id} className="shadow-lg border-0 hover:shadow-xl transition-shadow overflow-hidden">
+                <CardHeader className="pb-4">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex-1">
                       <h3 className="text-xl font-bold text-gray-900 mb-2">{job.title}</h3>
                       <div className="flex items-center space-x-4 text-gray-600 mb-3">
                         <div className="flex items-center">
@@ -105,6 +190,18 @@ const Jobs = () => {
                           {job.posted}
                         </div>
                       </div>
+                      
+                      <div className="flex items-center space-x-4 mb-3">
+                        <div className="flex items-center space-x-1">
+                          {getComplexityIcon(job.complexity)}
+                          <span className="text-sm font-medium">{job.complexity}</span>
+                        </div>
+                        <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200">
+                          {job.problemType}
+                        </Badge>
+                        <span className="text-sm text-gray-500">{job.teamSize} team</span>
+                      </div>
+
                       <div className="flex items-center space-x-3">
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -122,6 +219,7 @@ const Jobs = () => {
                         </span>
                       </div>
                     </div>
+                    
                     <div className="text-right">
                       <Badge variant="secondary" className="mb-2">
                         {job.type}
@@ -133,21 +231,51 @@ const Jobs = () => {
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-gray-700 mb-4">{job.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {job.skills.map((skill, index) => (
-                      <Badge key={index} variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200">
-                        {skill}
-                      </Badge>
-                    ))}
+                
+                <CardContent className="pt-0">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    {/* Skills Radar */}
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900">Skills Match</h4>
+                      <div className="flex justify-center">
+                        <SkillRadarChart skills={job.skillsRadar} />
+                      </div>
+                      <div className="flex justify-center space-x-4 text-xs">
+                        <div className="flex items-center space-x-1">
+                          <div className="w-3 h-3 bg-momentum-600 rounded-full opacity-50"></div>
+                          <span>Required</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <div className="w-3 h-1 bg-red-500 rounded-full"></div>
+                          <span>Your Level</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Tech Stack */}
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900">Tech Stack</h4>
+                      <TechStackVisualization techStack={job.techStack} />
+                    </div>
+
+                    {/* Match Score */}
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900">Compatibility</h4>
+                      <MatchScore score={job.matchScore.score} factors={job.matchScore.factors} />
+                    </div>
                   </div>
+
+                  <p className="text-gray-700 mb-4">{job.description}</p>
+                  
                   <div className="flex gap-3">
                     <Button className="bg-momentum-600 hover:bg-momentum-700">
                       Apply Now
                     </Button>
                     <Button variant="outline">
                       Save Job
+                    </Button>
+                    <Button variant="outline">
+                      View Analysis
                     </Button>
                   </div>
                 </CardContent>
