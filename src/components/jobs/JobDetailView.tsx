@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Building, MapPin, Clock, DollarSign, TrendingUp, Star } from "lucide-react";
+import { Building, MapPin, Clock, DollarSign, TrendingUp, Star, ArrowLeft } from "lucide-react";
 import { TechStackVisualization } from "./TechStackVisualization";
 
 interface JobListing {
@@ -49,13 +49,15 @@ export const JobDetailView = ({ job, onBackClick }: JobDetailViewProps) => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="mb-6">
+      {/* Fixed Back Button */}
+      <div className="mb-6 sticky top-20 z-10 bg-white/90 backdrop-blur-sm py-2 -mx-4 px-4">
         <Button 
           variant="outline" 
           onClick={onBackClick}
-          className="mb-4"
+          className="flex items-center space-x-2 hover:bg-momentum-50 border-momentum-200"
         >
-          ← Back to Jobs
+          <ArrowLeft className="h-4 w-4" />
+          <span>Back to Jobs</span>
         </Button>
       </div>
 
