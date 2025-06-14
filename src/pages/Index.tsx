@@ -1,3 +1,4 @@
+
 import Navigation from "@/components/Navigation";
 import RealCareerMoments from "@/components/RealCareerMoments";
 import CareerCheckIn from "@/components/CareerCheckIn";
@@ -219,9 +220,12 @@ const Index = () => {
                 ))}
               </div>
               
-              <div className="mt-2 pt-2 border-t border-red-100">
+              <div className="mt-2 pt-2 border-t border-red-100 flex justify-between items-center">
                 <button className="text-xs text-red-600 hover:text-red-700 font-medium">
-                  View all updates • Manage subscriptions
+                  View all updates (last 24h)
+                </button>
+                <button className="text-xs text-blue-600 hover:text-blue-700 font-medium">
+                  Quick summary from transcripts →
                 </button>
               </div>
             </div>
