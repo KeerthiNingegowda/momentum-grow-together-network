@@ -5,6 +5,7 @@ import CareerCheckIn from "@/components/CareerCheckIn";
 import WelcomeSection from "@/components/WelcomeSection";
 import TrendingActivities from "@/components/TrendingActivities";
 import CollapsibleSection from "@/components/CollapsibleSection";
+import PostCreator from "@/components/PostCreator";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 
@@ -135,6 +136,10 @@ const Index = () => {
           roles={userProfile.roles}
           onScrollToSection={scrollToSection}
         />
+
+        <div className="mb-8">
+          <PostCreator />
+        </div>
 
         <TrendingActivities
           isOpen={openSections.trending}
