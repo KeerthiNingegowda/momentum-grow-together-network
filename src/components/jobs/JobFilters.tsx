@@ -38,7 +38,7 @@ export const JobFilters = ({
           placeholder="Search jobs, companies, or keywords..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-12 h-12 text-base"
+          className="pl-12 h-12 text-base bg-white border border-gray-300 shadow-sm"
         />
       </div>
       
