@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { TrendingUp, Users, Target, Zap, MessageCircle, Share2, LinkedinIcon, TwitterIcon, ArrowRight, Brain, BarChart } from "lucide-react";
+import { TrendingUp, Users, Target, Zap, MessageCircle, Share2, TwitterIcon, ArrowRight, Brain, BarChart, ExternalLink } from "lucide-react";
 
 const Profile = () => {
   const keyWins = [
@@ -121,7 +121,7 @@ const Profile = () => {
                 <h3 className="font-bold text-gray-900 mb-4">Quick Connect</h3>
                 <div className="space-y-3 mb-4">
                   <div className="text-gray-600">
-                    <span className="font-medium text-gray-900">Based in:</span> Seattle, WA
+                    <span className="font-medium text-gray-900">Based in:</span> Toronto, ON
                   </div>
                   <div className="text-gray-600">
                     <span className="font-medium text-gray-900">Response time:</span> Same day
@@ -133,8 +133,8 @@ const Profile = () => {
                 
                 <div className="flex space-x-2 mb-4">
                   <Button variant="outline" size="sm" className="flex-1">
-                    <LinkedinIcon className="h-4 w-4 mr-2" />
-                    LinkedIn
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    Portfolio
                   </Button>
                   <Button variant="outline" size="sm" className="flex-1">
                     <TwitterIcon className="h-4 w-4 mr-2" />
