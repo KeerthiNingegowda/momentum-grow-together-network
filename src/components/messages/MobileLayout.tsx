@@ -49,11 +49,11 @@ const MobileLayout = ({
   onDeclineConversation
 }: MobileLayoutProps) => {
   return (
-    <div className="lg:hidden h-[calc(100vh-120px)]">
-      <Card className="border-0 shadow-sm h-full">
-        <CardContent className="p-0 h-full flex flex-col">
+    <div className="lg:hidden h-screen flex flex-col">
+      <Card className="border-0 shadow-sm flex-1 flex flex-col overflow-hidden">
+        <CardContent className="p-0 flex-1 flex flex-col overflow-hidden">
           {/* Mobile Header with Sheet for Conversations */}
-          <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-white">
+          <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-white flex-shrink-0">
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="outline" size="sm" className="flex items-center space-x-2">
@@ -61,8 +61,8 @@ const MobileLayout = ({
                   <span>Conversations</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-[320px] p-0">
-                <div className="h-full">
+              <SheetContent side="left" className="w-[300px] p-0 h-full">
+                <div className="h-full overflow-hidden">
                   <ConversationsList 
                     conversations={conversations}
                     selectedConversation={selectedConversation}
@@ -90,7 +90,7 @@ const MobileLayout = ({
           </div>
 
           {/* Mobile Chat Window */}
-          <div className="flex-1 flex flex-col min-h-0">
+          <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
             <ChatWindow 
               currentConversation={currentConversation}
               messages={messages}
