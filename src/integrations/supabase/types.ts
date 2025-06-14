@@ -625,6 +625,33 @@ export type Database = {
           },
         ]
       }
+      user_youtube_channels: {
+        Row: {
+          channel_id: string | null
+          channel_name: string
+          created_at: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          channel_id?: string | null
+          channel_name: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          channel_id?: string | null
+          channel_name?: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       youtube_insights: {
         Row: {
           channel_name: string

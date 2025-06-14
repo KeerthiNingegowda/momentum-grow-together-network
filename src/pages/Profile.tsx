@@ -1,5 +1,6 @@
 
 import Navigation from "@/components/Navigation";
+import YouTubeChannelManager from "@/components/YouTubeChannelManager";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -111,6 +112,11 @@ const Profile = () => {
                   </Card>
                 );
               })}
+            </div>
+
+            {/* Learning Preferences Section */}
+            <div className="mb-6">
+              <YouTubeChannelManager />
             </div>
 
             {/* Recent Business Wins */}
