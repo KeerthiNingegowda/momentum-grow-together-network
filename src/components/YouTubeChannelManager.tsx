@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,11 +8,6 @@ const YouTubeChannelManager = () => {
 
   // Static channels list - you can tell me which channels to add here
   const channels = [
-    { id: "1", channel_name: "freeCodeCamp.org" },
-    { id: "2", channel_name: "Traversy Media" },
-    { id: "3", channel_name: "Programming with Mosh" },
-    { id: "4", channel_name: "The Net Ninja" },
-    { id: "5", channel_name: "Fireship" },
     { id: "6", channel_name: "aiDotEngineer" },
     { id: "7", channel_name: "3blue1brown" },
     { id: "8", channel_name: "StatQuest" },
