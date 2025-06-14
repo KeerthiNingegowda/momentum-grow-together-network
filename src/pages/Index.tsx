@@ -1,208 +1,79 @@
 import Navigation from "@/components/Navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Heart, MessageCircle, Share2, MoreHorizontal, Users, TrendingUp } from "lucide-react";
+import { BookOpen, TrendingUp, Users, Lightbulb } from "lucide-react";
 
 const Index = () => {
-  const posts = [
-    {
-      id: 1,
-      author: {
-        name: "Dr. Sarah Chen",
-        title: "Principal ML Engineer at OpenAI",
-        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
-        initials: "SC"
-      },
-      content: "Just shipped our new RAG system that reduced hallucinations by 73% while maintaining response quality. The key was implementing a hybrid retrieval approach combining dense embeddings with keyword matching. Sometimes the best GenAI solutions combine old-school techniques with cutting-edge models! 🚀",
-      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
-      likes: 234,
-      comments: 45,
-      shares: 28,
-      timestamp: "2 hours ago"
-    },
-    {
-      id: 2,
-      author: {
-        name: "Marcus Rodriguez",
-        title: "Staff Data Scientist at Anthropic",
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-        initials: "MR"
-      },
-      content: "Hot take: Most companies don't need GPT-4 for their use cases. We saved $2M annually by fine-tuning smaller models for specific tasks. Before jumping to the latest LLM, ask: 'What's the minimum viable model that solves this problem?' Your CFO will thank you. What's been your experience with model right-sizing? 💰",
-      likes: 312,
-      comments: 87,
-      shares: 56,
-      timestamp: "4 hours ago"
-    },
-    {
-      id: 3,
-      author: {
-        name: "Dr. Priya Patel",
-        title: "Head of AI Research at Scale AI",
-        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
-        initials: "PP"
-      },
-      content: "Mentorship Monday: Looking for 5 mid-level data scientists who want to level up their GenAI game. I'll be hosting virtual office hours next week covering prompt engineering, fine-tuning strategies, and deploying LLMs at scale. Building the next generation of AI practitioners is what drives me! Apply in comments 👇",
-      likes: 156,
-      comments: 42,
-      shares: 23,
-      timestamp: "6 hours ago"
-    }
-  ];
+  const userProfile = {
+    name: "Jessica",
+    roles: ["Data Science", "CX Strategy"]
+  };
 
-  const trendingTopics = [
-    { name: "Large Language Models", count: "3.2k posts" },
-    { name: "Generative AI Applications", count: "2.8k posts" },
-    { name: "RAG Systems", count: "1.9k posts" },
-    { name: "AI Ethics & Safety", count: "1.4k posts" },
-    { name: "Prompt Engineering", count: "1.1k posts" }
-  ];
-
-  const suggestedConnections = [
+  const trendingActivities = [
     {
-      name: "Dr. Alex Kim",
-      title: "Senior Research Scientist at Google DeepMind",
-      mutualConnections: 23,
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-      initials: "AK"
+      activity: "Deep-diving into Transformer architectures",
+      context: "Understanding attention mechanisms for NLP projects",
+      participants: "127 professionals",
+      timeframe: "this week"
     },
     {
-      name: "Jamie Liu",
-      title: "ML Engineering Manager at Hugging Face",
-      mutualConnections: 18,
-      avatar: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&h=400&fit=crop&crop=face",
-      initials: "JL"
+      activity: "Exploring ethical AI frameworks", 
+      context: "Building responsible AI systems in production",
+      participants: "89 professionals",
+      timeframe: "this week"
+    },
+    {
+      activity: "Mastering MLOps best practices",
+      context: "Streamlining model deployment and monitoring",
+      participants: "156 professionals", 
+      timeframe: "this week"
+    },
+    {
+      activity: "Customer journey mapping with AI insights",
+      context: "Leveraging ML to understand user behavior patterns",
+      participants: "73 professionals",
+      timeframe: "this week"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
       <Navigation />
       
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="grid lg:grid-cols-4 gap-6">
-          {/* Left Sidebar */}
-          <div className="lg:col-span-1 space-y-4">
-            {/* User Quick Stats */}
-            <Card className="border-0 shadow-sm">
-              <CardContent className="p-4">
-                <div className="text-center">
-                  <Avatar className="w-16 h-16 mx-auto mb-3">
-                    <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face" />
-                    <AvatarFallback className="bg-momentum-100 text-momentum-600">You</AvatarFallback>
-                  </Avatar>
-                  <h3 className="font-semibold text-gray-900">Welcome back!</h3>
-                  <p className="text-sm text-gray-600 mb-3">Build your AI career momentum</p>
-                  <div className="grid grid-cols-2 gap-2 text-center">
-                    <div>
-                      <div className="text-lg font-bold text-momentum-600">234</div>
-                      <div className="text-xs text-gray-600">AI Connections</div>
-                    </div>
-                    <div>
-                      <div className="text-lg font-bold text-momentum-600">67</div>
-                      <div className="text-xs text-gray-600">ML Posts</div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Trending Topics */}
-            <Card className="border-0 shadow-sm">
-              <CardHeader className="pb-3">
-                <h3 className="font-semibold text-gray-900 flex items-center">
-                  <TrendingUp className="h-4 w-4 mr-2 text-momentum-600" />
-                  Trending in AI
-                </h3>
-              </CardHeader>
-              <CardContent className="p-0">
-                <div className="space-y-2">
-                  {trendingTopics.map((topic, index) => (
-                    <div key={index} className="px-4 py-2 hover:bg-gray-50 cursor-pointer">
-                      <div className="font-medium text-sm text-gray-900">{topic.name}</div>
-                      <div className="text-xs text-gray-500">{topic.count}</div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+      <div className="max-w-4xl mx-auto px-4 py-12">
+        {/* Section 1: People Like You Are Doing */}
+        <div className="mb-16">
+          <div className="mb-8">
+            <h1 className="text-2xl font-light text-gray-800 mb-2">
+              Welcome back, {userProfile.name}
+            </h1>
+            <p className="text-gray-600 text-lg font-light">
+              Here's what professionals in {userProfile.roles.join(" & ")} are exploring this week
+            </p>
           </div>
 
-          {/* Main Feed */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Create Post */}
-            <Card className="border-0 shadow-sm">
-              <CardContent className="p-4">
-                <div className="flex items-center space-x-3">
-                  <Avatar className="w-10 h-10">
-                    <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face" />
-                    <AvatarFallback className="bg-momentum-100 text-momentum-600">You</AvatarFallback>
-                  </Avatar>
-                  <Button variant="outline" className="flex-1 justify-start text-gray-500 hover:bg-gray-50">
-                    Share your latest AI breakthrough...
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Posts Feed */}
-            {posts.map((post) => (
-              <Card key={post.id} className="border-0 shadow-sm">
-                <CardContent className="p-0">
-                  {/* Post Header */}
-                  <div className="p-4 flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <Avatar className="w-10 h-10">
-                        <AvatarImage src={post.author.avatar} />
-                        <AvatarFallback className="bg-momentum-100 text-momentum-600">
-                          {post.author.initials}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <h4 className="font-semibold text-gray-900">{post.author.name}</h4>
-                        <p className="text-sm text-gray-600">{post.author.title}</p>
-                        <p className="text-xs text-gray-500">{post.timestamp}</p>
-                      </div>
+          <div className="grid gap-6">
+            {trendingActivities.map((item, index) => (
+              <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200 bg-white/80 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-momentum-100 p-3 rounded-full">
+                      <BookOpen className="h-5 w-5 text-momentum-600" />
                     </div>
-                    <Button variant="ghost" size="icon">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </div>
-
-                  {/* Post Content */}
-                  <div className="px-4 pb-3">
-                    <p className="text-gray-700 leading-relaxed">{post.content}</p>
-                  </div>
-
-                  {/* Post Image */}
-                  {post.image && (
-                    <div className="px-4 pb-3">
-                      <img 
-                        src={post.image} 
-                        alt="Post content" 
-                        className="w-full rounded-lg object-cover h-64"
-                      />
-                    </div>
-                  )}
-
-                  {/* Post Actions */}
-                  <div className="px-4 py-3 border-t border-gray-100">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-6">
-                        <Button variant="ghost" size="sm" className="text-gray-600 hover:text-momentum-600">
-                          <Heart className="h-4 w-4 mr-2" />
-                          {post.likes}
-                        </Button>
-                        <Button variant="ghost" size="sm" className="text-gray-600 hover:text-momentum-600">
-                          <MessageCircle className="h-4 w-4 mr-2" />
-                          {post.comments}
-                        </Button>
-                        <Button variant="ghost" size="sm" className="text-gray-600 hover:text-momentum-600">
-                          <Share2 className="h-4 w-4 mr-2" />
-                          {post.shares}
-                        </Button>
+                    <div className="flex-1">
+                      <h3 className="font-medium text-gray-900 mb-2">
+                        {item.activity}
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-3">
+                        {item.context}
+                      </p>
+                      <div className="flex items-center space-x-4 text-xs text-gray-500">
+                        <span className="flex items-center">
+                          <Users className="h-3 w-3 mr-1" />
+                          {item.participants}
+                        </span>
+                        <span>{item.timeframe}</span>
                       </div>
                     </div>
                   </div>
@@ -210,60 +81,12 @@ const Index = () => {
               </Card>
             ))}
           </div>
+        </div>
 
-          {/* Right Sidebar */}
-          <div className="lg:col-span-1 space-y-4">
-            {/* Suggested Connections */}
-            <Card className="border-0 shadow-sm">
-              <CardHeader className="pb-3">
-                <h3 className="font-semibold text-gray-900 flex items-center">
-                  <Users className="h-4 w-4 mr-2 text-momentum-600" />
-                  AI Professionals
-                </h3>
-              </CardHeader>
-              <CardContent className="p-0">
-                <div className="space-y-3">
-                  {suggestedConnections.map((person, index) => (
-                    <div key={index} className="px-4 py-3 hover:bg-gray-50">
-                      <div className="flex items-center space-x-3">
-                        <Avatar className="w-10 h-10">
-                          <AvatarImage src={person.avatar} />
-                          <AvatarFallback className="bg-momentum-100 text-momentum-600">
-                            {person.initials}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                          <h4 className="font-medium text-sm text-gray-900">{person.name}</h4>
-                          <p className="text-xs text-gray-600">{person.title}</p>
-                          <p className="text-xs text-gray-500">{person.mutualConnections} mutual connections</p>
-                        </div>
-                      </div>
-                      <Button size="sm" className="w-full mt-2 bg-momentum-600 hover:bg-momentum-700 text-white">
-                        Connect
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Quick Actions */}
-            <Card className="border-0 shadow-sm">
-              <CardHeader className="pb-3">
-                <h3 className="font-semibold text-gray-900">AI Community</h3>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <Button variant="outline" className="w-full justify-start">
-                  Join ML Study Groups
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  Find AI Mentors
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  Attend Tech Talks
-                </Button>
-              </CardContent>
-            </Card>
+        {/* Placeholder for other sections */}
+        <div className="space-y-16">
+          <div className="text-center py-12 border-t border-gray-100">
+            <p className="text-gray-400 text-sm">More sections coming soon...</p>
           </div>
         </div>
       </div>
