@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Sprout, User, Bell, MessageCircle, Search, Briefcase, Users } from "lucide-react";
+import { Sprout, User, Bell, MessageCircle, Briefcase, Users } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Navigation = () => {
@@ -53,9 +53,6 @@ const Navigation = () => {
           </div>
 
           <div className="flex items-center space-x-3">
-            <Button variant="ghost" size="icon" className="text-gray-600 hover:text-momentum-600">
-              <Search className="h-5 w-5" />
-            </Button>
             <Button
               variant="ghost"
               className="flex items-center space-x-2 text-gray-700 hover:text-momentum-600 hover:bg-momentum-50"
