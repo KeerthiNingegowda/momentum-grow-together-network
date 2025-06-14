@@ -160,13 +160,13 @@ const Messages = () => {
                 {/* Chat Header */}
                 <div className="p-4 border-b border-gray-100 flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <Avatar className="w-10 h-10">
+                    <Avatar className="w-12 h-12">
                       <AvatarImage src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face" />
                       <AvatarFallback className="bg-momentum-100 text-momentum-600">EZ</AvatarFallback>
                     </Avatar>
-                    <div>
-                      <h3 className="font-semibold text-gray-900">Dr. Emily Zhang</h3>
-                      <p className="text-sm text-gray-600">Research Scientist at DeepMind</p>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-gray-900 text-base leading-tight">Dr. Emily Zhang</h3>
+                      <p className="text-sm text-gray-600 leading-tight mt-0.5">Research Scientist at DeepMind</p>
                     </div>
                   </div>
                   <Button variant="ghost" size="icon">
