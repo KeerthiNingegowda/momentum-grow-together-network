@@ -1,11 +1,10 @@
-
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Search, MapPin, MessageCircle, UserPlus, Briefcase } from "lucide-react";
+import { Search, MessageCircle, UserPlus, Briefcase } from "lucide-react";
 
 const Network = () => {
   const profiles = [
@@ -91,7 +90,7 @@ const Network = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Network Now</h1>
-          <p className="text-gray-600">Connect with AI professionals and grow your network</p>
+          <p className="text-gray-600">Grow your career one real connection at a time</p>
         </div>
 
         {/* Search Bar */}
@@ -123,10 +122,6 @@ const Network = () => {
                     <div className="flex items-center text-sm text-gray-500 mb-2">
                       <Briefcase className="h-3 w-3 mr-1" />
                       <span>{profile.company}</span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <MapPin className="h-3 w-3 mr-1" />
-                      <span>{profile.location}</span>
                     </div>
                   </div>
                 </div>
