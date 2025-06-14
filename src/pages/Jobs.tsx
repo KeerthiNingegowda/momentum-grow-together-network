@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { MapPin, Clock, DollarSign, Building, TrendingUp, Brain, Code } from "lucide-react";
+import { MapPin, Clock, DollarSign, Building, TrendingUp, Brain, Code, Users, Coffee, Zap, Heart, Star } from "lucide-react";
 import { TechStackVisualization } from "@/components/jobs/TechStackVisualization";
 
 const Jobs = () => {
@@ -30,6 +30,28 @@ const Jobs = () => {
         totalPosted: 24,
         totalFilled: 18,
         confidenceScore: 75
+      },
+      companyProfile: {
+        culture: {
+          workStyle: "Hybrid - 3 days in office",
+          vibe: "Fast-paced, collaborative",
+          values: ["Innovation", "Work-life balance", "Growth mindset"]
+        },
+        perks: [
+          { icon: "Coffee", label: "Free meals & snacks" },
+          { icon: "Heart", label: "Comprehensive health coverage" },
+          { icon: "Zap", label: "Learning stipend $2k/year" }
+        ],
+        teamInsights: {
+          avgTenure: "2.5 years",
+          satisfactionScore: 4.2,
+          diversityScore: "High",
+          mentorshipProgram: true
+        },
+        recentFeedback: [
+          { text: "Great mentorship and learning opportunities", rating: 5 },
+          { text: "Good work-life balance, flexible hours", rating: 4 }
+        ]
       }
     },
     {
@@ -53,6 +75,28 @@ const Jobs = () => {
         totalPosted: 12,
         totalFilled: 11,
         confidenceScore: 92
+      },
+      companyProfile: {
+        culture: {
+          workStyle: "Fully remote",
+          vibe: "Cutting-edge, research-focused",
+          values: ["Innovation", "Technical excellence", "Autonomy"]
+        },
+        perks: [
+          { icon: "Zap", label: "Top-tier equipment provided" },
+          { icon: "Users", label: "Conference budget $5k/year" },
+          { icon: "Heart", label: "Flexible PTO policy" }
+        ],
+        teamInsights: {
+          avgTenure: "3.2 years",
+          satisfactionScore: 4.6,
+          diversityScore: "Medium",
+          mentorshipProgram: false
+        },
+        recentFeedback: [
+          { text: "Incredible technical challenges and growth", rating: 5 },
+          { text: "Very autonomous, great for self-starters", rating: 4 }
+        ]
       }
     },
     {
@@ -76,6 +120,28 @@ const Jobs = () => {
         totalPosted: 8,
         totalFilled: 4,
         confidenceScore: 50
+      },
+      companyProfile: {
+        culture: {
+          workStyle: "In-office focused",
+          vibe: "Traditional, structured",
+          values: ["Reliability", "Teamwork", "Results-driven"]
+        },
+        perks: [
+          { icon: "Heart", label: "401k matching 6%" },
+          { icon: "Coffee", label: "On-site gym & cafe" },
+          { icon: "Users", label: "Team building events" }
+        ],
+        teamInsights: {
+          avgTenure: "4.1 years",
+          satisfactionScore: 3.8,
+          diversityScore: "Medium",
+          mentorshipProgram: true
+        },
+        recentFeedback: [
+          { text: "Stable environment, good for families", rating: 4 },
+          { text: "Process-heavy, slower pace of innovation", rating: 3 }
+        ]
       }
     }
   ];
@@ -98,6 +164,16 @@ const Jobs = () => {
     if (score >= 80) return "bg-green-100 text-green-800 border-green-200";
     if (score >= 60) return "bg-yellow-100 text-yellow-800 border-yellow-200";
     return "bg-red-100 text-red-800 border-red-200";
+  };
+
+  const getPerkIcon = (iconName: string) => {
+    switch (iconName) {
+      case "Coffee": return <Coffee className="h-4 w-4" />;
+      case "Heart": return <Heart className="h-4 w-4" />;
+      case "Zap": return <Zap className="h-4 w-4" />;
+      case "Users": return <Users className="h-4 w-4" />;
+      default: return <Star className="h-4 w-4" />;
+    }
   };
 
   return (
@@ -179,9 +255,69 @@ const Jobs = () => {
                 </CardHeader>
                 
                 <CardContent className="pt-0">
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-3">Tech Stack</h4>
-                    <TechStackVisualization techStack={job.techStack} />
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    {/* Tech Stack */}
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900">Tech Stack</h4>
+                      <TechStackVisualization techStack={job.techStack} />
+                    </div>
+
+                    {/* Company Culture Preview */}
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900">Working Here</h4>
+                      <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium text-gray-700">Work Style</span>
+                          <span className="text-sm text-gray-600">{job.companyProfile.culture.workStyle}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium text-gray-700">Team Vibe</span>
+                          <span className="text-sm text-gray-600">{job.companyProfile.culture.vibe}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium text-gray-700">Avg Tenure</span>
+                          <span className="text-sm text-gray-600">{job.companyProfile.teamInsights.avgTenure}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium text-gray-700">Satisfaction</span>
+                          <div className="flex items-center">
+                            <Star className="h-3 w-3 text-yellow-500 mr-1" />
+                            <span className="text-sm text-gray-600">{job.companyProfile.teamInsights.satisfactionScore}/5</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Company Perks */}
+                  <div className="mb-4">
+                    <h5 className="font-medium text-gray-900 mb-2">Perks & Benefits</h5>
+                    <div className="flex flex-wrap gap-2">
+                      {job.companyProfile.perks.map((perk, index) => (
+                        <Badge key={index} variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                          {getPerkIcon(perk.icon)}
+                          <span className="ml-1 text-xs">{perk.label}</span>
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Recent Employee Feedback */}
+                  <div className="mb-4">
+                    <h5 className="font-medium text-gray-900 mb-2">What Employees Say</h5>
+                    <div className="space-y-2">
+                      {job.companyProfile.recentFeedback.map((feedback, index) => (
+                        <div key={index} className="bg-gray-50 rounded p-3 text-sm">
+                          <div className="flex items-center justify-between">
+                            <p className="text-gray-700 italic">"{feedback.text}"</p>
+                            <div className="flex items-center ml-2">
+                              <Star className="h-3 w-3 text-yellow-500 mr-1" />
+                              <span className="text-gray-600">{feedback.rating}</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
                   <p className="text-gray-700 mb-4">{job.description}</p>
@@ -194,7 +330,7 @@ const Jobs = () => {
                       Save Job
                     </Button>
                     <Button variant="outline">
-                      View Analysis
+                      View Full Company Profile
                     </Button>
                   </div>
                 </CardContent>
