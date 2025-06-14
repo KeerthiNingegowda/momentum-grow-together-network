@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -404,9 +403,6 @@ const Jobs = () => {
                     </Button>
                     <Button variant="outline">
                       Save Job
-                    </Button>
-                    <Button variant="outline">
-                      View Company Culture
                     </Button>
                   </div>
                 </CardContent>
