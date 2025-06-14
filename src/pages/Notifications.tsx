@@ -5,9 +5,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Heart, MessageCircle, UserPlus, Briefcase, Users, Calendar, MoreHorizontal, Brain, Code, BookOpen } from "lucide-react";
+import { useState } from "react";
 
 const Notifications = () => {
-  const notifications = [
+  const initialNotifications = [
     {
       id: 1,
       type: "like",
@@ -101,6 +102,17 @@ const Notifications = () => {
     }
   ];
 
+  const [notifications, setNotifications] = useState(initialNotifications);
+
+  const markAllAsRead = () => {
+    setNotifications(prev => 
+      prev.map(notification => ({
+        ...notification,
+        unread: false
+      }))
+    );
+  };
+
   const getIconColor = (type: string) => {
     switch (type) {
       case "like": return "text-red-500";
@@ -149,7 +161,12 @@ const Notifications = () => {
               <p className="text-sm text-gray-600">
                 {notifications.filter(n => n.unread).length} unread updates
               </p>
-              <Button variant="ghost" size="sm" className="text-momentum-600 hover:text-momentum-700">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-momentum-600 hover:text-momentum-700"
+                onClick={markAllAsRead}
+              >
                 Mark all as read
               </Button>
             </div>
