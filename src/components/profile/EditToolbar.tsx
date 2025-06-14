@@ -39,12 +39,13 @@ const EditToolbar = () => {
   ];
 
   const handleAddSection = (type: string) => {
+    console.log('Adding section:', type);
     addSection(type);
   };
 
   if (!isEditMode) {
     return (
-      <div className="fixed top-24 right-4 z-40">
+      <div className="fixed top-32 left-4 z-40">
         <Button 
           onClick={() => setIsEditMode(true)}
           className="bg-momentum-600 hover:bg-momentum-700 shadow-lg"
@@ -57,7 +58,7 @@ const EditToolbar = () => {
   }
 
   return (
-    <div className="fixed top-24 right-4 z-40">
+    <div className="fixed top-32 left-4 z-40">
       <Card className="shadow-lg border-momentum-200">
         <CardContent className="p-4">
           <div className="flex items-center space-x-2 mb-3">
@@ -86,17 +87,18 @@ const EditToolbar = () => {
                   {sectionTypes.map((sectionType) => {
                     const Icon = sectionType.icon;
                     return (
-                      <Button
-                        key={sectionType.type}
-                        variant="outline"
-                        className="w-full justify-start h-auto p-4"
-                        onClick={() => handleAddSection(sectionType.type)}
-                      >
-                        <Icon className="h-5 w-5 mr-3 text-momentum-600" />
-                        <div className="text-left">
-                          <div className="font-medium">{sectionType.label}</div>
-                        </div>
-                      </Button>
+                      <SheetTrigger key={sectionType.type} asChild>
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start h-auto p-4"
+                          onClick={() => handleAddSection(sectionType.type)}
+                        >
+                          <Icon className="h-5 w-5 mr-3 text-momentum-600" />
+                          <div className="text-left">
+                            <div className="font-medium">{sectionType.label}</div>
+                          </div>
+                        </Button>
+                      </SheetTrigger>
                     );
                   })}
                 </div>

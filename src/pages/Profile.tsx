@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -10,6 +9,12 @@ import { useState } from "react";
 import { ProfileEditProvider, useProfileEdit } from "@/contexts/ProfileEditContext";
 import EditToolbar from "@/components/profile/EditToolbar";
 import SectionControls from "@/components/profile/SectionControls";
+import ExperienceSection from "@/components/profile/sections/ExperienceSection";
+import EducationSection from "@/components/profile/sections/EducationSection";
+import SkillsSection from "@/components/profile/sections/SkillsSection";
+import ProjectsSection from "@/components/profile/sections/ProjectsSection";
+import AchievementsSection from "@/components/profile/sections/AchievementsSection";
+import CustomSection from "@/components/profile/sections/CustomSection";
 
 const ProfileContent = () => {
   const [isTestimonialsOpen, setIsTestimonialsOpen] = useState(false);
@@ -241,6 +246,54 @@ const ProfileContent = () => {
                 </Button>
               </CardContent>
             </Card>
+          </div>
+        );
+
+      case 'experience':
+        return (
+          <div key={section.id} {...sectionProps}>
+            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
+            <ExperienceSection content={section.content} />
+          </div>
+        );
+
+      case 'education':
+        return (
+          <div key={section.id} {...sectionProps}>
+            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
+            <EducationSection content={section.content} />
+          </div>
+        );
+
+      case 'skills':
+        return (
+          <div key={section.id} {...sectionProps}>
+            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
+            <SkillsSection content={section.content} />
+          </div>
+        );
+
+      case 'projects':
+        return (
+          <div key={section.id} {...sectionProps}>
+            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
+            <ProjectsSection content={section.content} />
+          </div>
+        );
+
+      case 'achievements':
+        return (
+          <div key={section.id} {...sectionProps}>
+            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
+            <AchievementsSection content={section.content} />
+          </div>
+        );
+
+      case 'custom':
+        return (
+          <div key={section.id} {...sectionProps}>
+            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
+            <CustomSection content={section.content} title={section.title} />
           </div>
         );
 
