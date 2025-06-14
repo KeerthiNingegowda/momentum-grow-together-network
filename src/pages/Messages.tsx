@@ -1,14 +1,11 @@
 
 import Navigation from "@/components/Navigation";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Search, MoreHorizontal, Send, Check, X, Archive, MessageCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import ConversationsList from "@/components/messages/ConversationsList";
+import ChatWindow from "@/components/messages/ChatWindow";
+import MobileLayout from "@/components/messages/MobileLayout";
 
 const Messages = () => {
   const { toast } = useToast();
@@ -96,7 +93,6 @@ const Messages = () => {
     }
   ];
 
-  const activeConversations = conversations.filter(conv => !conv.archived);
   const currentConversation = conversations.find(conv => conv.id === selectedConversation);
 
   const handleAcceptConversation = () => {
@@ -122,159 +118,6 @@ const Messages = () => {
     });
   };
 
-  const ConversationsList = () => (
-    <div className="h-full flex flex-col">
-      {/* Header */}
-      <div className="p-4 border-b border-gray-100 flex-shrink-0">
-        <h2 className="text-xl font-semibold text-gray-900 mb-3">AI Conversations</h2>
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <Input 
-            placeholder="Search AI professionals..." 
-            className="pl-10"
-          />
-        </div>
-      </div>
-
-      {/* Conversations */}
-      <div className="flex-1 overflow-y-auto">
-        {activeConversations.map((conversation) => (
-          <div 
-            key={conversation.id} 
-            onClick={() => setSelectedConversation(conversation.id)}
-            className={`p-4 border-b border-gray-50 hover:bg-gray-50 cursor-pointer transition-colors ${
-              conversation.id === selectedConversation ? 'bg-momentum-50 border-l-4 border-l-momentum-600' : ''
-            }`}
-          >
-            <div className="flex items-start space-x-3">
-              <Avatar className="w-12 h-12 flex-shrink-0">
-                <AvatarImage src={conversation.avatar} />
-                <AvatarFallback className="bg-momentum-100 text-momentum-600">
-                  {conversation.initials}
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-1">
-                  <h3 className="font-semibold text-gray-900 truncate text-sm">
-                    {conversation.name}
-                  </h3>
-                  <div className="flex items-center space-x-2 flex-shrink-0">
-                    <span className="text-xs text-gray-500">{conversation.timestamp}</span>
-                    {conversation.unread && (
-                      <Badge className="bg-momentum-600 text-white text-xs">
-                        {conversation.unreadCount}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-                <p className="text-xs text-gray-600 mb-1 truncate">{conversation.title}</p>
-                <p className={`text-sm truncate ${
-                  conversation.unread ? 'text-gray-900 font-medium' : 'text-gray-500'
-                }`}>
-                  {conversation.lastMessage}
-                </p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
-  const ChatWindow = () => (
-    <div className="h-full flex flex-col">
-      {/* Chat Header */}
-      {currentConversation && (
-        <div className="p-4 border-b border-gray-100 flex items-center justify-between flex-shrink-0">
-          <div className="flex items-center space-x-3 min-w-0 flex-1">
-            <Avatar className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0">
-              <AvatarImage src={currentConversation.avatar} />
-              <AvatarFallback className="bg-momentum-100 text-momentum-600">
-                {currentConversation.initials}
-              </AvatarFallback>
-            </Avatar>
-            <div className="min-w-0 flex-1">
-              <h3 className="font-semibold text-gray-900 text-sm md:text-lg leading-6 truncate">
-                {currentConversation.name}
-              </h3>
-              <p className="text-xs md:text-sm text-gray-600 leading-5 truncate">
-                {currentConversation.title}
-              </p>
-            </div>
-          </div>
-          <Button variant="ghost" size="icon" className="flex-shrink-0">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </div>
-      )}
-
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-4">
-        {currentMessages.map((message, index) => (
-          <div key={message.id}>
-            <div 
-              className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}
-            >
-              <div className={`max-w-[280px] md:max-w-xs lg:max-w-md px-3 md:px-4 py-2 rounded-lg ${
-                message.isOwn 
-                  ? 'bg-momentum-600 text-white' 
-                  : 'bg-gray-100 text-gray-900'
-              }`}>
-                <p className="text-sm">{message.content}</p>
-                <p className={`text-xs mt-1 ${
-                  message.isOwn ? 'text-momentum-100' : 'text-gray-500'
-                }`}>
-                  {message.timestamp}
-                </p>
-              </div>
-            </div>
-            
-            {/* Accept/Decline buttons after first message */}
-            {index === 0 && message.needsResponse && (
-              <div className="flex justify-center mt-4">
-                <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3 bg-white border border-gray-200 rounded-lg p-3 shadow-sm max-w-sm">
-                  <p className="text-sm text-gray-600 text-center">Accept this conversation?</p>
-                  <div className="flex space-x-2">
-                    <Button
-                      onClick={handleAcceptConversation}
-                      size="sm"
-                      className="bg-green-600 hover:bg-green-700 text-white text-xs"
-                    >
-                      <Check className="h-3 w-3 mr-1" />
-                      Accept
-                    </Button>
-                    <Button
-                      onClick={handleDeclineConversation}
-                      size="sm"
-                      variant="outline"
-                      className="border-red-200 text-red-600 hover:bg-red-50 text-xs"
-                    >
-                      <X className="h-3 w-3 mr-1" />
-                      Decline
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Message Input */}
-      <div className="p-3 md:p-4 border-t border-gray-100 flex-shrink-0">
-        <div className="flex space-x-2">
-          <Input 
-            placeholder="Discuss AI research, share insights..." 
-            className="flex-1 text-sm"
-          />
-          <Button className="bg-momentum-600 hover:bg-momentum-700 text-white flex-shrink-0">
-            <Send className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
@@ -286,7 +129,11 @@ const Messages = () => {
           <div className="lg:col-span-1">
             <Card className="border-0 shadow-sm h-full">
               <CardContent className="p-0 h-full">
-                <ConversationsList />
+                <ConversationsList 
+                  conversations={conversations}
+                  selectedConversation={selectedConversation}
+                  onSelectConversation={setSelectedConversation}
+                />
               </CardContent>
             </Card>
           </div>
@@ -295,56 +142,27 @@ const Messages = () => {
           <div className="lg:col-span-2">
             <Card className="border-0 shadow-sm h-full">
               <CardContent className="p-0 h-full">
-                <ChatWindow />
+                <ChatWindow 
+                  currentConversation={currentConversation}
+                  messages={currentMessages}
+                  onAcceptConversation={handleAcceptConversation}
+                  onDeclineConversation={handleDeclineConversation}
+                />
               </CardContent>
             </Card>
           </div>
         </div>
 
         {/* Mobile Layout */}
-        <div className="lg:hidden h-[calc(100vh-120px)]">
-          <Card className="border-0 shadow-sm h-full">
-            <CardContent className="p-0 h-full flex flex-col">
-              {/* Mobile Header with Sheet for Conversations */}
-              <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-white">
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Button variant="outline" size="sm" className="flex items-center space-x-2">
-                      <MessageCircle className="h-4 w-4" />
-                      <span>Conversations</span>
-                    </Button>
-                  </SheetTrigger>
-                  <SheetContent side="left" className="w-[320px] p-0">
-                    <div className="h-full">
-                      <ConversationsList />
-                    </div>
-                  </SheetContent>
-                </Sheet>
-                
-                {currentConversation && (
-                  <div className="flex items-center space-x-2 min-w-0 flex-1 ml-4">
-                    <Avatar className="w-8 h-8 flex-shrink-0">
-                      <AvatarImage src={currentConversation.avatar} />
-                      <AvatarFallback className="bg-momentum-100 text-momentum-600 text-xs">
-                        {currentConversation.initials}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-gray-900 text-sm truncate">
-                        {currentConversation.name}
-                      </h3>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Mobile Chat Window */}
-              <div className="flex-1 flex flex-col min-h-0">
-                <ChatWindow />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <MobileLayout 
+          conversations={conversations}
+          selectedConversation={selectedConversation}
+          currentConversation={currentConversation}
+          messages={currentMessages}
+          onSelectConversation={setSelectedConversation}
+          onAcceptConversation={handleAcceptConversation}
+          onDeclineConversation={handleDeclineConversation}
+        />
       </div>
     </div>
   );
