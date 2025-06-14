@@ -1,4 +1,3 @@
-
 import { MoreHorizontal, Send, Check, X, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -14,6 +13,7 @@ interface Conversation {
   unread: boolean;
   unreadCount: number;
   archived: boolean;
+  avatar?: string; // Made optional since we're using initials
 }
 
 interface Message {
