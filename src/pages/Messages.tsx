@@ -11,45 +11,45 @@ const Messages = () => {
   const conversations = [
     {
       id: 1,
-      name: "Sarah Johnson",
-      title: "Product Manager at TechCorp",
+      name: "Dr. Emily Zhang",
+      title: "Research Scientist at DeepMind",
       avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
-      initials: "SJ",
-      lastMessage: "Thanks for connecting! I'd love to discuss potential collaboration opportunities.",
-      timestamp: "2 hours ago",
+      initials: "EZ",
+      lastMessage: "The multimodal approach you described sounds promising. Would love to collaborate on the vision-language model.",
+      timestamp: "1 hour ago",
       unread: true,
-      unreadCount: 2
+      unreadCount: 3
     },
     {
       id: 2,
-      name: "Michael Chen",
-      title: "Senior Developer at StartupXYZ",
+      name: "Alex Thompson",
+      title: "ML Engineering Lead at Hugging Face",
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-      initials: "MC",
-      lastMessage: "Great meeting you at the networking event yesterday!",
-      timestamp: "5 hours ago",
+      initials: "AT",
+      lastMessage: "Great insights on model optimization! Our team is facing similar inference latency challenges.",
+      timestamp: "3 hours ago",
       unread: false,
       unreadCount: 0
     },
     {
       id: 3,
-      name: "Emma Rodriguez",
-      title: "Marketing Director at GrowthCo",
+      name: "Priya Sharma",
+      title: "Principal Data Scientist at Microsoft",
       avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
-      initials: "ER",
-      lastMessage: "I have some insights about the marketing strategies we discussed.",
-      timestamp: "1 day ago",
+      initials: "PS",
+      lastMessage: "The reinforcement learning paper you shared was exactly what I needed for our recommendation system.",
+      timestamp: "5 hours ago",
       unread: true,
       unreadCount: 1
     },
     {
       id: 4,
-      name: "David Park",
-      title: "UX Designer at DesignStudio",
+      name: "Jordan Kim",
+      title: "AI Ethics Researcher at Anthropic",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-      initials: "DP",
-      lastMessage: "The portfolio you shared is impressive. Let's schedule a call.",
-      timestamp: "2 days ago",
+      initials: "JK",
+      lastMessage: "Your thoughts on bias mitigation in large language models would be valuable for our upcoming panel.",
+      timestamp: "1 day ago",
       unread: false,
       unreadCount: 0
     }
@@ -58,30 +58,30 @@ const Messages = () => {
   const currentMessages = [
     {
       id: 1,
-      sender: "Sarah Johnson",
-      content: "Hi! Thanks for accepting my connection request.",
-      timestamp: "10:30 AM",
+      sender: "Dr. Emily Zhang",
+      content: "Hi! I read your recent paper on few-shot learning techniques. Really impressive work on improving sample efficiency.",
+      timestamp: "2:30 PM",
       isOwn: false
     },
     {
       id: 2,
       sender: "You",
-      content: "Hi Sarah! Great to connect with you. I saw your post about the new product launch.",
-      timestamp: "10:35 AM",
+      content: "Thank you! We were inspired by your work on meta-learning. The gradient-based adaptation approach was a game-changer for our experiments.",
+      timestamp: "2:35 PM",
       isOwn: true
     },
     {
       id: 3,
-      sender: "Sarah Johnson",
-      content: "Thanks! It's been an exciting project. I'd love to discuss potential collaboration opportunities with your team.",
-      timestamp: "10:40 AM",
+      sender: "Dr. Emily Zhang",
+      content: "The multimodal approach you described sounds promising. Our team is working on vision-language models and could benefit from your domain adaptation techniques.",
+      timestamp: "2:40 PM",
       isOwn: false
     },
     {
       id: 4,
-      sender: "Sarah Johnson",
-      content: "Are you available for a quick call this week?",
-      timestamp: "10:41 AM",
+      sender: "Dr. Emily Zhang",
+      content: "Would love to collaborate on this! We have some interesting benchmark datasets that might be perfect for testing your approach.",
+      timestamp: "2:41 PM",
       isOwn: false
     }
   ];
@@ -98,11 +98,11 @@ const Messages = () => {
               <CardContent className="p-0 h-full flex flex-col">
                 {/* Header */}
                 <div className="p-4 border-b border-gray-100">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-3">Messages</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 mb-3">AI Conversations</h2>
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input 
-                      placeholder="Search conversations..." 
+                      placeholder="Search AI professionals..." 
                       className="pl-10"
                     />
                   </div>
@@ -162,11 +162,11 @@ const Messages = () => {
                   <div className="flex items-center space-x-3">
                     <Avatar className="w-10 h-10">
                       <AvatarImage src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face" />
-                      <AvatarFallback className="bg-momentum-100 text-momentum-600">SJ</AvatarFallback>
+                      <AvatarFallback className="bg-momentum-100 text-momentum-600">EZ</AvatarFallback>
                     </Avatar>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Sarah Johnson</h3>
-                      <p className="text-sm text-gray-600">Product Manager at TechCorp</p>
+                      <h3 className="font-semibold text-gray-900">Dr. Emily Zhang</h3>
+                      <p className="text-sm text-gray-600">Research Scientist at DeepMind</p>
                     </div>
                   </div>
                   <Button variant="ghost" size="icon">
@@ -201,7 +201,7 @@ const Messages = () => {
                 <div className="p-4 border-t border-gray-100">
                   <div className="flex space-x-2">
                     <Input 
-                      placeholder="Type your message..." 
+                      placeholder="Discuss AI research, share insights..." 
                       className="flex-1"
                     />
                     <Button className="bg-momentum-600 hover:bg-momentum-700 text-white">

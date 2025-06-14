@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, MessageCircle, UserPlus, Briefcase, Users, Calendar, MoreHorizontal } from "lucide-react";
+import { Heart, MessageCircle, UserPlus, Briefcase, Users, Calendar, MoreHorizontal, Brain, Code, BookOpen } from "lucide-react";
 
 const Notifications = () => {
   const notifications = [
@@ -14,12 +14,12 @@ const Notifications = () => {
       type: "like",
       icon: Heart,
       user: {
-        name: "Michael Chen",
+        name: "Dr. Sarah Kim",
         avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-        initials: "MC"
+        initials: "SK"
       },
-      action: "liked your post about networking strategies",
-      time: "2 hours ago",
+      action: "liked your post about transformer architecture optimizations",
+      time: "1 hour ago",
       unread: true
     },
     {
@@ -27,12 +27,12 @@ const Notifications = () => {
       type: "connection",
       icon: UserPlus,
       user: {
-        name: "Emma Rodriguez",
+        name: "Alex Chen",
         avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
-        initials: "ER"
+        initials: "AC"
       },
-      action: "accepted your connection request",
-      time: "4 hours ago",
+      action: "accepted your connection request. Alex works on reinforcement learning at OpenAI",
+      time: "2 hours ago",
       unread: true
     },
     {
@@ -40,51 +40,64 @@ const Notifications = () => {
       type: "comment",
       icon: MessageCircle,
       user: {
-        name: "David Park",
+        name: "Dr. Raj Patel",
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-        initials: "DP"
+        initials: "RP"
       },
-      action: "commented on your post: 'Great insights! I'd love to discuss this further.'",
-      time: "6 hours ago",
+      action: "commented on your paper: 'Brilliant approach to few-shot learning! Have you considered applying this to computer vision tasks?'",
+      time: "4 hours ago",
       unread: false
     },
     {
       id: 4,
-      type: "job",
-      icon: Briefcase,
+      type: "research",
+      icon: Brain,
       user: {
-        name: "Lisa Wong",
+        name: "Maya Rodriguez",
         avatar: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&h=400&fit=crop&crop=face",
-        initials: "LW"
+        initials: "MR"
       },
-      action: "shared a job opportunity that might interest you",
-      time: "1 day ago",
+      action: "shared a breakthrough paper on multimodal AI that matches your research interests",
+      time: "6 hours ago",
       unread: false
     },
     {
       id: 5,
-      type: "event",
-      icon: Calendar,
+      type: "job",
+      icon: Briefcase,
       user: {
-        name: "Tech Professionals Group",
+        name: "TechCorp AI Lab",
         avatar: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=400&fit=crop",
-        initials: "TP"
+        initials: "TC"
       },
-      action: "invited you to 'Monthly Networking Meetup'",
-      time: "1 day ago",
+      action: "posted a Senior ML Research Scientist position that matches your expertise",
+      time: "8 hours ago",
       unread: false
     },
     {
       id: 6,
-      type: "connection",
-      icon: UserPlus,
+      type: "event",
+      icon: Calendar,
       user: {
-        name: "Alex Thompson",
-        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face",
-        initials: "AT"
+        name: "NeurIPS Conference",
+        avatar: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=400&fit=crop",
+        initials: "NC"
       },
-      action: "wants to connect with you",
-      time: "2 days ago",
+      action: "invited you to 'Advanced ML Techniques Workshop' - paper submission deadline approaching",
+      time: "12 hours ago",
+      unread: false
+    },
+    {
+      id: 7,
+      type: "collaboration",
+      icon: Code,
+      user: {
+        name: "Dr. Lisa Zhang",
+        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face",
+        initials: "LZ"
+      },
+      action: "invited you to collaborate on an open-source transformer library project",
+      time: "1 day ago",
       unread: false
     }
   ];
@@ -96,6 +109,8 @@ const Notifications = () => {
       case "comment": return "text-blue-500";
       case "job": return "text-purple-500";
       case "event": return "text-orange-500";
+      case "research": return "text-green-500";
+      case "collaboration": return "text-indigo-500";
       default: return "text-gray-500";
     }
   };
@@ -107,6 +122,8 @@ const Notifications = () => {
       case "comment": return "bg-blue-50";
       case "job": return "bg-purple-50";
       case "event": return "bg-orange-50";
+      case "research": return "bg-green-50";
+      case "collaboration": return "bg-indigo-50";
       default: return "bg-gray-50";
     }
   };
@@ -117,22 +134,22 @@ const Notifications = () => {
       
       <div className="max-w-4xl mx-auto px-4 py-6">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Notifications</h1>
-          <p className="text-gray-600">Stay updated with your professional network</p>
+          <h1 className="text-2xl font-bold text-gray-900">AI Research Updates</h1>
+          <p className="text-gray-600">Stay connected with the latest in machine learning and AI</p>
         </div>
 
         <Tabs defaultValue="all" className="space-y-4">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="connections">Connections</TabsTrigger>
-            <TabsTrigger value="interactions">Interactions</TabsTrigger>
+            <TabsTrigger value="research">Research</TabsTrigger>
+            <TabsTrigger value="collaborations">Collaborations</TabsTrigger>
             <TabsTrigger value="opportunities">Opportunities</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all" className="space-y-4">
             <div className="flex justify-between items-center">
               <p className="text-sm text-gray-600">
-                {notifications.filter(n => n.unread).length} unread notifications
+                {notifications.filter(n => n.unread).length} unread updates
               </p>
               <Button variant="ghost" size="sm" className="text-momentum-600 hover:text-momentum-700">
                 Mark all as read
@@ -181,10 +198,10 @@ const Notifications = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="connections" className="space-y-4">
+          <TabsContent value="research" className="space-y-4">
             <Card className="border-0 shadow-sm">
               <CardContent className="p-0">
-                {notifications.filter(n => n.type === 'connection').map((notification, index, filtered) => (
+                {notifications.filter(n => n.type === 'research' || n.type === 'like' || n.type === 'comment').map((notification, index, filtered) => (
                   <div 
                     key={notification.id}
                     className={`p-4 flex items-start space-x-4 hover:bg-gray-50 cursor-pointer ${
@@ -224,10 +241,10 @@ const Notifications = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="interactions" className="space-y-4">
+          <TabsContent value="collaborations" className="space-y-4">
             <Card className="border-0 shadow-sm">
               <CardContent className="p-0">
-                {notifications.filter(n => n.type === 'like' || n.type === 'comment').map((notification, index, filtered) => (
+                {notifications.filter(n => n.type === 'connection' || n.type === 'collaboration').map((notification, index, filtered) => (
                   <div 
                     key={notification.id}
                     className={`p-4 flex items-start space-x-4 hover:bg-gray-50 cursor-pointer ${

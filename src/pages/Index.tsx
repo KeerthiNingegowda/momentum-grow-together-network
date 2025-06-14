@@ -11,70 +11,70 @@ const Index = () => {
     {
       id: 1,
       author: {
-        name: "Sarah Johnson",
-        title: "Product Manager at TechCorp",
+        name: "Sarah Chen",
+        title: "ML Engineer at OpenAI",
         avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
-        initials: "SJ"
+        initials: "SC"
       },
-      content: "Excited to share that our team just launched a new feature that helps professionals connect more meaningfully. Building authentic relationships in the digital age is more important than ever! 🌱",
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=600&h=400&fit=crop",
-      likes: 24,
-      comments: 8,
-      shares: 3,
-      timestamp: "2 hours ago"
+      content: "Just shipped our new RAG system that reduced hallucinations by 73% while maintaining response quality. The key was implementing a hybrid retrieval approach combining dense embeddings with keyword matching. Sometimes the best AI solutions combine old-school techniques with cutting-edge models! 🚀",
+      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
+      likes: 156,
+      comments: 34,
+      shares: 18,
+      timestamp: "3 hours ago"
     },
     {
       id: 2,
       author: {
-        name: "Michael Chen",
-        title: "Senior Developer at StartupXYZ",
+        name: "Marcus Rodriguez",
+        title: "Principal Data Scientist at Anthropic",
         avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-        initials: "MC"
+        initials: "MR"
       },
-      content: "Just finished an amazing networking session at the local tech meetup. The key to successful networking isn't collecting business cards - it's about building genuine connections and helping others succeed. What's your best networking tip?",
-      likes: 18,
-      comments: 12,
-      shares: 5,
-      timestamp: "4 hours ago"
+      content: "Hot take: Most companies don't need GPT-4 for their use cases. We saved $2M annually by fine-tuning smaller models for specific tasks. Before jumping to the latest LLM, ask: 'What's the minimum viable model that solves this problem?' Your CFO will thank you. What's been your experience with model right-sizing?",
+      likes: 243,
+      comments: 67,
+      shares: 41,
+      timestamp: "6 hours ago"
     },
     {
       id: 3,
       author: {
-        name: "Emma Rodriguez",
-        title: "Marketing Director at GrowthCo",
+        name: "Dr. Priya Patel",
+        title: "Head of AI Research at Scale AI",
         avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
-        initials: "ER"
+        initials: "PP"
       },
-      content: "Mentorship Monday: Looking for 3 junior marketers who want to learn about growth strategies. I'll be hosting a virtual coffee chat next week. Building the next generation of professionals is what momentum is all about! 💪",
-      likes: 42,
-      comments: 16,
-      shares: 8,
-      timestamp: "6 hours ago"
+      content: "Mentorship Monday: Looking for 5 mid-level data scientists who want to level up their MLOps game. I'll be hosting virtual office hours next week covering model monitoring, A/B testing ML systems, and production debugging. Building the next generation of AI practitioners is what drives me! Apply in comments 👇",
+      likes: 89,
+      comments: 28,
+      shares: 15,
+      timestamp: "8 hours ago"
     }
   ];
 
   const trendingTopics = [
-    { name: "Professional Development", count: "2.1k posts" },
-    { name: "Remote Work", count: "1.8k posts" },
-    { name: "Leadership Tips", count: "1.2k posts" },
-    { name: "Career Growth", count: "987 posts" },
-    { name: "Networking", count: "756 posts" }
+    { name: "Large Language Models", count: "3.2k posts" },
+    { name: "MLOps & Production AI", count: "2.8k posts" },
+    { name: "RAG Systems", count: "1.9k posts" },
+    { name: "AI Ethics & Safety", count: "1.4k posts" },
+    { name: "Computer Vision", count: "1.1k posts" }
   ];
 
   const suggestedConnections = [
     {
-      name: "David Park",
-      title: "UX Designer",
-      mutualConnections: 12,
+      name: "Alex Kim",
+      title: "Staff ML Engineer",
+      mutualConnections: 15,
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-      initials: "DP"
+      initials: "AK"
     },
     {
-      name: "Lisa Wong",
-      title: "Data Scientist",
-      mutualConnections: 8,
+      name: "Jamie Liu",
+      title: "Research Scientist",
+      mutualConnections: 11,
       avatar: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&h=400&fit=crop&crop=face",
-      initials: "LW"
+      initials: "JL"
     }
   ];
 
@@ -95,15 +95,15 @@ const Index = () => {
                     <AvatarFallback className="bg-momentum-100 text-momentum-600">You</AvatarFallback>
                   </Avatar>
                   <h3 className="font-semibold text-gray-900">Welcome back!</h3>
-                  <p className="text-sm text-gray-600 mb-3">Build your professional momentum</p>
+                  <p className="text-sm text-gray-600 mb-3">Build your AI career momentum</p>
                   <div className="grid grid-cols-2 gap-2 text-center">
                     <div>
-                      <div className="text-lg font-bold text-momentum-600">156</div>
-                      <div className="text-xs text-gray-600">Connections</div>
+                      <div className="text-lg font-bold text-momentum-600">234</div>
+                      <div className="text-xs text-gray-600">AI Connections</div>
                     </div>
                     <div>
-                      <div className="text-lg font-bold text-momentum-600">42</div>
-                      <div className="text-xs text-gray-600">Posts</div>
+                      <div className="text-lg font-bold text-momentum-600">67</div>
+                      <div className="text-xs text-gray-600">ML Posts</div>
                     </div>
                   </div>
                 </div>
@@ -115,7 +115,7 @@ const Index = () => {
               <CardHeader className="pb-3">
                 <h3 className="font-semibold text-gray-900 flex items-center">
                   <TrendingUp className="h-4 w-4 mr-2 text-momentum-600" />
-                  Trending Topics
+                  Trending in AI
                 </h3>
               </CardHeader>
               <CardContent className="p-0">
@@ -142,7 +142,7 @@ const Index = () => {
                     <AvatarFallback className="bg-momentum-100 text-momentum-600">You</AvatarFallback>
                   </Avatar>
                   <Button variant="outline" className="flex-1 justify-start text-gray-500 hover:bg-gray-50">
-                    Share your professional insights...
+                    Share your latest AI breakthrough...
                   </Button>
                 </div>
               </CardContent>
@@ -219,7 +219,7 @@ const Index = () => {
               <CardHeader className="pb-3">
                 <h3 className="font-semibold text-gray-900 flex items-center">
                   <Users className="h-4 w-4 mr-2 text-momentum-600" />
-                  Suggested Connections
+                  AI Professionals
                 </h3>
               </CardHeader>
               <CardContent className="p-0">
@@ -251,17 +251,17 @@ const Index = () => {
             {/* Quick Actions */}
             <Card className="border-0 shadow-sm">
               <CardHeader className="pb-3">
-                <h3 className="font-semibold text-gray-900">Quick Actions</h3>
+                <h3 className="font-semibold text-gray-900">AI Community</h3>
               </CardHeader>
               <CardContent className="space-y-2">
                 <Button variant="outline" className="w-full justify-start">
-                  Create Event
+                  Join ML Study Groups
                 </Button>
                 <Button variant="outline" className="w-full justify-start">
-                  Find Mentors
+                  Find AI Mentors
                 </Button>
                 <Button variant="outline" className="w-full justify-start">
-                  Join Groups
+                  Attend Tech Talks
                 </Button>
               </CardContent>
             </Card>
