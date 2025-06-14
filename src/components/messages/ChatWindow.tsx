@@ -1,7 +1,9 @@
+
 import { MoreHorizontal, Send, Check, X, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 interface Conversation {
   id: number;
@@ -13,7 +15,9 @@ interface Conversation {
   unread: boolean;
   unreadCount: number;
   archived: boolean;
-  avatar?: string; // Made optional since we're using initials
+  avatar?: string;
+  conversationId?: string;
+  isPendingRequest?: boolean;
 }
 
 interface Message {
@@ -30,14 +34,32 @@ interface ChatWindowProps {
   messages: Message[];
   onAcceptConversation: () => void;
   onDeclineConversation: () => void;
+  onSendMessage?: (content: string) => void;
 }
 
 const ChatWindow = ({ 
   currentConversation, 
   messages, 
   onAcceptConversation, 
-  onDeclineConversation 
+  onDeclineConversation,
+  onSendMessage 
 }: ChatWindowProps) => {
+  const [newMessage, setNewMessage] = useState("");
+
+  const handleSendMessage = () => {
+    if (newMessage.trim() && onSendMessage) {
+      onSendMessage(newMessage.trim());
+      setNewMessage("");
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   if (!currentConversation) {
     return (
       <div className="h-full flex items-center justify-center bg-gray-50">
@@ -132,8 +154,15 @@ const ChatWindow = ({
           <Input 
             placeholder="Discuss AI research, share insights..." 
             className="flex-1"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
           />
-          <Button className="bg-momentum-600 hover:bg-momentum-700 text-white px-6">
+          <Button 
+            onClick={handleSendMessage}
+            disabled={!newMessage.trim()}
+            className="bg-momentum-600 hover:bg-momentum-700 text-white px-6"
+          >
             <Send className="h-4 w-4" />
           </Button>
         </div>

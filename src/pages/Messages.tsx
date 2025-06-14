@@ -1,3 +1,4 @@
+
 import Navigation from "@/components/Navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -6,7 +7,7 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { useConversations, useCreateConversation, useArchiveConversation } from "@/hooks/useConversations";
 import { useConnectionRequests, useUpdateConnectionRequest } from "@/hooks/useConnectionRequests";
-import { useMessages } from "@/hooks/useMessages";
+import { useMessages, useSendMessage } from "@/hooks/useMessages";
 import { supabase } from "@/integrations/supabase/client";
 import ConversationsList from "@/components/messages/ConversationsList";
 import ChatWindow from "@/components/messages/ChatWindow";
@@ -34,13 +35,14 @@ const Messages = () => {
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   
-  const { data: conversations = [], isLoading: conversationsLoading } = useConversations();
+  const { data: conversations = [], isLoading: conversationsLoading, refetch: refetchConversations } = useConversations();
   const { data: connectionRequests = [] } = useConnectionRequests();
-  const { data: messages = [] } = useMessages(selectedConversationId);
+  const { data: messages = [], refetch: refetchMessages } = useMessages(selectedConversationId);
   
   const updateConnectionRequest = useUpdateConnectionRequest();
   const createConversation = useCreateConversation();
   const archiveConversation = useArchiveConversation();
+  const sendMessage = useSendMessage();
 
   // Get current user ID on component mount
   useEffect(() => {
@@ -121,6 +123,41 @@ const Messages = () => {
     const conv = allConversations.find(c => c.id === id);
     if (conv?.conversationId) {
       setSelectedConversationId(conv.conversationId);
+    }
+  };
+
+  const handleSendMessage = async (content: string) => {
+    if (!selectedConversationId || !currentUserId) {
+      toast({
+        title: "Error",
+        description: "Unable to send message. Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      await sendMessage.mutateAsync({
+        conversationId: selectedConversationId,
+        content,
+        senderProfileId: currentUserId,
+      });
+
+      // Refetch conversations and messages to get the latest data
+      refetchConversations();
+      refetchMessages();
+
+      toast({
+        title: "Message sent",
+        description: "Your message has been sent successfully.",
+      });
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast({
+        title: "Error sending message",
+        description: "Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -229,6 +266,7 @@ const Messages = () => {
                   messages={formattedMessages}
                   onAcceptConversation={handleAcceptConversation}
                   onDeclineConversation={handleDeclineConversation}
+                  onSendMessage={handleSendMessage}
                 />
               </CardContent>
             </Card>
@@ -244,6 +282,7 @@ const Messages = () => {
           onSelectConversation={handleSelectConversation}
           onAcceptConversation={handleAcceptConversation}
           onDeclineConversation={handleDeclineConversation}
+          onSendMessage={handleSendMessage}
         />
       </div>
     </div>

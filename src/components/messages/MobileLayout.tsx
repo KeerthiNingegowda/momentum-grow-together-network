@@ -11,7 +11,7 @@ interface Conversation {
   id: number;
   name: string;
   title: string;
-  avatar?: string; // Made optional since we're using initials
+  avatar?: string;
   initials: string;
   lastMessage: string;
   timestamp: string;
@@ -37,6 +37,7 @@ interface MobileLayoutProps {
   onSelectConversation: (id: number) => void;
   onAcceptConversation: () => void;
   onDeclineConversation: () => void;
+  onSendMessage?: (content: string) => void;
 }
 
 const MobileLayout = ({
@@ -46,7 +47,8 @@ const MobileLayout = ({
   messages,
   onSelectConversation,
   onAcceptConversation,
-  onDeclineConversation
+  onDeclineConversation,
+  onSendMessage
 }: MobileLayoutProps) => {
   return (
     <div className="lg:hidden h-screen flex flex-col">
@@ -96,6 +98,7 @@ const MobileLayout = ({
               messages={messages}
               onAcceptConversation={onAcceptConversation}
               onDeclineConversation={onDeclineConversation}
+              onSendMessage={onSendMessage}
             />
           </div>
         </CardContent>
