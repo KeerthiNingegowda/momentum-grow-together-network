@@ -8,6 +8,7 @@ import { Loader2 } from "lucide-react";
 import { useConversations, useCreateConversation, useArchiveConversation } from "@/hooks/useConversations";
 import { useConnectionRequests, useUpdateConnectionRequest } from "@/hooks/useConnectionRequests";
 import { useMessages } from "@/hooks/useMessages";
+import { supabase } from "@/integrations/supabase/client";
 import ConversationsList from "@/components/messages/ConversationsList";
 import ChatWindow from "@/components/messages/ChatWindow";
 import MobileLayout from "@/components/messages/MobileLayout";
@@ -32,6 +33,7 @@ const Messages = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   
   const { data: conversations = [], isLoading: conversationsLoading } = useConversations();
   const { data: connectionRequests = [] } = useConnectionRequests();
@@ -40,6 +42,54 @@ const Messages = () => {
   const updateConnectionRequest = useUpdateConnectionRequest();
   const createConversation = useCreateConversation();
   const archiveConversation = useArchiveConversation();
+
+  // Get current user ID on component mount
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          // Get the user's profile ID
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('id')
+            .eq('user_id', user.id)
+            .single();
+          
+          if (profile) {
+            setCurrentUserId(profile.id);
+          } else {
+            // If no profile exists, use the first profile as fallback for demo
+            const { data: firstProfile } = await supabase
+              .from('profiles')
+              .select('id')
+              .limit(1)
+              .single();
+            if (firstProfile) {
+              setCurrentUserId(firstProfile.id);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error getting current user:', error);
+        // Fallback: use first profile for demo purposes
+        try {
+          const { data: firstProfile } = await supabase
+            .from('profiles')
+            .select('id')
+            .limit(1)
+            .single();
+          if (firstProfile) {
+            setCurrentUserId(firstProfile.id);
+          }
+        } catch (fallbackError) {
+          console.error('Error getting fallback profile:', fallbackError);
+        }
+      }
+    };
+
+    getCurrentUser();
+  }, []);
 
   // Convert data to format expected by existing components
   const formattedConversations: FormattedConversation[] = conversations.map(conv => ({
@@ -81,7 +131,7 @@ const Messages = () => {
     sender: msg.sender_profile?.name || 'Unknown',
     content: msg.content,
     timestamp: formatTimestamp(msg.created_at),
-    isOwn: false, // TODO: Check if message is from current user
+    isOwn: msg.sender_profile_id === currentUserId, // Check if message is from current user
     needsResponse: index === 0 && selectedConversation?.isPendingRequest,
   }));
 
