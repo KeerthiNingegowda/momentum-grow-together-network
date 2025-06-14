@@ -11,7 +11,7 @@ interface Conversation {
   id: number;
   name: string;
   title: string;
-  avatar: string;
+  avatar?: string; // Made optional since we're using initials
   initials: string;
   lastMessage: string;
   timestamp: string;
