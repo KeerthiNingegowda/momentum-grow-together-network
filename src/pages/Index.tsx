@@ -149,7 +149,6 @@ const Index = () => {
                     </CardContent>
                   </Card>
                 ))}
-                <p className="text-xs text-gray-500 text-center">Click to see all activities</p>
               </div>
             )}
 
@@ -234,7 +233,6 @@ const Index = () => {
                     </p>
                   </CardContent>
                 </Card>
-                <p className="text-xs text-gray-500 text-center">Click to see all moments</p>
               </div>
             )}
 
