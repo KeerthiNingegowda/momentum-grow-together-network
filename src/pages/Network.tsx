@@ -82,6 +82,10 @@ const Network = () => {
     }
   ];
 
+  const handleStartConversation = () => {
+    window.location.href = "/messages";
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
@@ -146,22 +150,18 @@ const Network = () => {
 
                 {/* Action Buttons */}
                 <div className="flex space-x-2">
-                  {profile.isConnected ? (
-                    <Button 
-                      variant="outline" 
-                      className="flex-1 text-sm"
-                    >
-                      <MessageCircle className="h-4 w-4 mr-2" />
-                      Message
-                    </Button>
-                  ) : (
-                    <Button 
-                      className="flex-1 bg-momentum-600 hover:bg-momentum-700 text-white text-sm"
-                    >
-                      <UserPlus className="h-4 w-4 mr-2" />
-                      Start conversation
-                    </Button>
-                  )}
+                  <Button 
+                    onClick={handleStartConversation}
+                    className={`flex-1 text-sm ${
+                      profile.isConnected 
+                        ? "variant-outline" 
+                        : "bg-momentum-600 hover:bg-momentum-700 text-white"
+                    }`}
+                    variant={profile.isConnected ? "outline" : "default"}
+                  >
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Start conversation
+                  </Button>
                 </div>
               </CardContent>
             </Card>
