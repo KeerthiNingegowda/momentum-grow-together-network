@@ -4,9 +4,17 @@ import RealCareerMoments from "@/components/RealCareerMoments";
 import CareerCheckIn from "@/components/CareerCheckIn";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Users, MessageCircle, PenTool, TrendingUp } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { BookOpen, Users, MessageCircle, PenTool, TrendingUp, ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 const Index = () => {
+  const [openSections, setOpenSections] = useState({
+    trending: false,
+    moments: false,
+    checkin: false
+  });
+
   const userProfile = {
     name: "Alex Chen",
     roles: ["Data Science", "CX Strategy"]
@@ -48,6 +56,13 @@ const Index = () => {
     });
   };
 
+  const toggleSection = (section: 'trending' | 'moments' | 'checkin') => {
+    setOpenSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
       <Navigation />
@@ -59,7 +74,7 @@ const Index = () => {
             Welcome back, {firstName}
           </h1>
           <p className="text-gray-600 text-lg font-light mb-6">
-            Here's what professionals in {userProfile.roles.join(" & ")} are exploring this week
+            Here's what professionals in {userProfile.roles.join(" & ")} are exploring recently
           </p>
           
           {/* Section Navigation Buttons */}
@@ -91,46 +106,97 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Section 1: People Like You Are Doing */}
+        {/* Section 1: Trending Activities */}
         <div id="trending-activities" className="mb-16">
-          <div className="grid gap-6">
-            {trendingActivities.map((item, index) => (
-              <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200 bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-momentum-100 p-3 rounded-full">
-                      <BookOpen className="h-5 w-5 text-momentum-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-medium text-gray-900 mb-2">
-                        {item.activity}
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed mb-3">
-                        {item.context}
-                      </p>
-                      <div className="flex items-center space-x-4 text-xs text-gray-500">
-                        <span className="flex items-center">
-                          <Users className="h-3 w-3 mr-1" />
-                          {item.participants}
-                        </span>
-                        <span>{item.timeframe}</span>
+          <Collapsible open={openSections.trending} onOpenChange={() => toggleSection('trending')}>
+            <CollapsibleTrigger className="w-full">
+              <div className="flex items-center justify-between mb-6 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="text-left">
+                  <h2 className="text-xl font-medium text-gray-800 mb-1">
+                    Trending Activities
+                  </h2>
+                  <p className="text-gray-600 text-sm">
+                    What professionals like you are exploring
+                  </p>
+                </div>
+                <ChevronDown className={`h-5 w-5 text-gray-500 transition-transform ${openSections.trending ? 'rotate-180' : ''}`} />
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="grid gap-6">
+                {trendingActivities.map((item, index) => (
+                  <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200 bg-white/80 backdrop-blur-sm">
+                    <CardContent className="p-6">
+                      <div className="flex items-start space-x-4">
+                        <div className="bg-momentum-100 p-3 rounded-full">
+                          <BookOpen className="h-5 w-5 text-momentum-600" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-medium text-gray-900 mb-2">
+                            {item.activity}
+                          </h3>
+                          <p className="text-gray-600 text-sm leading-relaxed mb-3">
+                            {item.context}
+                          </p>
+                          <div className="flex items-center space-x-4 text-xs text-gray-500">
+                            <span className="flex items-center">
+                              <Users className="h-3 w-3 mr-1" />
+                              {item.participants}
+                            </span>
+                            <span>{item.timeframe}</span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
         </div>
 
         {/* Section 2: Real Career Moments */}
-        <div id="career-moments">
-          <RealCareerMoments />
+        <div id="career-moments" className="mb-16">
+          <Collapsible open={openSections.moments} onOpenChange={() => toggleSection('moments')}>
+            <CollapsibleTrigger className="w-full">
+              <div className="flex items-center justify-between mb-6 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="text-left">
+                  <h2 className="text-xl font-medium text-gray-800 mb-1">
+                    Real Career Moments
+                  </h2>
+                  <p className="text-gray-600 text-sm">
+                    Authentic stories and insights from your professional community
+                  </p>
+                </div>
+                <ChevronDown className={`h-5 w-5 text-gray-500 transition-transform ${openSections.moments ? 'rotate-180' : ''}`} />
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <RealCareerMoments />
+            </CollapsibleContent>
+          </Collapsible>
         </div>
 
         {/* Section 3: Career Check-In */}
-        <div id="career-checkin">
-          <CareerCheckIn />
+        <div id="career-checkin" className="mb-16">
+          <Collapsible open={openSections.checkin} onOpenChange={() => toggleSection('checkin')}>
+            <CollapsibleTrigger className="w-full">
+              <div className="flex items-center justify-between mb-6 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="text-left">
+                  <h2 className="text-xl font-medium text-gray-800 mb-1">
+                    Career Check-In
+                  </h2>
+                  <p className="text-gray-600 text-sm">
+                    Your private space for reflection and growth
+                  </p>
+                </div>
+                <ChevronDown className={`h-5 w-5 text-gray-500 transition-transform ${openSections.checkin ? 'rotate-180' : ''}`} />
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <CareerCheckIn />
+            </CollapsibleContent>
+          </Collapsible>
         </div>
 
         {/* Placeholder for other sections */}

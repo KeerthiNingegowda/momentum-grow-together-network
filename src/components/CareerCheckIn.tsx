@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -42,37 +41,28 @@ const CareerCheckIn = () => {
   };
 
   return (
-    <div className="mb-16">
-      <div className="mb-8">
-        <h2 className="text-xl font-medium text-gray-800 mb-2">
-          Career Check-In
-        </h2>
-        <p className="text-gray-600 text-sm mb-4">
-          Your private space for reflection. Share only if you want to.
-        </p>
-        
-        {/* Career buddy suggestion */}
-        <Card className="border-momentum-200 bg-momentum-50/30 mb-6">
-          <CardContent className="p-4">
-            <div className="flex items-start space-x-3">
-              <div className="bg-momentum-100 p-2 rounded-full">
-                <Users className="h-4 w-4 text-momentum-600" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-medium text-gray-900 text-sm mb-1">
-                  Want a career buddy?
-                </h3>
-                <p className="text-gray-600 text-xs leading-relaxed mb-2">
-                  Get paired with someone at a similar career stage for monthly check-ins and workplace navigation support.
-                </p>
-                <Button variant="outline" size="sm" className="text-xs">
-                  Find a career buddy
-                </Button>
-              </div>
+    <div>
+      {/* Career buddy suggestion */}
+      <Card className="border-momentum-200 bg-momentum-50/30 mb-6">
+        <CardContent className="p-4">
+          <div className="flex items-start space-x-3">
+            <div className="bg-momentum-100 p-2 rounded-full">
+              <Users className="h-4 w-4 text-momentum-600" />
             </div>
-          </CardContent>
-        </Card>
-      </div>
+            <div className="flex-1">
+              <h3 className="font-medium text-gray-900 text-sm mb-1">
+                Want a career buddy?
+              </h3>
+              <p className="text-gray-600 text-xs leading-relaxed mb-2">
+                Get paired with someone at a similar career stage for monthly check-ins and workplace navigation support.
+              </p>
+              <Button variant="outline" size="sm" className="text-xs">
+                Find a career buddy
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <Card className="border-0 shadow-sm bg-white/80 backdrop-blur-sm">
         <CardContent className="p-6">
