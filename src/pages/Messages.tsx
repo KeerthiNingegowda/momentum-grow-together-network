@@ -1,14 +1,31 @@
+
 import Navigation from "@/components/Navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 import { useConversations, useCreateConversation, useArchiveConversation } from "@/hooks/useConversations";
 import { useConnectionRequests, useUpdateConnectionRequest } from "@/hooks/useConnectionRequests";
 import { useMessages } from "@/hooks/useMessages";
 import ConversationsList from "@/components/messages/ConversationsList";
 import ChatWindow from "@/components/messages/ChatWindow";
 import MobileLayout from "@/components/messages/MobileLayout";
+
+interface FormattedConversation {
+  id: number;
+  name: string;
+  title: string;
+  initials: string;
+  lastMessage: string;
+  timestamp: string;
+  unread: boolean;
+  unreadCount: number;
+  archived: boolean;
+  conversationId?: string;
+  connectionRequestId?: string;
+  isPendingRequest?: boolean;
+}
 
 const Messages = () => {
   const { toast } = useToast();
@@ -25,7 +42,7 @@ const Messages = () => {
   const archiveConversation = useArchiveConversation();
 
   // Convert data to format expected by existing components
-  const formattedConversations = conversations.map(conv => ({
+  const formattedConversations: FormattedConversation[] = conversations.map(conv => ({
     id: parseInt(conv.id.split('-')[0], 16), // Convert UUID to number for compatibility
     name: conv.other_profile?.name || 'Unknown',
     title: conv.other_profile?.title || '',
@@ -39,7 +56,7 @@ const Messages = () => {
   }));
 
   // Add pending connection requests as "conversations"
-  const requestConversations = connectionRequests.map(req => ({
+  const requestConversations: FormattedConversation[] = connectionRequests.map(req => ({
     id: parseInt(req.id.split('-')[0], 16),
     name: req.sender_profile?.name || 'Unknown',
     title: req.sender_profile?.title || '',
@@ -55,7 +72,7 @@ const Messages = () => {
 
   const allConversations = [...requestConversations, ...formattedConversations];
   const selectedConversation = allConversations.find(conv => 
-    selectedConversationId ? conv.conversationId === selectedConversationId : conv.id === parseInt(selectedConversationId || '0')
+    conv.conversationId === selectedConversationId
   );
 
   // Convert messages to expected format
@@ -129,28 +146,13 @@ const Messages = () => {
       const userId = parseInt(userParam);
       
       // Check if conversation already exists
-      const existingConversation = conversations.find(conv => conv.id === userId);
+      const existingConversation = allConversations.find(conv => conv.id === userId);
       
-      if (!existingConversation) {
-        // Create new conversation for the selected user
-        const newConversation = {
-          id: userId,
-          name: selectedUser.name,
-          title: selectedUser.title,
-          initials: selectedUser.initials,
-          lastMessage: "Start a conversation...",
-          timestamp: "now",
-          unread: false,
-          unreadCount: 0,
-          archived: false
-        };
-        
-        setConversations(prev => [newConversation, ...prev]);
+      if (existingConversation?.conversationId) {
+        setSelectedConversationId(existingConversation.conversationId);
       }
-      
-      setSelectedConversation(userId);
     }
-  }, [searchParams, location.state, conversations]);
+  }, [searchParams, location.state, allConversations]);
 
   if (conversationsLoading) {
     return (
