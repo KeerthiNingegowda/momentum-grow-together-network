@@ -122,6 +122,37 @@ const Index = () => {
                 <ChevronDown className={`h-5 w-5 text-gray-500 transition-transform ${openSections.trending ? 'rotate-180' : ''}`} />
               </div>
             </CollapsibleTrigger>
+            
+            {/* Preview when collapsed */}
+            {!openSections.trending && (
+              <div className="grid gap-4 mb-4">
+                {trendingActivities.slice(0, 2).map((item, index) => (
+                  <Card key={index} className="border-0 shadow-sm bg-white/60 backdrop-blur-sm opacity-75">
+                    <CardContent className="p-4">
+                      <div className="flex items-start space-x-3">
+                        <div className="bg-momentum-100 p-2 rounded-full">
+                          <BookOpen className="h-4 w-4 text-momentum-600" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-medium text-gray-900 text-sm mb-1">
+                            {item.activity}
+                          </h3>
+                          <div className="flex items-center space-x-3 text-xs text-gray-500">
+                            <span className="flex items-center">
+                              <Users className="h-3 w-3 mr-1" />
+                              {item.participants}
+                            </span>
+                            <span>{item.timeframe}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+                <p className="text-xs text-gray-500 text-center">Click to see all activities</p>
+              </div>
+            )}
+
             <CollapsibleContent>
               <div className="grid gap-6">
                 {trendingActivities.map((item, index) => (
@@ -171,6 +202,42 @@ const Index = () => {
                 <ChevronDown className={`h-5 w-5 text-gray-500 transition-transform ${openSections.moments ? 'rotate-180' : ''}`} />
               </div>
             </CollapsibleTrigger>
+            
+            {/* Preview when collapsed */}
+            {!openSections.moments && (
+              <div className="space-y-4 mb-4">
+                <Card className="border-0 shadow-sm bg-white/60 backdrop-blur-sm opacity-75">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h3 className="font-medium text-gray-900 text-sm">Sarah Chen</h3>
+                        <p className="text-xs text-gray-600">ML Engineer</p>
+                      </div>
+                      <span className="text-xs text-gray-500">2 days ago</span>
+                    </div>
+                    <p className="text-gray-800 text-sm leading-relaxed truncate">
+                      I led my first stakeholder alignment workshop. Took 3 tries, but I finally figured out how to frame trade-offs...
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-0 shadow-sm bg-white/60 backdrop-blur-sm opacity-75">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h3 className="font-medium text-gray-900 text-sm">Marcus Johnson</h3>
+                        <p className="text-xs text-gray-600">Data Scientist</p>
+                      </div>
+                      <span className="text-xs text-gray-500">5 days ago</span>
+                    </div>
+                    <p className="text-gray-800 text-sm leading-relaxed truncate">
+                      Been experimenting with explaining model predictions to non-technical users...
+                    </p>
+                  </CardContent>
+                </Card>
+                <p className="text-xs text-gray-500 text-center">Click to see all moments</p>
+              </div>
+            )}
+
             <CollapsibleContent>
               <RealCareerMoments />
             </CollapsibleContent>
@@ -193,6 +260,32 @@ const Index = () => {
                 <ChevronDown className={`h-5 w-5 text-gray-500 transition-transform ${openSections.checkin ? 'rotate-180' : ''}`} />
               </div>
             </CollapsibleTrigger>
+            
+            {/* Preview when collapsed */}
+            {!openSections.checkin && (
+              <div className="mb-4">
+                <Card className="border-0 shadow-sm bg-white/60 backdrop-blur-sm opacity-75">
+                  <CardContent className="p-4">
+                    <div className="flex items-center space-x-3 mb-3">
+                      <span className="text-lg">🎯</span>
+                      <div>
+                        <h3 className="font-medium text-gray-900 text-sm">Week 1 Reflection</h3>
+                        <p className="text-xs text-gray-600">What's one thing you want more of in your work this week?</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-momentum-200 rounded-full"></div>
+                        <div className="w-2 h-2 bg-gray-200 rounded-full"></div>
+                        <div className="w-2 h-2 bg-gray-200 rounded-full"></div>
+                      </div>
+                      <span className="text-xs text-gray-500">Click to start your reflection</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
             <CollapsibleContent>
               <CareerCheckIn />
             </CollapsibleContent>
