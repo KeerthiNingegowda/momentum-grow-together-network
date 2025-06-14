@@ -7,9 +7,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { TrendingUp, Handshake, Target, Zap, MessageCircle, Share2, TwitterIcon, ArrowRight, Brain, BarChart, ExternalLink, Building, GraduationCap, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { ProfileEditProvider, useProfileEdit } from "@/contexts/ProfileEditContext";
+import EditToolbar from "@/components/profile/EditToolbar";
+import SectionControls from "@/components/profile/SectionControls";
 
-const Profile = () => {
+const ProfileContent = () => {
   const [isTestimonialsOpen, setIsTestimonialsOpen] = useState(false);
+  const { isEditMode, sections } = useProfileEdit();
 
   const keyWins = [
     { metric: "$12M", label: "Revenue Impact Generated", icon: TrendingUp },
@@ -56,14 +60,19 @@ const Profile = () => {
     { school: "UC Berkeley", degree: "BS Mathematics" }
   ];
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Navigation />
-      
-      <div className="max-w-6xl mx-auto px-4 py-8 pt-24">
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Hero Elevator Pitch */}
-          <div className="lg:col-span-2">
+  const visibleSections = sections.filter(section => section.isVisible).sort((a, b) => a.order - b.order);
+
+  const renderSection = (section: any) => {
+    const sectionProps = {
+      className: `relative ${isEditMode ? 'ring-2 ring-momentum-200 ring-opacity-50' : ''}`,
+      style: isEditMode ? { paddingTop: '1rem' } : {}
+    };
+
+    switch (section.type) {
+      case 'hero':
+        return (
+          <div key={section.id} {...sectionProps}>
+            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
             <Card className="shadow-lg border-0 mb-6 bg-gradient-to-br from-momentum-50 to-white">
               <CardContent className="p-8">
                 <div className="flex items-start space-x-6">
@@ -95,8 +104,13 @@ const Profile = () => {
                 </div>
               </CardContent>
             </Card>
+          </div>
+        );
 
-            {/* Key Metrics */}
+      case 'metrics':
+        return (
+          <div key={section.id} {...sectionProps}>
+            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
             <div className="grid md:grid-cols-4 gap-4 mb-6">
               {keyWins.map((win, index) => {
                 const Icon = win.icon;
@@ -111,8 +125,13 @@ const Profile = () => {
                 );
               })}
             </div>
+          </div>
+        );
 
-            {/* Recent Wins */}
+      case 'wins':
+        return (
+          <div key={section.id} {...sectionProps}>
+            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
             <Card className="shadow-lg border-0 mb-6">
               <CardHeader>
                 <h2 className="text-xl font-bold text-gray-900 flex items-center">
@@ -131,8 +150,13 @@ const Profile = () => {
                 </div>
               </CardContent>
             </Card>
+          </div>
+        );
 
-            {/* Client Testimonials */}
+      case 'testimonials':
+        return (
+          <div key={section.id} {...sectionProps}>
+            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
             <Card className="shadow-lg border-0 mb-6">
               <Collapsible open={isTestimonialsOpen} onOpenChange={setIsTestimonialsOpen}>
                 <CollapsibleTrigger className="w-full">
@@ -147,7 +171,6 @@ const Profile = () => {
                   </CardHeader>
                 </CollapsibleTrigger>
                 
-                {/* Preview when collapsed - show only the most recent testimonial */}
                 {!isTestimonialsOpen && (
                   <CardContent>
                     <div className="p-4 bg-momentum-50 rounded-lg border-l-4 border-momentum-600">
@@ -197,8 +220,13 @@ const Profile = () => {
                 </CollapsibleContent>
               </Collapsible>
             </Card>
+          </div>
+        );
 
-            {/* What I'm Looking For */}
+      case 'cta':
+        return (
+          <div key={section.id} {...sectionProps}>
+            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
             <Card className="shadow-lg border-0 bg-gradient-to-r from-momentum-600 to-momentum-700 text-white">
               <CardContent className="p-6">
                 <h2 className="text-xl font-bold mb-3">What I'm Looking For Right Now</h2>
@@ -214,10 +242,27 @@ const Profile = () => {
               </CardContent>
             </Card>
           </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Navigation />
+      <EditToolbar />
+      
+      <div className="max-w-6xl mx-auto px-4 py-8 pt-24">
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2">
+            {visibleSections.map(renderSection)}
+          </div>
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            {/* Quick Contact */}
             <Card className="shadow-lg border-0 mb-6">
               <CardContent className="p-6">
                 <h3 className="font-bold text-gray-900 mb-4">Quick Connect</h3>
@@ -230,7 +275,6 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {/* Work Experience */}
                 <div className="mb-4">
                   <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
                     <Building className="h-4 w-4 mr-2 text-momentum-600" />
@@ -246,7 +290,6 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {/* Education */}
                 <div className="mb-4">
                   <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
                     <GraduationCap className="h-4 w-4 mr-2 text-momentum-600" />
@@ -280,7 +323,6 @@ const Profile = () => {
               </CardContent>
             </Card>
 
-            {/* Specialties */}
             <Card className="shadow-lg border-0">
               <CardHeader>
                 <h3 className="font-bold text-gray-900">What I Actually Do</h3>
@@ -309,6 +351,14 @@ const Profile = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Profile = () => {
+  return (
+    <ProfileEditProvider>
+      <ProfileContent />
+    </ProfileEditProvider>
   );
 };
 
