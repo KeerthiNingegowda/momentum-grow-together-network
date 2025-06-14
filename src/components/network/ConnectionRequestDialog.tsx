@@ -70,6 +70,8 @@ const ConnectionRequestDialog = ({
 
   if (!profile) return null;
 
+  const firstName = profile.name.split(' ')[0];
+
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md">
@@ -103,11 +105,11 @@ const ConnectionRequestDialog = ({
           {/* Connection Request Message */}
           <div className="space-y-2">
             <label htmlFor="connection-message" className="text-sm font-medium text-gray-700">
-              Why would you like to connect with {profile.name.split(' ')[0]}?
+              Why would you like to connect with {firstName}?
             </label>
             <Textarea
               id="connection-message"
-              placeholder={`Hi ${profile.name.split(' ')[0]}, I'd love to connect with you because...`}
+              placeholder={`Hi ${firstName}, I'd love to connect with you because...`}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className="min-h-[120px] resize-none"
