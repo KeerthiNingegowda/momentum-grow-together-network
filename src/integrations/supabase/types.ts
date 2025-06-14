@@ -9,6 +9,60 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      career_checkins: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          mood: string | null
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          mood?: string | null
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          mood?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      career_moments: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          tags: string[] | null
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          tags?: string[] | null
+          title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          tags?: string[] | null
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       connection_requests: {
         Row: {
           created_at: string
@@ -353,6 +407,36 @@ export type Database = {
           },
         ]
       }
+      posts: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          post_type: string
+          tags: string[] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          post_type?: string
+          tags?: string[] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          post_type?: string
+          tags?: string[] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profile_past_companies: {
         Row: {
           company: string
@@ -453,6 +537,62 @@ export type Database = {
         }
         Relationships: []
       }
+      trending_activities: {
+        Row: {
+          activity: string
+          context: string
+          created_at: string
+          id: string
+          is_active: boolean
+          participant_count: number
+        }
+        Insert: {
+          activity: string
+          context: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          participant_count?: number
+        }
+        Update: {
+          activity?: string
+          context?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          participant_count?: number
+        }
+        Relationships: []
+      }
+      user_activity_participation: {
+        Row: {
+          activity_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          activity_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          activity_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_activity_participation_activity_id_fkey"
+            columns: ["activity_id"]
+            isOneToOne: false
+            referencedRelation: "trending_activities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_connections: {
         Row: {
           connected_profile_id: string | null
@@ -484,6 +624,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      youtube_insights: {
+        Row: {
+          channel_name: string
+          created_at: string
+          duration: string | null
+          id: string
+          topics: string[] | null
+          upload_time: string
+          user_id: string
+          video_title: string
+          video_url: string | null
+          view_count: string | null
+        }
+        Insert: {
+          channel_name: string
+          created_at?: string
+          duration?: string | null
+          id?: string
+          topics?: string[] | null
+          upload_time: string
+          user_id: string
+          video_title: string
+          video_url?: string | null
+          view_count?: string | null
+        }
+        Update: {
+          channel_name?: string
+          created_at?: string
+          duration?: string | null
+          id?: string
+          topics?: string[] | null
+          upload_time?: string
+          user_id?: string
+          video_title?: string
+          video_url?: string | null
+          view_count?: string | null
+        }
+        Relationships: []
       }
     }
     Views: {

@@ -6,10 +6,12 @@ import WelcomeSection from "@/components/WelcomeSection";
 import TrendingActivities from "@/components/TrendingActivities";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import PostCreator from "@/components/PostCreator";
+import YouTubeInsightsSection from "@/components/YouTubeInsightsSection";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import { Sparkles, TrendingUp, Users, Youtube, Clock, Eye } from "lucide-react";
+import { Sparkles, TrendingUp, Users } from "lucide-react";
+import { useTrendingActivities } from "@/hooks/useTrendingActivities";
 
 const Index = () => {
   const [openSections, setOpenSections] = useState({
@@ -18,59 +20,14 @@ const Index = () => {
     checkin: false
   });
 
+  const { data: trendingActivities = [] } = useTrendingActivities();
+
   const userProfile = {
     name: "Alex Chen",
     roles: ["Data Science", "CX Strategy"]
   };
 
   const firstName = userProfile.name.split(' ')[0];
-
-  const trendingActivities = [
-    {
-      activity: "Deep-diving into Transformer architectures",
-      context: "Understanding attention mechanisms for NLP projects",
-      participants: "127 professionals",
-      timeframe: "2 days ago"
-    },
-    {
-      activity: "Exploring ethical AI frameworks", 
-      context: "Building responsible AI systems in production",
-      participants: "89 professionals",
-      timeframe: "3 days ago"
-    },
-    {
-      activity: "Mastering MLOps best practices",
-      context: "Streamlining model deployment and monitoring",
-      participants: "156 professionals", 
-      timeframe: "1 day ago"
-    },
-    {
-      activity: "Customer journey mapping with AI insights",
-      context: "Leveraging ML to understand user behavior patterns",
-      participants: "73 professionals",
-      timeframe: "4 days ago"
-    }
-  ];
-
-  // Mock YouTube insights data - reduced to 2 videos for more compact design
-  const youtubeInsights = [
-    {
-      channel: "StatQuest",
-      videoTitle: "Random Forest Clearly Explained",
-      uploadTime: "2 hours ago",
-      duration: "18:32",
-      views: "12K views",
-      topics: ["Machine Learning", "Ensemble Methods"]
-    },
-    {
-      channel: "AI Engineer",
-      videoTitle: "Building Production RAG Systems",
-      uploadTime: "6 hours ago", 
-      duration: "24:15",
-      views: "8.3K views",
-      topics: ["RAG", "Production ML"]
-    }
-  ];
 
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ 
@@ -182,53 +139,8 @@ const Index = () => {
               </div>
             </div>
 
-            {/* YouTube Insights Section - More Compact */}
-            <div className="mb-4 p-3 bg-gradient-to-r from-red-50 to-pink-50 rounded-xl border border-red-100">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center space-x-2">
-                  <Youtube className="h-4 w-4 text-red-600" />
-                  <h3 className="text-sm font-semibold text-gray-800">New from Your Learning Channels</h3>
-                </div>
-                <Badge variant="outline" className="bg-red-100 text-red-700 border-red-200 text-xs">
-                  {youtubeInsights.length} new
-                </Badge>
-              </div>
-              
-              <div className="space-y-2">
-                {youtubeInsights.map((video, index) => (
-                  <div key={index} className="flex items-center justify-between p-2 bg-white/60 rounded-lg hover:bg-white/80 transition-colors cursor-pointer">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">
-                        {video.videoTitle}
-                      </p>
-                      <div className="flex items-center space-x-3 mt-1">
-                        <span className="text-xs text-red-600 font-medium">{video.channel}</span>
-                        <span className="text-xs text-gray-500">•</span>
-                        <span className="text-xs text-gray-500">{video.uploadTime}</span>
-                        <span className="text-xs text-gray-500">•</span>
-                        <span className="text-xs text-gray-500">{video.duration}</span>
-                      </div>
-                    </div>
-                    <div className="flex space-x-1 ml-2">
-                      {video.topics.slice(0, 2).map((topic, topicIndex) => (
-                        <Badge key={topicIndex} variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 text-xs px-1 py-0">
-                          {topic}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="mt-2 pt-2 border-t border-red-100 flex justify-between items-center">
-                <button className="text-xs text-red-600 hover:text-red-700 font-medium">
-                  View all updates (last 24h)
-                </button>
-                <button className="text-xs text-blue-600 hover:text-blue-700 font-medium">
-                  Quick summary from transcripts →
-                </button>
-              </div>
-            </div>
+            {/* YouTube Insights Section */}
+            <YouTubeInsightsSection />
             
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
@@ -237,7 +149,7 @@ const Index = () => {
                   <TrendingUp className="h-4 w-4 text-momentum-600" />
                   <span className="text-xs font-medium text-gray-700">Trending Topics</span>
                 </div>
-                <p className="text-lg font-bold text-momentum-700 mt-1">12</p>
+                <p className="text-lg font-bold text-momentum-700 mt-1">{trendingActivities.length}</p>
                 <p className="text-xs text-gray-500">Active discussions</p>
               </div>
               <div className="bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-momentum-100">
@@ -269,7 +181,12 @@ const Index = () => {
             <TrendingActivities
               isOpen={openSections.trending}
               onToggle={() => toggleSection('trending')}
-              activities={trendingActivities}
+              activities={trendingActivities.map(activity => ({
+                activity: activity.activity,
+                context: activity.context,
+                participants: `${activity.participant_count} professionals`,
+                timeframe: formatDistanceToNow(new Date(activity.created_at), { addSuffix: true })
+              }))}
             />
 
             <CollapsibleSection
