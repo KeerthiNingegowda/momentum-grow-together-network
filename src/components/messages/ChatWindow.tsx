@@ -54,19 +54,19 @@ const ChatWindow = ({
   return (
     <div className="h-full flex flex-col bg-white">
       {/* Chat Header - Fixed and visible */}
-      <div className="p-4 border-b border-gray-200 bg-white flex items-center justify-between flex-shrink-0 min-h-[80px]">
-        <div className="flex items-center space-x-3 min-w-0 flex-1">
-          <Avatar className="w-12 h-12 flex-shrink-0">
+      <div className="p-6 border-b border-gray-200 bg-white flex items-center justify-between flex-shrink-0">
+        <div className="flex items-center space-x-4 min-w-0 flex-1">
+          <Avatar className="w-14 h-14 flex-shrink-0">
             <AvatarImage src={currentConversation.avatar} />
-            <AvatarFallback className="bg-momentum-100 text-momentum-600 font-semibold">
+            <AvatarFallback className="bg-momentum-100 text-momentum-600 font-semibold text-lg">
               {currentConversation.initials}
             </AvatarFallback>
           </Avatar>
           <div className="min-w-0 flex-1">
-            <h3 className="font-semibold text-gray-900 text-lg leading-6 truncate">
+            <h3 className="font-bold text-gray-900 text-xl leading-7 truncate">
               {currentConversation.name}
             </h3>
-            <p className="text-sm text-gray-600 leading-5 truncate">
+            <p className="text-base text-gray-600 leading-6 truncate mt-1">
               {currentConversation.title}
             </p>
           </div>
