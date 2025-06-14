@@ -93,16 +93,46 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-gradient-to-br from-gray-50 via-white to-momentum-50 text-foreground font-sans;
+    min-height: 100vh;
   }
 }
 
 @layer components {
   .gradient-text {
-    @apply bg-gradient-to-r from-momentum-600 to-momentum-800 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-momentum-600 via-momentum-700 to-momentum-800 bg-clip-text text-transparent;
   }
   
   .hero-gradient {
-    background: linear-gradient(135deg, #f6f8f6 0%, #e8f0e8 100%);
+    background: linear-gradient(135deg, #f6f8f6 0%, #e8f0e8 50%, #f0f4f0 100%);
+  }
+
+  .card-gradient {
+    @apply bg-gradient-to-br from-white to-momentum-25 border border-momentum-100;
+  }
+
+  .nav-gradient {
+    @apply bg-gradient-to-r from-white via-momentum-25 to-white;
+  }
+
+  .button-gradient {
+    @apply bg-gradient-to-r from-momentum-600 to-momentum-700 hover:from-momentum-700 hover:to-momentum-800;
+  }
+
+  .section-accent {
+    @apply bg-gradient-to-br from-momentum-50/30 to-blue-50/20 border border-momentum-100/50;
+  }
+
+  .text-accent {
+    @apply text-momentum-700;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  .glass-effect {
+    @apply bg-white/80 backdrop-blur-sm border border-white/20;
   }
 }
+

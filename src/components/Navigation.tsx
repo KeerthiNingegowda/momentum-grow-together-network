@@ -15,22 +15,22 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="bg-white shadow-sm border-b fixed top-0 left-0 right-0 z-50">
+    <nav className="nav-gradient shadow-lg border-b border-momentum-200/50 fixed top-0 left-0 right-0 z-50 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div 
-            className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity"
+            className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105"
             onClick={() => navigate("/")}
           >
-            <div className="bg-momentum-100 p-2 rounded-lg">
-              <Sprout className="h-6 w-6 text-momentum-600" />
+            <div className="bg-gradient-to-br from-momentum-200 to-momentum-300 p-2.5 rounded-xl shadow-md">
+              <Sprout className="h-6 w-6 text-momentum-700" />
             </div>
             <div>
               <span className="text-xl font-bold gradient-text">Momentum</span>
             </div>
           </div>
           
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-2">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.href;
@@ -38,10 +38,10 @@ const Navigation = () => {
                 <Button
                   key={item.href}
                   variant={isActive ? "default" : "ghost"}
-                  className={`flex items-center space-x-2 ${
+                  className={`flex items-center space-x-2 transition-all duration-300 ${
                     isActive 
-                      ? "bg-momentum-600 hover:bg-momentum-700 text-white" 
-                      : "text-gray-700 hover:text-momentum-600 hover:bg-momentum-50"
+                      ? "button-gradient text-white shadow-md hover:shadow-lg" 
+                      : "text-gray-700 hover:text-momentum-600 hover:bg-momentum-50 hover:shadow-sm"
                   }`}
                   onClick={() => navigate(item.href)}
                 >
@@ -55,7 +55,7 @@ const Navigation = () => {
           <div className="flex items-center space-x-3">
             <Button
               variant="ghost"
-              className="flex items-center space-x-2 text-gray-700 hover:text-momentum-600 hover:bg-momentum-50"
+              className="flex items-center space-x-2 text-gray-700 hover:text-momentum-600 hover:bg-momentum-50 transition-all duration-300 hover:shadow-sm"
               onClick={() => navigate("/profile")}
             >
               <User className="h-4 w-4" />
@@ -69,3 +69,4 @@ const Navigation = () => {
 };
 
 export default Navigation;
+
