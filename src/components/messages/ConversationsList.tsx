@@ -34,11 +34,11 @@ const ConversationsList = ({
     <div className="h-full flex flex-col">
       {/* Header */}
       <div className="p-4 border-b border-gray-100 flex-shrink-0">
-        <h2 className="text-xl font-semibold text-gray-900 mb-3">AI Conversations</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mb-3">Messages</h2>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
           <Input 
-            placeholder="Search AI professionals..." 
+            placeholder="Search conversations..." 
             className="pl-10"
           />
         </div>
