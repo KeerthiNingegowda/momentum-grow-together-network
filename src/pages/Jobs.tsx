@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -262,61 +261,40 @@ const Jobs = () => {
                       <TechStackVisualization techStack={job.techStack} />
                     </div>
 
-                    {/* Company Culture Preview */}
+                    {/* Company Culture Snapshot */}
                     <div className="space-y-3">
                       <h4 className="font-semibold text-gray-900">Working Here</h4>
-                      <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-                        <div className="flex items-center justify-between">
+                      <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-4 border border-blue-100">
+                        <div className="flex items-center justify-between mb-3">
                           <span className="text-sm font-medium text-gray-700">Work Style</span>
-                          <span className="text-sm text-gray-600">{job.companyProfile.culture.workStyle}</span>
+                          <span className="text-sm text-blue-700 font-medium">{job.companyProfile.culture.workStyle}</span>
                         </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium text-gray-700">Team Vibe</span>
-                          <span className="text-sm text-gray-600">{job.companyProfile.culture.vibe}</span>
+                        
+                        <div className="flex items-center space-x-3 mb-3">
+                          <Star className="h-4 w-4 text-yellow-500" />
+                          <span className="text-sm text-gray-700">
+                            <span className="font-medium">{job.companyProfile.teamInsights.satisfactionScore}/5</span> employee satisfaction
+                          </span>
                         </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium text-gray-700">Avg Tenure</span>
-                          <span className="text-sm text-gray-600">{job.companyProfile.teamInsights.avgTenure}</span>
+
+                        <div className="text-xs text-gray-600 italic mb-3">
+                          "{job.companyProfile.recentFeedback[0].text}"
                         </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium text-gray-700">Satisfaction</span>
-                          <div className="flex items-center">
-                            <Star className="h-3 w-3 text-yellow-500 mr-1" />
-                            <span className="text-sm text-gray-600">{job.companyProfile.teamInsights.satisfactionScore}/5</span>
-                          </div>
+
+                        <div className="flex flex-wrap gap-1">
+                          {job.companyProfile.perks.slice(0, 2).map((perk, index) => (
+                            <Badge key={index} variant="outline" className="text-xs bg-white/50 border-blue-200 text-blue-700">
+                              {getPerkIcon(perk.icon)}
+                              <span className="ml-1">{perk.label.split(' ')[0]}</span>
+                            </Badge>
+                          ))}
+                          {job.companyProfile.perks.length > 2 && (
+                            <Badge variant="outline" className="text-xs bg-white/50 border-blue-200 text-blue-700">
+                              +{job.companyProfile.perks.length - 2} more
+                            </Badge>
+                          )}
                         </div>
                       </div>
-                    </div>
-                  </div>
-
-                  {/* Company Perks */}
-                  <div className="mb-4">
-                    <h5 className="font-medium text-gray-900 mb-2">Perks & Benefits</h5>
-                    <div className="flex flex-wrap gap-2">
-                      {job.companyProfile.perks.map((perk, index) => (
-                        <Badge key={index} variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                          {getPerkIcon(perk.icon)}
-                          <span className="ml-1 text-xs">{perk.label}</span>
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Recent Employee Feedback */}
-                  <div className="mb-4">
-                    <h5 className="font-medium text-gray-900 mb-2">What Employees Say</h5>
-                    <div className="space-y-2">
-                      {job.companyProfile.recentFeedback.map((feedback, index) => (
-                        <div key={index} className="bg-gray-50 rounded p-3 text-sm">
-                          <div className="flex items-center justify-between">
-                            <p className="text-gray-700 italic">"{feedback.text}"</p>
-                            <div className="flex items-center ml-2">
-                              <Star className="h-3 w-3 text-yellow-500 mr-1" />
-                              <span className="text-gray-600">{feedback.rating}</span>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
                     </div>
                   </div>
 
@@ -330,7 +308,7 @@ const Jobs = () => {
                       Save Job
                     </Button>
                     <Button variant="outline">
-                      View Full Company Profile
+                      View Company Culture
                     </Button>
                   </div>
                 </CardContent>
