@@ -1,6 +1,7 @@
 
 import Navigation from "@/components/Navigation";
 import RealCareerMoments from "@/components/RealCareerMoments";
+import CareerCheckIn from "@/components/CareerCheckIn";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, Users } from "lucide-react";
 
@@ -85,6 +86,9 @@ const Index = () => {
 
         {/* Section 2: Real Career Moments */}
         <RealCareerMoments />
+
+        {/* Section 3: Career Check-In */}
+        <CareerCheckIn />
 
         {/* Placeholder for other sections */}
         <div className="space-y-16">
