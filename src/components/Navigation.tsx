@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Sprout, User, Bell, MessageCircle, Search, Briefcase } from "lucide-react";
 import { useLocation } from "react-router-dom";
@@ -23,7 +22,6 @@ const Navigation = () => {
             </div>
             <div>
               <span className="text-xl font-bold gradient-text">Momentum</span>
-              <p className="text-xs text-gray-600 -mt-1">Grow your career, one real connection at a time</p>
             </div>
           </div>
           
