@@ -2,7 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Pen, Camera, Link, Send } from "lucide-react";
+import { Pen, Camera, Link, Send, Sparkles, Heart } from "lucide-react";
 import { useState } from "react";
 
 const PostCreator = () => {
@@ -29,55 +29,113 @@ const PostCreator = () => {
   };
 
   return (
-    <Card className="border-0 shadow-sm bg-white">
-      <CardContent className="p-4">
-        <div className="relative">
-          <div className="flex items-center space-x-2 mb-2">
-            <Pen size={16} className="text-gray-500" />
-            <span className="text-gray-500 text-sm">Share your thoughts...</span>
+    <Card className="border-0 shadow-lg bg-gradient-to-br from-white via-momentum-25 to-momentum-50 hover-lift">
+      <CardContent className="p-6">
+        {/* Header with inspiring message */}
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="bg-gradient-to-br from-momentum-400 to-momentum-600 p-2 rounded-xl">
+            <Sparkles className="h-5 w-5 text-white" />
           </div>
+          <div>
+            <h3 className="font-semibold text-gray-800">Share your professional journey</h3>
+            <p className="text-sm text-momentum-600">What's inspiring you today?</p>
+          </div>
+        </div>
+
+        <div className="relative">
           <Textarea
-            placeholder=""
+            placeholder="Share an insight, ask a question, or tell your story..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
             onFocus={handleFocus}
-            className="min-h-[40px] resize-none border-gray-200 focus:border-momentum-300"
+            className="min-h-[80px] resize-none border-momentum-200 focus:border-momentum-400 focus:ring-momentum-300 bg-white/60 backdrop-blur-sm placeholder:text-momentum-500 text-gray-800"
           />
           
+          {!isExpanded && !content && (
+            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+              <div className="flex items-center space-x-2 text-momentum-600">
+                <Pen size={16} />
+                <span className="text-sm">Click to share your thoughts...</span>
+              </div>
+            </div>
+          )}
+          
           {isExpanded && (
-            <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-              <div className="flex space-x-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleAttachPhoto}
-                  className="text-gray-600 hover:text-gray-800"
+            <div className="mt-4">
+              {/* Suggestion pills */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                <button
+                  onClick={() => setContent("Today I learned that ")}
+                  className="px-3 py-1 bg-momentum-100 text-momentum-700 rounded-full text-xs hover:bg-momentum-200 transition-colors"
                 >
-                  <Camera size={16} className="mr-1" />
-                  Photo
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleAddLink}
-                  className="text-gray-600 hover:text-gray-800"
+                  💡 Share a learning
+                </button>
+                <button
+                  onClick={() => setContent("I'm excited about ")}
+                  className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs hover:bg-blue-200 transition-colors"
                 >
-                  <Link size={16} className="mr-1" />
-                  Link
+                  🚀 Share excitement
+                </button>
+                <button
+                  onClick={() => setContent("Looking for advice on ")}
+                  className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs hover:bg-purple-200 transition-colors"
+                >
+                  🤝 Ask for help
+                </button>
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex items-center justify-between pt-4 border-t border-momentum-100">
+                <div className="flex space-x-3">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleAttachPhoto}
+                    className="text-momentum-600 hover:text-momentum-800 hover:bg-momentum-50"
+                  >
+                    <Camera size={16} className="mr-2" />
+                    Photo
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleAddLink}
+                    className="text-momentum-600 hover:text-momentum-800 hover:bg-momentum-50"
+                  >
+                    <Link size={16} className="mr-2" />
+                    Link
+                  </Button>
+                </div>
+                <Button
+                  onClick={handlePost}
+                  size="sm"
+                  disabled={!content.trim()}
+                  className={`transition-all duration-300 ${
+                    content.trim() 
+                      ? "bg-gradient-to-r from-momentum-600 to-momentum-700 hover:from-momentum-700 hover:to-momentum-800 text-white shadow-lg hover:shadow-xl" 
+                      : "bg-gray-200 text-gray-400"
+                  }`}
+                >
+                  <Send size={16} className="mr-2" />
+                  Share
                 </Button>
               </div>
-              <Button
-                onClick={handlePost}
-                size="sm"
-                disabled={!content.trim()}
-                className="bg-momentum-600 hover:bg-momentum-700 text-white"
-              >
-                <Send size={16} className="mr-1" />
-                Post
-              </Button>
             </div>
           )}
         </div>
+
+        {/* Inspiration footer */}
+        {!isExpanded && (
+          <div className="mt-4 pt-4 border-t border-momentum-100">
+            <div className="flex items-center justify-between text-xs text-momentum-600">
+              <div className="flex items-center space-x-1">
+                <Heart size={12} className="text-red-400" />
+                <span>Join the conversation with 247 professionals</span>
+              </div>
+              <span className="italic">Your voice matters</span>
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
