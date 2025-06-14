@@ -222,7 +222,7 @@ const Messages = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-momentum-50">
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-2 md:px-4 py-4 md:py-6 pt-20">
@@ -230,7 +230,7 @@ const Messages = () => {
         <div className="hidden lg:grid lg:grid-cols-3 gap-6 h-[calc(100vh-140px)]">
           {/* Conversations List */}
           <div className="lg:col-span-1">
-            <Card className="border-0 shadow-sm h-full">
+            <Card className="border border-gray-200 shadow-lg bg-white h-full">
               <CardContent className="p-0 h-full">
                 <ConversationsList 
                   conversations={mockConversations}
@@ -243,7 +243,7 @@ const Messages = () => {
 
           {/* Chat Window */}
           <div className="lg:col-span-2">
-            <Card className="border-0 shadow-sm h-full">
+            <Card className="border border-gray-200 shadow-lg bg-white h-full">
               <CardContent className="p-0 h-full">
                 <ChatWindow 
                   currentConversation={selectedConversation}
