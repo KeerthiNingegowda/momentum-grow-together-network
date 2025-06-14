@@ -2,11 +2,20 @@ import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { MapPin, Clock, DollarSign, Building, TrendingUp, Users, Coffee, Zap, Heart, Star } from "lucide-react";
+import { MapPin, Clock, DollarSign, Building, TrendingUp, Users, Coffee, Zap, Heart, Star, Search, Filter } from "lucide-react";
 import { TechStackVisualization } from "@/components/jobs/TechStackVisualization";
+import { useState } from "react";
 
 const Jobs = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [salaryFilter, setSalaryFilter] = useState("");
+  const [viewMode, setViewMode] = useState<"detailed" | "preview">("detailed");
+
   const jobListings = [
     {
       id: 1,
@@ -286,6 +295,16 @@ const Jobs = () => {
     }
   ];
 
+  // Filter jobs based on search criteria
+  const filteredJobs = jobListings.filter(job => {
+    const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         job.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesLocation = !locationFilter || job.location.includes(locationFilter);
+    const matchesType = !typeFilter || job.type === typeFilter;
+    return matchesSearch && matchesLocation && matchesType;
+  });
+
   const getConfidenceColor = (score: number) => {
     if (score >= 80) return "text-green-600";
     if (score >= 60) return "text-yellow-600";
@@ -308,105 +327,228 @@ const Jobs = () => {
     }
   };
 
+  const JobPreviewCard = ({ job }: { job: typeof jobListings[0] }) => (
+    <Card className="hover:shadow-md transition-shadow cursor-pointer border-l-4 border-l-momentum-500">
+      <CardContent className="p-4">
+        <div className="flex justify-between items-start mb-2">
+          <div>
+            <h3 className="font-semibold text-lg text-gray-900 mb-1">{job.title}</h3>
+            <div className="flex items-center text-gray-600 text-sm space-x-3">
+              <span className="flex items-center"><Building className="h-3 w-3 mr-1" />{job.company}</span>
+              <span className="flex items-center"><MapPin className="h-3 w-3 mr-1" />{job.location}</span>
+            </div>
+          </div>
+          <div className="text-right">
+            <div className="flex items-center text-momentum-600 font-semibold text-sm">
+              <DollarSign className="h-3 w-3 mr-1" />
+              {job.salary}
+            </div>
+            <Badge variant="secondary" className="text-xs mt-1">{job.type}</Badge>
+          </div>
+        </div>
+        
+        <p className="text-gray-700 text-sm line-clamp-2 mb-3">{job.description}</p>
+        
+        <div className="flex items-center justify-between">
+          <div className="flex space-x-2">
+            <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200 text-xs">
+              {job.problemType}
+            </Badge>
+            <Badge variant="outline" className={`${getConfidenceBadgeColor(job.companyStats.confidenceScore)} text-xs`}>
+              {job.companyStats.confidenceScore}% Confidence
+            </Badge>
+          </div>
+          <div className="flex items-center text-gray-500 text-xs">
+            <Clock className="h-3 w-3 mr-1" />
+            {job.posted}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
   return (
     <TooltipProvider>
       <div className="min-h-screen bg-gradient-to-br from-momentum-50 to-white">
         <Navigation />
         
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold gradient-text mb-4">
-              Visual Job Matching
-            </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Discover AI roles through interactive visualizations and smart matching
+          {/* Search and Filters Section */}
+          <div className="mb-8">
+            <div className="flex items-center space-x-4 mb-6">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder="Search jobs, companies, or keywords..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              <Button
+                variant={viewMode === "preview" ? "default" : "outline"}
+                onClick={() => setViewMode(viewMode === "preview" ? "detailed" : "preview")}
+                className="whitespace-nowrap"
+              >
+                {viewMode === "preview" ? "Detailed View" : "Quick Preview"}
+              </Button>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <Filter className="h-4 w-4 text-gray-500" />
+                <span className="text-sm font-medium text-gray-700">Filters:</span>
+              </div>
+              
+              <Select value={locationFilter} onValueChange={setLocationFilter}>
+                <SelectTrigger className="w-48">
+                  <SelectValue placeholder="Location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All Locations</SelectItem>
+                  <SelectItem value="San Francisco">San Francisco</SelectItem>
+                  <SelectItem value="Remote">Remote</SelectItem>
+                  <SelectItem value="New York">New York</SelectItem>
+                </SelectContent>
+              </Select>
+              
+              <Select value={typeFilter} onValueChange={setTypeFilter}>
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="Job Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All Types</SelectItem>
+                  <SelectItem value="Full-time">Full-time</SelectItem>
+                  <SelectItem value="Contract">Contract</SelectItem>
+                  <SelectItem value="Part-time">Part-time</SelectItem>
+                </SelectContent>
+              </Select>
+              
+              <Select value={salaryFilter} onValueChange={setSalaryFilter}>
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="Salary Range" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All Ranges</SelectItem>
+                  <SelectItem value="0-100k">$0 - $100k</SelectItem>
+                  <SelectItem value="100k-150k">$100k - $150k</SelectItem>
+                  <SelectItem value="150k+">$150k+</SelectItem>
+                </SelectContent>
+              </Select>
+              
+              {(searchTerm || locationFilter || typeFilter || salaryFilter) && (
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    setSearchTerm("");
+                    setLocationFilter("");
+                    setTypeFilter("");
+                    setSalaryFilter("");
+                  }}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  Clear all
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {/* Results Count */}
+          <div className="mb-6">
+            <p className="text-gray-600">
+              Showing {filteredJobs.length} of {jobListings.length} jobs
             </p>
           </div>
 
-          <div className="grid gap-8">
-            {jobListings.map((job) => (
-              <Card key={job.id} className="shadow-lg border-0 hover:shadow-xl transition-shadow overflow-hidden">
-                <CardHeader className="pb-4">
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{job.title}</h3>
-                      <div className="flex items-center space-x-4 text-gray-600 mb-3">
-                        <div className="flex items-center">
-                          <Building className="h-4 w-4 mr-1" />
-                          {job.company}
+          {/* Job Listings */}
+          <div className={`grid gap-${viewMode === "preview" ? "4" : "8"}`}>
+            {filteredJobs.map((job) => (
+              viewMode === "preview" ? (
+                <JobPreviewCard key={job.id} job={job} />
+              ) : (
+                <Card key={job.id} className="shadow-lg border-0 hover:shadow-xl transition-shadow overflow-hidden">
+                  <CardHeader className="pb-4">
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">{job.title}</h3>
+                        <div className="flex items-center space-x-4 text-gray-600 mb-3">
+                          <div className="flex items-center">
+                            <Building className="h-4 w-4 mr-1" />
+                            {job.company}
+                          </div>
+                          <div className="flex items-center">
+                            <MapPin className="h-4 w-4 mr-1" />
+                            {job.location}
+                          </div>
+                          <div className="flex items-center">
+                            <Clock className="h-4 w-4 mr-1" />
+                            {job.posted}
+                          </div>
                         </div>
-                        <div className="flex items-center">
-                          <MapPin className="h-4 w-4 mr-1" />
-                          {job.location}
-                        </div>
-                        <div className="flex items-center">
-                          <Clock className="h-4 w-4 mr-1" />
-                          {job.posted}
+                        
+                        <div className="flex items-center space-x-4 mb-3">
+                          <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200">
+                            {job.problemType}
+                          </Badge>
+                          <span className="text-sm text-gray-500">{job.teamSize} team</span>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Badge variant="outline" className={getConfidenceBadgeColor(job.companyStats.confidenceScore)}>
+                                <TrendingUp className="h-3 w-3 mr-1" />
+                                {job.companyStats.confidenceScore}% Confidence
+                              </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Likelihood of a ghost job based on past hiring.</p>
+                            </TooltipContent>
+                          </Tooltip>
                         </div>
                       </div>
                       
-                      <div className="flex items-center space-x-4 mb-3">
-                        <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200">
-                          {job.problemType}
+                      <div className="text-right">
+                        <Badge variant="secondary" className="mb-2">
+                          {job.type}
                         </Badge>
-                        <span className="text-sm text-gray-500">{job.teamSize} team</span>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Badge variant="outline" className={getConfidenceBadgeColor(job.companyStats.confidenceScore)}>
-                              <TrendingUp className="h-3 w-3 mr-1" />
-                              {job.companyStats.confidenceScore}% Confidence
-                            </Badge>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Likelihood of a ghost job based on past hiring.</p>
-                          </TooltipContent>
-                        </Tooltip>
+                        <div className="flex items-center text-momentum-600 font-semibold">
+                          <DollarSign className="h-4 w-4 mr-1" />
+                          {job.salary}
+                        </div>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  
+                  <CardContent className="pt-0">
+                    {/* Job Description - Now prioritized */}
+                    <div className="mb-6">
+                      <h4 className="font-semibold text-gray-900 mb-2">About This Role</h4>
+                      <p className="text-gray-700 leading-relaxed">{job.description}</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                      {/* Enhanced Tech Stack */}
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-gray-900">Technical Requirements</h4>
+                        <TechStackVisualization techStack={job.techStack} />
+                      </div>
+
+                      {/* Company Insights - Similar format to Tech Stack */}
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-gray-900">Company Insights</h4>
+                        <TechStackVisualization techStack={job.companyProfile.companyInsights} />
                       </div>
                     </div>
                     
-                    <div className="text-right">
-                      <Badge variant="secondary" className="mb-2">
-                        {job.type}
-                      </Badge>
-                      <div className="flex items-center text-momentum-600 font-semibold">
-                        <DollarSign className="h-4 w-4 mr-1" />
-                        {job.salary}
-                      </div>
+                    <div className="flex gap-3">
+                      <Button className="bg-momentum-600 hover:bg-momentum-700">
+                        Apply Now
+                      </Button>
+                      <Button variant="outline">
+                        Save Job
+                      </Button>
                     </div>
-                  </div>
-                </CardHeader>
-                
-                <CardContent className="pt-0">
-                  {/* Job Description - Now prioritized */}
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-2">About This Role</h4>
-                    <p className="text-gray-700 leading-relaxed">{job.description}</p>
-                  </div>
-
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                    {/* Enhanced Tech Stack */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-gray-900">Technical Requirements</h4>
-                      <TechStackVisualization techStack={job.techStack} />
-                    </div>
-
-                    {/* Company Insights - Similar format to Tech Stack */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-gray-900">Company Insights</h4>
-                      <TechStackVisualization techStack={job.companyProfile.companyInsights} />
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-3">
-                    <Button className="bg-momentum-600 hover:bg-momentum-700">
-                      Apply Now
-                    </Button>
-                    <Button variant="outline">
-                      Save Job
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              )
             ))}
           </div>
         </div>
