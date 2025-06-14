@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -18,6 +17,27 @@ const Profile = () => {
     "Built fraud detection system that prevented $8M in losses while reducing false positives by 85%",
     "Created customer lifetime value model that increased marketing ROI by 340% across 3 business units",
     "Led AI transformation initiative that automated 60% of manual processes, saving 2,000 hours monthly"
+  ];
+
+  const testimonials = [
+    {
+      quote: "Alex delivered a recommendation engine that increased our revenue by 45% in just 3 months. His ability to translate complex ML concepts into business value is unmatched.",
+      author: "Sarah Mitchell",
+      title: "VP of Product, TechFlow Inc.",
+      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face"
+    },
+    {
+      quote: "The fraud detection system Alex built saved us $2.3M in the first quarter alone. He doesn't just build models—he builds business solutions.",
+      author: "Michael Rodriguez",
+      title: "CTO, FinanceCore",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face"
+    },
+    {
+      quote: "Working with Alex was a game-changer. His customer segmentation model helped us optimize our marketing spend and achieve 3x ROI improvement.",
+      author: "Emily Chen",
+      title: "Head of Marketing, GrowthLabs",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face"
+    }
   ];
 
   return (
@@ -90,6 +110,39 @@ const Profile = () => {
                     <div key={index} className="flex items-start space-x-3 p-3 bg-momentum-50 rounded-lg">
                       <ArrowRight className="h-5 w-5 text-momentum-600 mt-0.5 flex-shrink-0" />
                       <p className="text-gray-700 font-medium">{win}</p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Client Testimonials */}
+            <Card className="shadow-lg border-0 mb-6">
+              <CardHeader>
+                <h2 className="text-xl font-bold text-gray-900 flex items-center">
+                  <Users className="h-6 w-6 text-momentum-600 mr-2" />
+                  What Clients Say
+                </h2>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-1 gap-6">
+                  {testimonials.map((testimonial, index) => (
+                    <div key={index} className="p-4 bg-momentum-50 rounded-lg border-l-4 border-momentum-600">
+                      <p className="text-gray-700 italic mb-4 leading-relaxed">
+                        "{testimonial.quote}"
+                      </p>
+                      <div className="flex items-center space-x-3">
+                        <Avatar className="w-12 h-12">
+                          <AvatarImage src={testimonial.avatar} />
+                          <AvatarFallback className="bg-momentum-100 text-momentum-600">
+                            {testimonial.author.split(' ').map(n => n[0]).join('')}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className="font-semibold text-gray-900">{testimonial.author}</div>
+                          <div className="text-sm text-gray-600">{testimonial.title}</div>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
