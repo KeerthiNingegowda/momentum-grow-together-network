@@ -30,20 +30,22 @@ export const JobFilters = ({
   hasActiveFilters
 }: JobFiltersProps) => {
   return (
-    <div className="mb-8">
-      <div className="flex items-center space-x-4 mb-6">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+    <div className="mb-8 bg-white rounded-lg shadow-sm border p-6">
+      {/* Search Bar - Make it more prominent */}
+      <div className="mb-6">
+        <div className="relative max-w-2xl">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
           <Input
             placeholder="Search jobs, companies, or keywords..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
+            className="pl-12 h-12 text-base border-gray-300 focus:border-momentum-500 focus:ring-momentum-500"
           />
         </div>
       </div>
       
-      <div className="flex items-center space-x-4">
+      {/* Filter Controls */}
+      <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center space-x-2">
           <Filter className="h-4 w-4 text-gray-500" />
           <span className="text-sm font-medium text-gray-700">Filters:</span>
