@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -11,31 +10,31 @@ const Index = () => {
     {
       id: 1,
       author: {
-        name: "Sarah Chen",
-        title: "ML Engineer at OpenAI",
+        name: "Dr. Sarah Chen",
+        title: "Principal ML Engineer at OpenAI",
         avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
         initials: "SC"
       },
-      content: "Just shipped our new RAG system that reduced hallucinations by 73% while maintaining response quality. The key was implementing a hybrid retrieval approach combining dense embeddings with keyword matching. Sometimes the best AI solutions combine old-school techniques with cutting-edge models! 🚀",
+      content: "Just shipped our new RAG system that reduced hallucinations by 73% while maintaining response quality. The key was implementing a hybrid retrieval approach combining dense embeddings with keyword matching. Sometimes the best GenAI solutions combine old-school techniques with cutting-edge models! 🚀",
       image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
-      likes: 156,
-      comments: 34,
-      shares: 18,
-      timestamp: "3 hours ago"
+      likes: 234,
+      comments: 45,
+      shares: 28,
+      timestamp: "2 hours ago"
     },
     {
       id: 2,
       author: {
         name: "Marcus Rodriguez",
-        title: "Principal Data Scientist at Anthropic",
+        title: "Staff Data Scientist at Anthropic",
         avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
         initials: "MR"
       },
-      content: "Hot take: Most companies don't need GPT-4 for their use cases. We saved $2M annually by fine-tuning smaller models for specific tasks. Before jumping to the latest LLM, ask: 'What's the minimum viable model that solves this problem?' Your CFO will thank you. What's been your experience with model right-sizing?",
-      likes: 243,
-      comments: 67,
-      shares: 41,
-      timestamp: "6 hours ago"
+      content: "Hot take: Most companies don't need GPT-4 for their use cases. We saved $2M annually by fine-tuning smaller models for specific tasks. Before jumping to the latest LLM, ask: 'What's the minimum viable model that solves this problem?' Your CFO will thank you. What's been your experience with model right-sizing? 💰",
+      likes: 312,
+      comments: 87,
+      shares: 56,
+      timestamp: "4 hours ago"
     },
     {
       id: 3,
@@ -45,34 +44,34 @@ const Index = () => {
         avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
         initials: "PP"
       },
-      content: "Mentorship Monday: Looking for 5 mid-level data scientists who want to level up their MLOps game. I'll be hosting virtual office hours next week covering model monitoring, A/B testing ML systems, and production debugging. Building the next generation of AI practitioners is what drives me! Apply in comments 👇",
-      likes: 89,
-      comments: 28,
-      shares: 15,
-      timestamp: "8 hours ago"
+      content: "Mentorship Monday: Looking for 5 mid-level data scientists who want to level up their GenAI game. I'll be hosting virtual office hours next week covering prompt engineering, fine-tuning strategies, and deploying LLMs at scale. Building the next generation of AI practitioners is what drives me! Apply in comments 👇",
+      likes: 156,
+      comments: 42,
+      shares: 23,
+      timestamp: "6 hours ago"
     }
   ];
 
   const trendingTopics = [
     { name: "Large Language Models", count: "3.2k posts" },
-    { name: "MLOps & Production AI", count: "2.8k posts" },
+    { name: "Generative AI Applications", count: "2.8k posts" },
     { name: "RAG Systems", count: "1.9k posts" },
     { name: "AI Ethics & Safety", count: "1.4k posts" },
-    { name: "Computer Vision", count: "1.1k posts" }
+    { name: "Prompt Engineering", count: "1.1k posts" }
   ];
 
   const suggestedConnections = [
     {
-      name: "Alex Kim",
-      title: "Staff ML Engineer",
-      mutualConnections: 15,
+      name: "Dr. Alex Kim",
+      title: "Senior Research Scientist at Google DeepMind",
+      mutualConnections: 23,
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
       initials: "AK"
     },
     {
       name: "Jamie Liu",
-      title: "Research Scientist",
-      mutualConnections: 11,
+      title: "ML Engineering Manager at Hugging Face",
+      mutualConnections: 18,
       avatar: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&h=400&fit=crop&crop=face",
       initials: "JL"
     }
@@ -91,7 +90,7 @@ const Index = () => {
               <CardContent className="p-4">
                 <div className="text-center">
                   <Avatar className="w-16 h-16 mx-auto mb-3">
-                    <AvatarImage src="https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=400&h=400&fit=crop&crop=face" />
+                    <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face" />
                     <AvatarFallback className="bg-momentum-100 text-momentum-600">You</AvatarFallback>
                   </Avatar>
                   <h3 className="font-semibold text-gray-900">Welcome back!</h3>
@@ -138,7 +137,7 @@ const Index = () => {
               <CardContent className="p-4">
                 <div className="flex items-center space-x-3">
                   <Avatar className="w-10 h-10">
-                    <AvatarImage src="https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=400&h=400&fit=crop&crop=face" />
+                    <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face" />
                     <AvatarFallback className="bg-momentum-100 text-momentum-600">You</AvatarFallback>
                   </Avatar>
                   <Button variant="outline" className="flex-1 justify-start text-gray-500 hover:bg-gray-50">
