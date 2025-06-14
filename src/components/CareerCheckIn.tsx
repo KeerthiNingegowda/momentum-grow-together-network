@@ -3,13 +3,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Lock, Heart, MessageCircle, Users, Bot, Calendar, Target, TrendingUp } from "lucide-react";
+import { Heart, MessageCircle, Users, Bot, Calendar, Target, TrendingUp } from "lucide-react";
 import { useState } from "react";
 
 const CareerCheckIn = () => {
   const [currentPrompt, setCurrentPrompt] = useState(0);
   const [responses, setResponses] = useState<string[]>(["", "", ""]);
-  const [isPublic, setIsPublic] = useState([false, false, false]);
   const [showAIBuddy, setShowAIBuddy] = useState(false);
 
   const prompts = [
@@ -34,12 +33,6 @@ const CareerCheckIn = () => {
     const newResponses = [...responses];
     newResponses[currentPrompt] = value;
     setResponses(newResponses);
-  };
-
-  const togglePublic = () => {
-    const newPublic = [...isPublic];
-    newPublic[currentPrompt] = !newPublic[currentPrompt];
-    setIsPublic(newPublic);
   };
 
   return (
@@ -189,41 +182,15 @@ const CareerCheckIn = () => {
               />
             </div>
 
-            {/* Privacy and sharing options */}
+            {/* Save action */}
             <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-              <div className="flex items-center space-x-3">
-                <Badge 
-                  className={`text-xs px-3 py-1 ${
-                    isPublic[currentPrompt] 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-gray-100 text-gray-600'
-                  }`}
-                >
-                  <Lock className="h-3 w-3 mr-1" />
-                  {isPublic[currentPrompt] ? 'Public' : 'Private'}
-                </Badge>
-                
-                {isPublic[currentPrompt] && (
-                  <span className="text-xs text-gray-500">
-                    Will appear in your public reflections
-                  </span>
-                )}
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={togglePublic}
-                  className="text-xs"
-                >
-                  {isPublic[currentPrompt] ? 'Make private' : 'Share publicly'}
-                </Button>
-                
-                <Button size="sm" className="text-xs">
-                  Save reflection
-                </Button>
-              </div>
+              <Badge className="text-xs px-3 py-1 bg-gray-100 text-gray-600">
+                Private reflection
+              </Badge>
+              
+              <Button size="sm" className="text-xs">
+                Save reflection
+              </Button>
             </div>
           </div>
 
