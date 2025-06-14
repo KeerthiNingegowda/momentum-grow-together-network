@@ -1,14 +1,16 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Lock, Heart, MessageCircle, Users } from "lucide-react";
+import { Lock, Heart, MessageCircle, Users, Bot, Calendar, Target, TrendingUp } from "lucide-react";
 import { useState } from "react";
 
 const CareerCheckIn = () => {
   const [currentPrompt, setCurrentPrompt] = useState(0);
   const [responses, setResponses] = useState<string[]>(["", "", ""]);
   const [isPublic, setIsPublic] = useState([false, false, false]);
+  const [showAIBuddy, setShowAIBuddy] = useState(false);
 
   const prompts = [
     {
@@ -42,7 +44,95 @@ const CareerCheckIn = () => {
 
   return (
     <div>
-      {/* Career buddy suggestion */}
+      {/* AI Career Buddy Section */}
+      <Card className="border-momentum-200 bg-gradient-to-r from-momentum-50/30 to-blue-50/30 mb-6">
+        <CardContent className="p-6">
+          <div className="flex items-start space-x-4">
+            <div className="bg-gradient-to-r from-momentum-100 to-blue-100 p-3 rounded-full">
+              <Bot className="h-6 w-6 text-momentum-600" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-gray-900 text-lg mb-2">
+                🤖 Try our AI-Powered Career Buddy
+              </h3>
+              <p className="text-gray-700 text-sm leading-relaxed mb-4">
+                Get personalized insights, monthly check-ins, and workplace navigation support from your AI career companion.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                <div className="flex items-center space-x-2 text-xs text-gray-600">
+                  <Calendar className="h-4 w-4 text-momentum-500" />
+                  <span>Monthly check-ins</span>
+                </div>
+                <div className="flex items-center space-x-2 text-xs text-gray-600">
+                  <Target className="h-4 w-4 text-momentum-500" />
+                  <span>Goal tracking</span>
+                </div>
+                <div className="flex items-center space-x-2 text-xs text-gray-600">
+                  <TrendingUp className="h-4 w-4 text-momentum-500" />
+                  <span>Career insights</span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <Button 
+                  onClick={() => setShowAIBuddy(!showAIBuddy)}
+                  className="bg-momentum-600 hover:bg-momentum-700 text-white text-sm"
+                >
+                  {showAIBuddy ? 'Hide AI Buddy' : 'Start with AI Buddy'}
+                </Button>
+                <Button variant="outline" size="sm" className="text-xs border-momentum-200 text-momentum-600 hover:bg-momentum-50">
+                  Learn more
+                </Button>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* AI Buddy Interface */}
+      {showAIBuddy && (
+        <Card className="border-blue-200 bg-blue-50/30 mb-6">
+          <CardContent className="p-6">
+            <div className="flex items-start space-x-4 mb-4">
+              <div className="bg-blue-100 p-2 rounded-full">
+                <Bot className="h-5 w-5 text-blue-600" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-medium text-gray-900 mb-2">Your AI Career Buddy</h4>
+                <div className="bg-white p-4 rounded-lg border border-blue-200 mb-3">
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Hi there! I'm your AI career buddy. I can help you with monthly check-ins, workplace navigation, and career growth insights. 
+                    Based on your reflections, I notice you're focused on {userProfile.roles.join(" & ")}. 
+                    What would you like to explore today?
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <Button variant="outline" size="sm" className="text-xs justify-start">
+                    <MessageCircle className="h-3 w-3 mr-2" />
+                    Workplace navigation tips
+                  </Button>
+                  <Button variant="outline" size="sm" className="text-xs justify-start">
+                    <Target className="h-3 w-3 mr-2" />
+                    Set monthly goals
+                  </Button>
+                  <Button variant="outline" size="sm" className="text-xs justify-start">
+                    <TrendingUp className="h-3 w-3 mr-2" />
+                    Career growth insights
+                  </Button>
+                  <Button variant="outline" size="sm" className="text-xs justify-start">
+                    <Users className="h-3 w-3 mr-2" />
+                    Networking strategies
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Human Career Buddy */}
       <Card className="border-momentum-200 bg-momentum-50/30 mb-6">
         <CardContent className="p-4">
           <div className="flex items-start space-x-3">
@@ -51,7 +141,7 @@ const CareerCheckIn = () => {
             </div>
             <div className="flex-1">
               <h3 className="font-medium text-gray-900 text-sm mb-1">
-                Want a career buddy?
+                Want a human career buddy too?
               </h3>
               <p className="text-gray-600 text-xs leading-relaxed mb-2">
                 Get paired with someone at a similar career stage for monthly check-ins and workplace navigation support.
@@ -157,6 +247,12 @@ const CareerCheckIn = () => {
       </Card>
     </div>
   );
+};
+
+// Add userProfile for AI buddy context
+const userProfile = {
+  name: "Alex Chen",
+  roles: ["Data Science", "CX Strategy"]
 };
 
 export default CareerCheckIn;
