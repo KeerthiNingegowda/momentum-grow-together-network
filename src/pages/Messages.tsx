@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -47,49 +46,30 @@ const Messages = () => {
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user) {
-          // Get the user's profile ID
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('id')
-            .eq('user_id', user.id)
-            .single();
-          
-          if (profile) {
-            setCurrentUserId(profile.id);
-          } else {
-            // If no profile exists, use the first profile as fallback for demo
-            const { data: firstProfile } = await supabase
-              .from('profiles')
-              .select('id')
-              .limit(1)
-              .single();
-            if (firstProfile) {
-              setCurrentUserId(firstProfile.id);
-            }
-          }
+        console.log('Getting current user...');
+        // For demo purposes, use the first profile
+        const { data: firstProfile, error } = await supabase
+          .from('profiles')
+          .select('id')
+          .limit(1)
+          .single();
+        
+        if (firstProfile) {
+          console.log('Setting current user ID:', firstProfile.id);
+          setCurrentUserId(firstProfile.id);
+        } else {
+          console.error('No profiles found:', error);
         }
       } catch (error) {
         console.error('Error getting current user:', error);
-        // Fallback: use first profile for demo purposes
-        try {
-          const { data: firstProfile } = await supabase
-            .from('profiles')
-            .select('id')
-            .limit(1)
-            .single();
-          if (firstProfile) {
-            setCurrentUserId(firstProfile.id);
-          }
-        } catch (fallbackError) {
-          console.error('Error getting fallback profile:', fallbackError);
-        }
       }
     };
 
     getCurrentUser();
   }, []);
+
+  console.log('Conversations data:', conversations);
+  console.log('Current user ID:', currentUserId);
 
   // Convert data to format expected by existing components
   const formattedConversations: FormattedConversation[] = conversations.map(conv => ({
@@ -121,6 +101,8 @@ const Messages = () => {
   }));
 
   const allConversations = [...requestConversations, ...formattedConversations];
+  console.log('All conversations:', allConversations);
+  
   const selectedConversation = allConversations.find(conv => 
     conv.conversationId === selectedConversationId
   );

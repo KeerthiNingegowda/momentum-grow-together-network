@@ -29,16 +29,21 @@ export const useConversations = () => {
   return useQuery({
     queryKey: ['conversations'],
     queryFn: async () => {
-      // Get current user's profile first
-      const { data: userProfile } = await supabase
+      console.log('Fetching conversations...');
+      
+      // For demo purposes, let's get the first profile as the current user
+      const { data: currentProfile, error: profileError } = await supabase
         .from('profiles')
         .select('id')
-        .eq('user_id', (await supabase.auth.getUser()).data.user?.id)
+        .limit(1)
         .single();
 
-      if (!userProfile) {
-        throw new Error('User profile not found');
+      if (profileError || !currentProfile) {
+        console.error('Error getting current profile:', profileError);
+        return [];
       }
+
+      console.log('Current profile ID:', currentProfile.id);
 
       const { data, error } = await supabase
         .from('conversations')
@@ -47,13 +52,15 @@ export const useConversations = () => {
           profile1:profiles!profile1_id(id, name, title, company, initials, image_url),
           profile2:profiles!profile2_id(id, name, title, company, initials, image_url)
         `)
-        .or(`profile1_id.eq.${userProfile.id},profile2_id.eq.${userProfile.id}`)
+        .or(`profile1_id.eq.${currentProfile.id},profile2_id.eq.${currentProfile.id}`)
         .order('last_message_at', { ascending: false });
 
       if (error) {
         console.error('Error fetching conversations:', error);
         throw error;
       }
+
+      console.log('Raw conversations data:', data);
 
       // Get last message for each conversation
       const conversationsWithMessages = await Promise.all(
@@ -67,7 +74,7 @@ export const useConversations = () => {
             .single();
 
           // Determine which profile is the "other" profile
-          const otherProfile = conversation.profile1_id === userProfile.id 
+          const otherProfile = conversation.profile1_id === currentProfile.id 
             ? conversation.profile2 
             : conversation.profile1;
 
@@ -79,6 +86,7 @@ export const useConversations = () => {
         })
       );
 
+      console.log('Conversations with messages:', conversationsWithMessages);
       return conversationsWithMessages as Conversation[];
     },
   });
