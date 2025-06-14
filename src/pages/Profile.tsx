@@ -4,20 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { TrendingUp, Users, Target, Zap, MessageCircle, Share2, LinkedinIcon, TwitterIcon, ArrowRight } from "lucide-react";
+import { TrendingUp, Users, Target, Zap, MessageCircle, Share2, LinkedinIcon, TwitterIcon, ArrowRight, Brain, BarChart } from "lucide-react";
 
 const Profile = () => {
   const keyWins = [
-    { metric: "40%", label: "User Retention Increase", icon: TrendingUp },
-    { metric: "3", label: "SaaS Scale-ups", icon: Target },
-    { metric: "$2M+", label: "Revenue Generated", icon: Zap },
-    { metric: "50+", label: "Teams Led", icon: Users }
+    { metric: "$12M", label: "Revenue Impact Generated", icon: TrendingUp },
+    { metric: "67%", label: "Cost Reduction Achieved", icon: Target },
+    { metric: "5x", label: "Model Performance Gains", icon: Zap },
+    { metric: "3", label: "AI Products Launched", icon: Brain }
   ];
 
   const recentWins = [
-    "Launched AI-powered feature that reduced churn by 35% in 6 months",
-    "Built and scaled product team from 5 to 25 people at TechCorp",
-    "Led digital transformation saving $500K annually"
+    "Built fraud detection system that prevented $8M in losses while reducing false positives by 85%",
+    "Created customer lifetime value model that increased marketing ROI by 340% across 3 business units",
+    "Led AI transformation initiative that automated 60% of manual processes, saving 2,000 hours monthly"
   ];
 
   return (
@@ -32,23 +32,23 @@ const Profile = () => {
               <CardContent className="p-8">
                 <div className="flex items-start space-x-6">
                   <Avatar className="w-20 h-20 ring-4 ring-momentum-200">
-                    <AvatarImage src="https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=400&h=400&fit=crop&crop=face" />
-                    <AvatarFallback className="text-xl bg-momentum-100 text-momentum-600">JS</AvatarFallback>
+                    <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face" />
+                    <AvatarFallback className="text-xl bg-momentum-100 text-momentum-600">AC</AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Jordan Smith</h1>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Alex Chen</h1>
                     <div className="text-lg text-momentum-700 font-semibold mb-4">
-                      I help SaaS companies turn struggling products into market leaders
+                      I turn messy data into millions in revenue for tech companies
                     </div>
                     <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                      <span className="font-semibold text-momentum-600">In the last 3 years:</span> I've transformed underperforming products at 3 different SaaS companies, 
-                      increasing user retention by an average of 40% and generating over $2M in additional revenue. 
-                      My secret? I combine data-driven strategy with human psychology to build products people actually love using.
+                      <span className="font-semibold text-momentum-600">In the past 18 months:</span> My AI models have directly generated $12M+ in revenue 
+                      and prevented $8M in losses across 4 companies. While most data scientists build models that sit on shelves, 
+                      I build systems that CEOs actually care about—the ones that show up on quarterly earnings calls.
                     </p>
                     <div className="flex space-x-3">
                       <Button size="lg" className="bg-momentum-600 hover:bg-momentum-700">
                         <MessageCircle className="h-5 w-5 mr-2" />
-                        Let's Connect
+                        Let's Talk Business
                       </Button>
                       <Button variant="outline" size="lg">
                         <Share2 className="h-5 w-5 mr-2" />
@@ -80,8 +80,8 @@ const Profile = () => {
             <Card className="shadow-lg border-0 mb-6">
               <CardHeader>
                 <h2 className="text-xl font-bold text-gray-900 flex items-center">
-                  <Zap className="h-6 w-6 text-momentum-600 mr-2" />
-                  Recent Game-Changers
+                  <BarChart className="h-6 w-6 text-momentum-600 mr-2" />
+                  Recent Business Wins
                 </h2>
               </CardHeader>
               <CardContent>
@@ -101,13 +101,13 @@ const Profile = () => {
               <CardContent className="p-6">
                 <h2 className="text-xl font-bold mb-3">What I'm Looking For Right Now</h2>
                 <p className="text-momentum-50 leading-relaxed mb-4">
-                  I'm connecting with <span className="font-semibold">VPs of Product, CTOs, and Founders</span> who are 
-                  frustrated with slow product growth or high churn rates. If you're scaling a B2B SaaS and need someone 
-                  who can diagnose problems fast and execute solutions faster, let's talk.
+                  I'm connecting with <span className="font-semibold">CTOs, VPs of Engineering, and Founders</span> who are 
+                  sitting on valuable data but struggling to monetize it. If you're tired of "insights" that don't move the needle 
+                  and want AI that actually impacts your bottom line, let's discuss how I can help.
                 </p>
                 <Button variant="secondary" size="lg" className="bg-white text-momentum-700 hover:bg-momentum-50">
                   <MessageCircle className="h-5 w-5 mr-2" />
-                  Start a Conversation
+                  Discuss Your Data Challenge
                 </Button>
               </CardContent>
             </Card>
@@ -121,13 +121,13 @@ const Profile = () => {
                 <h3 className="font-bold text-gray-900 mb-4">Quick Connect</h3>
                 <div className="space-y-3 mb-4">
                   <div className="text-gray-600">
-                    <span className="font-medium text-gray-900">Based in:</span> San Francisco, CA
+                    <span className="font-medium text-gray-900">Based in:</span> Seattle, WA
                   </div>
                   <div className="text-gray-600">
-                    <span className="font-medium text-gray-900">Response time:</span> Usually within 2 hours
+                    <span className="font-medium text-gray-900">Response time:</span> Same day
                   </div>
                   <div className="text-gray-600">
-                    <span className="font-medium text-gray-900">Open to:</span> Consulting, Full-time, Advisory
+                    <span className="font-medium text-gray-900">Open to:</span> Consulting, Leadership, Advisory
                   </div>
                 </div>
                 
@@ -143,8 +143,8 @@ const Profile = () => {
                 </div>
 
                 <div className="text-center pt-4 border-t">
-                  <div className="text-2xl font-bold text-momentum-600 mb-1">98%</div>
-                  <div className="text-sm text-gray-600">Connection Response Rate</div>
+                  <div className="text-2xl font-bold text-momentum-600 mb-1">94%</div>
+                  <div className="text-sm text-gray-600">Project Success Rate</div>
                 </div>
               </CardContent>
             </Card>
@@ -152,16 +152,16 @@ const Profile = () => {
             {/* Specialties */}
             <Card className="shadow-lg border-0">
               <CardHeader>
-                <h3 className="font-bold text-gray-900">My Superpowers</h3>
+                <h3 className="font-bold text-gray-900">What I Actually Do</h3>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
                   {[
-                    "0→1 Product Strategy",
-                    "User Retention Optimization", 
-                    "Cross-functional Leadership",
-                    "Growth Product Management",
-                    "Data-Driven Decision Making"
+                    "Revenue-Generating ML Models",
+                    "Real-time Fraud Detection", 
+                    "Customer Behavior Prediction",
+                    "AI Strategy & Implementation",
+                    "Data Team Leadership"
                   ].map((skill, index) => (
                     <Badge 
                       key={index} 
