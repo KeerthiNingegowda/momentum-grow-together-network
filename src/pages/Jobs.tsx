@@ -3,7 +3,7 @@ import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Clock, DollarSign, Building } from "lucide-react";
+import { MapPin, Clock, DollarSign, Building, TrendingUp } from "lucide-react";
 
 const Jobs = () => {
   const jobListings = [
@@ -16,7 +16,12 @@ const Jobs = () => {
       salary: "$120k - $160k",
       posted: "2 days ago",
       description: "We're looking for a senior data scientist to lead our ML initiatives and drive business insights.",
-      skills: ["Python", "Machine Learning", "SQL", "TensorFlow"]
+      skills: ["Python", "Machine Learning", "SQL", "TensorFlow"],
+      companyStats: {
+        totalPosted: 24,
+        totalFilled: 18,
+        confidenceScore: 75
+      }
     },
     {
       id: 2,
@@ -27,7 +32,12 @@ const Jobs = () => {
       salary: "$80 - $120/hr",
       posted: "1 week ago",
       description: "Join our team to build cutting-edge AI solutions for enterprise clients.",
-      skills: ["PyTorch", "Deep Learning", "Computer Vision", "AWS"]
+      skills: ["PyTorch", "Deep Learning", "Computer Vision", "AWS"],
+      companyStats: {
+        totalPosted: 12,
+        totalFilled: 11,
+        confidenceScore: 92
+      }
     },
     {
       id: 3,
@@ -38,9 +48,26 @@ const Jobs = () => {
       salary: "$100k - $140k",
       posted: "3 days ago",
       description: "Lead a team of data analysts and drive strategic decision-making through data insights.",
-      skills: ["SQL", "Tableau", "Python", "Leadership"]
+      skills: ["SQL", "Tableau", "Python", "Leadership"],
+      companyStats: {
+        totalPosted: 8,
+        totalFilled: 4,
+        confidenceScore: 50
+      }
     }
   ];
+
+  const getConfidenceColor = (score: number) => {
+    if (score >= 80) return "text-green-600";
+    if (score >= 60) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const getConfidenceBadgeColor = (score: number) => {
+    if (score >= 80) return "bg-green-100 text-green-800 border-green-200";
+    if (score >= 60) return "bg-yellow-100 text-yellow-800 border-yellow-200";
+    return "bg-red-100 text-red-800 border-red-200";
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-momentum-50 to-white">
@@ -76,6 +103,15 @@ const Jobs = () => {
                         <Clock className="h-4 w-4 mr-1" />
                         {job.posted}
                       </div>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <Badge variant="outline" className={getConfidenceBadgeColor(job.companyStats.confidenceScore)}>
+                        <TrendingUp className="h-3 w-3 mr-1" />
+                        {job.companyStats.confidenceScore}% Confidence
+                      </Badge>
+                      <span className="text-sm text-gray-500">
+                        {job.companyStats.totalFilled}/{job.companyStats.totalPosted} roles filled
+                      </span>
                     </div>
                   </div>
                   <div className="text-right">
