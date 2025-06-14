@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { Sparkles, TrendingUp, Users } from "lucide-react";
 import { useTrendingActivities } from "@/hooks/useTrendingActivities";
+import { formatDistanceToNow } from "date-fns";
 
 const Index = () => {
   const [openSections, setOpenSections] = useState({
