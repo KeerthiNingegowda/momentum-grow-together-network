@@ -114,7 +114,7 @@ const Jobs = () => {
                             </Badge>
                           </TooltipTrigger>
                           <TooltipContent>
-                            <p>Shows the likelihood of a ghost job posting based on past recruitment activities</p>
+                            <p>Likelihood of a ghost job based on past hiring.</p>
                           </TooltipContent>
                         </Tooltip>
                         <span className="text-sm text-gray-500">
