@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -134,8 +133,7 @@ const Notifications = () => {
       
       <div className="max-w-4xl mx-auto px-4 py-6 pt-20">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">AI Research Updates</h1>
-          <p className="text-gray-600">Stay connected with the latest in machine learning and AI</p>
+          <h1 className="text-2xl font-bold text-gray-900">Activity center</h1>
         </div>
 
         <Tabs defaultValue="all" className="space-y-4">
