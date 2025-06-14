@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Sprout, User, Network, MessageCircle } from "lucide-react";
+import { Sprout, User, Bell, MessageCircle, Search } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 const Navigation = () => {
@@ -9,8 +9,8 @@ const Navigation = () => {
   const navItems = [
     { href: "/", label: "Home", icon: Sprout },
     { href: "/profile", label: "Profile", icon: User },
-    { href: "/connections", label: "Connections", icon: Network },
     { href: "/messages", label: "Messages", icon: MessageCircle },
+    { href: "/notifications", label: "Notifications", icon: Bell },
   ];
 
   return (
@@ -47,11 +47,14 @@ const Navigation = () => {
           </div>
 
           <div className="flex items-center space-x-3">
+            <Button variant="ghost" size="icon" className="text-gray-600 hover:text-momentum-600">
+              <Search className="h-5 w-5" />
+            </Button>
             <Button variant="outline" className="border-momentum-300 text-momentum-700 hover:bg-momentum-50">
               Sign In
             </Button>
             <Button className="bg-momentum-600 hover:bg-momentum-700 text-white">
-              Get Started
+              Join Now
             </Button>
           </div>
         </div>
