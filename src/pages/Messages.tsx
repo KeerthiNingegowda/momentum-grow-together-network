@@ -2,13 +2,8 @@
 import Navigation from "@/components/Navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { Loader2 } from "lucide-react";
-import { useConversations, useCreateConversation, useArchiveConversation } from "@/hooks/useConversations";
-import { useConnectionRequests, useUpdateConnectionRequest } from "@/hooks/useConnectionRequests";
-import { useMessages, useSendMessage } from "@/hooks/useMessages";
-import { supabase } from "@/integrations/supabase/client";
 import ConversationsList from "@/components/messages/ConversationsList";
 import ChatWindow from "@/components/messages/ChatWindow";
 import MobileLayout from "@/components/messages/MobileLayout";
@@ -28,214 +23,203 @@ interface FormattedConversation {
   isPendingRequest?: boolean;
 }
 
+interface Message {
+  id: number;
+  sender: string;
+  content: string;
+  timestamp: string;
+  isOwn: boolean;
+  needsResponse?: boolean;
+}
+
 const Messages = () => {
   const { toast } = useToast();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-  
-  const { data: conversations = [], isLoading: conversationsLoading, refetch: refetchConversations } = useConversations();
-  const { data: connectionRequests = [] } = useConnectionRequests();
-  const { data: messages = [], refetch: refetchMessages } = useMessages(selectedConversationId);
-  
-  const updateConnectionRequest = useUpdateConnectionRequest();
-  const createConversation = useCreateConversation();
-  const archiveConversation = useArchiveConversation();
-  const sendMessage = useSendMessage();
+  const [selectedConversationId, setSelectedConversationId] = useState<number>(1);
 
-  // Get current user ID on component mount
-  useEffect(() => {
-    const getCurrentUser = async () => {
-      try {
-        console.log('Getting current user...');
-        // For demo purposes, use the first profile
-        const { data: firstProfile, error } = await supabase
-          .from('profiles')
-          .select('id')
-          .limit(1)
-          .single();
-        
-        if (firstProfile) {
-          console.log('Setting current user ID:', firstProfile.id);
-          setCurrentUserId(firstProfile.id);
-        } else {
-          console.error('No profiles found:', error);
-        }
-      } catch (error) {
-        console.error('Error getting current user:', error);
+  // Mock conversations data
+  const mockConversations: FormattedConversation[] = [
+    {
+      id: 1,
+      name: "Sarah Chen",
+      title: "AI Research Scientist at DeepMind",
+      initials: "SC",
+      lastMessage: "I'd love to connect and discuss AI ethics research.",
+      timestamp: "4 hours ago",
+      unread: true,
+      unreadCount: 1,
+      archived: false,
+      isPendingRequest: true,
+      connectionRequestId: "request-1"
+    },
+    {
+      id: 2,
+      name: "Marcus Johnson",
+      title: "Machine Learning Engineer at OpenAI",
+      initials: "MJ",
+      lastMessage: "Thanks for reaching out! I'd be happy to discuss our research.",
+      timestamp: "30 minutes ago",
+      unread: false,
+      unreadCount: 0,
+      archived: false,
+      conversationId: "conv-2"
+    },
+    {
+      id: 3,
+      name: "Elena Rodriguez",
+      title: "Data Science Lead at Meta",
+      initials: "ER",
+      lastMessage: "Hello! I'm interested in collaborating on machine learning projects.",
+      timestamp: "3 hours ago",
+      unread: false,
+      unreadCount: 0,
+      archived: false,
+      conversationId: "conv-3"
+    },
+    {
+      id: 4,
+      name: "David Kim",
+      title: "AI Product Manager at Google",
+      initials: "DK",
+      lastMessage: "We've been experimenting with gradient compression and asynchronous updates.",
+      timestamp: "2 days ago",
+      unread: false,
+      unreadCount: 0,
+      archived: false,
+      conversationId: "conv-4"
+    }
+  ];
+
+  // Mock messages for each conversation
+  const mockMessages: { [key: number]: Message[] } = {
+    1: [
+      {
+        id: 1,
+        sender: "Sarah Chen",
+        content: "I'd love to connect and discuss AI ethics research. Your work on responsible AI development really resonates with my current projects.",
+        timestamp: "4 hours ago",
+        isOwn: false,
+        needsResponse: true
       }
-    };
+    ],
+    2: [
+      {
+        id: 1,
+        sender: "Marcus Johnson",
+        content: "Hi! I saw your work on neural architecture search. Really impressive results on the CIFAR-10 benchmarks!",
+        timestamp: "2 hours ago",
+        isOwn: false
+      },
+      {
+        id: 2,
+        sender: "You",
+        content: "Thank you! Your research on transformer efficiency caught my attention too. Would love to discuss potential collaboration opportunities.",
+        timestamp: "1 hour ago",
+        isOwn: true
+      },
+      {
+        id: 3,
+        sender: "Marcus Johnson",
+        content: "Thanks for reaching out! I'd be happy to discuss our research.",
+        timestamp: "30 minutes ago",
+        isOwn: false
+      }
+    ],
+    3: [
+      {
+        id: 1,
+        sender: "You",
+        content: "Elena, I noticed we both worked on similar problems with recommendation systems. Would you be interested in comparing approaches?",
+        timestamp: "1 week ago",
+        isOwn: true
+      },
+      {
+        id: 2,
+        sender: "Elena Rodriguez",
+        content: "Hello! I'm interested in collaborating on machine learning projects.",
+        timestamp: "3 hours ago",
+        isOwn: false
+      }
+    ],
+    4: [
+      {
+        id: 1,
+        sender: "David Kim",
+        content: "Hey! Loved your presentation at NeurIPS. The section on distributed training was especially insightful.",
+        timestamp: "5 days ago",
+        isOwn: false
+      },
+      {
+        id: 2,
+        sender: "You",
+        content: "Thanks David! Your work on model parallelization is groundbreaking. How are you handling the communication overhead?",
+        timestamp: "3 days ago",
+        isOwn: true
+      },
+      {
+        id: 3,
+        sender: "David Kim",
+        content: "We've been experimenting with gradient compression and asynchronous updates. Happy to share our findings!",
+        timestamp: "2 days ago",
+        isOwn: false
+      }
+    ]
+  };
 
-    getCurrentUser();
-  }, []);
-
-  console.log('Conversations data:', conversations);
-  console.log('Current user ID:', currentUserId);
-
-  // Convert data to format expected by existing components
-  const formattedConversations: FormattedConversation[] = conversations.map(conv => ({
-    id: parseInt(conv.id.split('-')[0], 16), // Convert UUID to number for compatibility
-    name: conv.other_profile?.name || 'Unknown',
-    title: conv.other_profile?.title || '',
-    initials: conv.other_profile?.initials || '',
-    lastMessage: conv.last_message?.content || 'Start a conversation...',
-    timestamp: formatTimestamp(conv.last_message?.created_at || conv.created_at),
-    unread: false, // TODO: Calculate based on unread messages
-    unreadCount: 0, // TODO: Calculate based on unread messages
-    archived: false, // TODO: Check if archived by current user
-    conversationId: conv.id, // Keep original UUID for API calls
-  }));
-
-  // Add pending connection requests as "conversations"
-  const requestConversations: FormattedConversation[] = connectionRequests.map(req => ({
-    id: parseInt(req.id.split('-')[0], 16),
-    name: req.sender_profile?.name || 'Unknown',
-    title: req.sender_profile?.title || '',
-    initials: req.sender_profile?.initials || '',
-    lastMessage: req.message,
-    timestamp: formatTimestamp(req.created_at),
-    unread: true,
-    unreadCount: 1,
-    archived: false,
-    connectionRequestId: req.id,
-    isPendingRequest: true,
-  }));
-
-  const allConversations = [...requestConversations, ...formattedConversations];
-  console.log('All conversations:', allConversations);
-  
-  const selectedConversation = allConversations.find(conv => 
-    conv.conversationId === selectedConversationId
-  );
-
-  // Convert messages to expected format
-  const formattedMessages = messages.map((msg, index) => ({
-    id: index + 1,
-    sender: msg.sender_profile?.name || 'Unknown',
-    content: msg.content,
-    timestamp: formatTimestamp(msg.created_at),
-    isOwn: msg.sender_profile_id === currentUserId, // Check if message is from current user
-    needsResponse: index === 0 && selectedConversation?.isPendingRequest,
-  }));
+  const selectedConversation = mockConversations.find(conv => conv.id === selectedConversationId);
+  const currentMessages = mockMessages[selectedConversationId] || [];
 
   const handleSelectConversation = (id: number) => {
-    const conv = allConversations.find(c => c.id === id);
-    if (conv?.conversationId) {
-      setSelectedConversationId(conv.conversationId);
-    }
+    setSelectedConversationId(id);
   };
 
-  const handleSendMessage = async (content: string) => {
-    if (!selectedConversationId || !currentUserId) {
-      toast({
-        title: "Error",
-        description: "Unable to send message. Please try again.",
-        variant: "destructive",
-      });
-      return;
-    }
+  const handleSendMessage = (content: string) => {
+    // Mock message sending
+    const newMessage: Message = {
+      id: currentMessages.length + 1,
+      sender: "You",
+      content,
+      timestamp: "now",
+      isOwn: true
+    };
 
-    try {
-      await sendMessage.mutateAsync({
-        conversationId: selectedConversationId,
-        content,
-        senderProfileId: currentUserId,
-      });
+    // Add the message to our mock data
+    mockMessages[selectedConversationId] = [...currentMessages, newMessage];
 
-      // Refetch conversations and messages to get the latest data
-      refetchConversations();
-      refetchMessages();
+    toast({
+      title: "Message sent",
+      description: "Your message has been sent successfully.",
+    });
 
-      toast({
-        title: "Message sent",
-        description: "Your message has been sent successfully.",
-      });
-    } catch (error) {
-      console.error('Error sending message:', error);
-      toast({
-        title: "Error sending message",
-        description: "Please try again.",
-        variant: "destructive",
-      });
-    }
+    // Force re-render by updating state
+    setSelectedConversationId(selectedConversationId);
   };
 
-  const handleAcceptConversation = async () => {
-    if (!selectedConversation?.connectionRequestId) return;
+  const handleAcceptConversation = () => {
+    if (!selectedConversation?.isPendingRequest) return;
 
-    try {
-      await updateConnectionRequest.mutateAsync({
-        id: selectedConversation.connectionRequestId,
-        status: 'accepted'
-      });
+    toast({
+      title: "Connection accepted",
+      description: "You can now continue the conversation freely.",
+    });
 
-      toast({
-        title: "Connection accepted",
-        description: "You can now continue the conversation freely.",
-      });
-    } catch (error) {
-      toast({
-        title: "Error accepting connection",
-        description: "Please try again.",
-        variant: "destructive",
-      });
-    }
+    // Convert pending request to regular conversation
+    const updatedConversation = { ...selectedConversation };
+    updatedConversation.isPendingRequest = false;
+    updatedConversation.conversationId = `conv-${selectedConversation.id}`;
+    delete updatedConversation.connectionRequestId;
   };
 
-  const handleDeclineConversation = async () => {
-    if (!selectedConversation?.connectionRequestId) return;
+  const handleDeclineConversation = () => {
+    if (!selectedConversation?.isPendingRequest) return;
 
-    try {
-      await updateConnectionRequest.mutateAsync({
-        id: selectedConversation.connectionRequestId,
-        status: 'declined'
-      });
-
-      toast({
-        title: "Connection declined",
-        description: "This conversation request has been declined.",
-        variant: "destructive",
-      });
-    } catch (error) {
-      toast({
-        title: "Error declining connection",
-        description: "Please try again.",
-        variant: "destructive",
-      });
-    }
+    toast({
+      title: "Connection declined",
+      description: "This conversation request has been declined.",
+      variant: "destructive",
+    });
   };
-
-  // Handle navigation from Network page
-  useEffect(() => {
-    const userParam = searchParams.get('user');
-    const selectedUser = location.state?.selectedUser;
-    
-    if (userParam && selectedUser) {
-      const userId = parseInt(userParam);
-      
-      // Check if conversation already exists
-      const existingConversation = allConversations.find(conv => conv.id === userId);
-      
-      if (existingConversation?.conversationId) {
-        setSelectedConversationId(existingConversation.conversationId);
-      }
-    }
-  }, [searchParams, location.state, allConversations]);
-
-  if (conversationsLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Navigation />
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex items-center justify-center h-64">
-            <Loader2 className="h-8 w-8 animate-spin text-momentum-600" />
-            <span className="ml-2 text-gray-600">Loading conversations...</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -249,8 +233,8 @@ const Messages = () => {
             <Card className="border-0 shadow-sm h-full">
               <CardContent className="p-0 h-full">
                 <ConversationsList 
-                  conversations={allConversations}
-                  selectedConversation={selectedConversation?.id || 0}
+                  conversations={mockConversations}
+                  selectedConversation={selectedConversationId}
                   onSelectConversation={handleSelectConversation}
                 />
               </CardContent>
@@ -263,7 +247,7 @@ const Messages = () => {
               <CardContent className="p-0 h-full">
                 <ChatWindow 
                   currentConversation={selectedConversation}
-                  messages={formattedMessages}
+                  messages={currentMessages}
                   onAcceptConversation={handleAcceptConversation}
                   onDeclineConversation={handleDeclineConversation}
                   onSendMessage={handleSendMessage}
@@ -275,10 +259,10 @@ const Messages = () => {
 
         {/* Mobile Layout */}
         <MobileLayout 
-          conversations={allConversations}
-          selectedConversation={selectedConversation?.id || 0}
+          conversations={mockConversations}
+          selectedConversation={selectedConversationId}
           currentConversation={selectedConversation}
-          messages={formattedMessages}
+          messages={currentMessages}
           onSelectConversation={handleSelectConversation}
           onAcceptConversation={handleAcceptConversation}
           onDeclineConversation={handleDeclineConversation}
@@ -288,22 +272,5 @@ const Messages = () => {
     </div>
   );
 };
-
-// Helper function to format timestamps
-function formatTimestamp(timestamp: string): string {
-  const date = new Date(timestamp);
-  const now = new Date();
-  const diffInMs = now.getTime() - date.getTime();
-  const diffInHours = diffInMs / (1000 * 60 * 60);
-
-  if (diffInHours < 1) {
-    return "now";
-  } else if (diffInHours < 24) {
-    return `${Math.floor(diffInHours)} hour${Math.floor(diffInHours) !== 1 ? 's' : ''} ago`;
-  } else {
-    const diffInDays = Math.floor(diffInHours / 24);
-    return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
-  }
-}
 
 export default Messages;
