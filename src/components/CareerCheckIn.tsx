@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -36,52 +37,6 @@ const CareerCheckIn = () => {
 
   return (
     <div>
-      {/* AI Career Buddy Section */}
-      <Card className="border-momentum-200 bg-gradient-to-r from-momentum-50/30 to-blue-50/30 mb-6">
-        <CardContent className="p-6">
-          <div className="flex items-start space-x-4">
-            <div className="bg-gradient-to-r from-momentum-100 to-blue-100 p-3 rounded-full">
-              <Bot className="h-6 w-6 text-momentum-600" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-gray-900 text-lg mb-2">
-                🤖 Try our AI-Powered Career Buddy
-              </h3>
-              <p className="text-gray-700 text-sm leading-relaxed mb-4">
-                Get personalized insights, monthly check-ins, and workplace navigation support from your AI career companion.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-                <div className="flex items-center space-x-2 text-xs text-gray-600">
-                  <Calendar className="h-4 w-4 text-momentum-500" />
-                  <span>Monthly check-ins</span>
-                </div>
-                <div className="flex items-center space-x-2 text-xs text-gray-600">
-                  <Target className="h-4 w-4 text-momentum-500" />
-                  <span>Goal tracking</span>
-                </div>
-                <div className="flex items-center space-x-2 text-xs text-gray-600">
-                  <TrendingUp className="h-4 w-4 text-momentum-500" />
-                  <span>Career insights</span>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                <Button 
-                  onClick={() => setShowAIBuddy(!showAIBuddy)}
-                  className="bg-momentum-600 hover:bg-momentum-700 text-white text-sm"
-                >
-                  {showAIBuddy ? 'Hide AI Buddy' : 'Start with AI Buddy'}
-                </Button>
-                <Button variant="outline" size="sm" className="text-xs border-momentum-200 text-momentum-600 hover:bg-momentum-50">
-                  Learn more
-                </Button>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
       {/* AI Buddy Interface */}
       {showAIBuddy && (
         <Card className="border-blue-200 bg-blue-50/30 mb-6">
@@ -170,11 +125,23 @@ const CareerCheckIn = () => {
               />
             </div>
 
-            {/* Save action */}
+            {/* Actions */}
             <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-              <Badge className="text-xs px-3 py-1 bg-gray-100 text-gray-600">
-                Private reflection
-              </Badge>
+              <div className="flex items-center space-x-3">
+                <Badge className="text-xs px-3 py-1 bg-gray-100 text-gray-600">
+                  Private reflection
+                </Badge>
+                
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setShowAIBuddy(!showAIBuddy)}
+                  className="text-xs"
+                >
+                  <Bot className="h-3 w-3 mr-1" />
+                  {showAIBuddy ? 'Hide AI buddy' : 'Try AI-powered buddy'}
+                </Button>
+              </div>
               
               <Button size="sm" className="text-xs">
                 Save entry
