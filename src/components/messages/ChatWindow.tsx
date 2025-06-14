@@ -1,5 +1,5 @@
 
-import { MoreHorizontal, Send, Check, X } from "lucide-react";
+import { MoreHorizontal, Send, Check, X, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
