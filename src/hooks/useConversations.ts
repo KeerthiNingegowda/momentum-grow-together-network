@@ -45,6 +45,7 @@ export const useConversations = () => {
 
       console.log('Current profile ID:', currentProfile.id);
 
+      // Use proper Supabase filtering instead of string interpolation
       const { data, error } = await supabase
         .from('conversations')
         .select(`
@@ -57,21 +58,30 @@ export const useConversations = () => {
 
       if (error) {
         console.error('Error fetching conversations:', error);
-        throw error;
+        return [];
       }
 
       console.log('Raw conversations data:', data);
 
+      if (!data || data.length === 0) {
+        console.log('No conversations found');
+        return [];
+      }
+
       // Get last message for each conversation
       const conversationsWithMessages = await Promise.all(
         data.map(async (conversation: any) => {
-          const { data: lastMessage } = await supabase
+          const { data: lastMessage, error: messageError } = await supabase
             .from('messages')
             .select('content, created_at, sender_profile_id')
             .eq('conversation_id', conversation.id)
             .order('created_at', { ascending: false })
             .limit(1)
-            .single();
+            .maybeSingle();
+
+          if (messageError) {
+            console.error('Error fetching last message for conversation:', conversation.id, messageError);
+          }
 
           // Determine which profile is the "other" profile
           const otherProfile = conversation.profile1_id === currentProfile.id 
