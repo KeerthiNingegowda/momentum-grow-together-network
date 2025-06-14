@@ -48,7 +48,7 @@ const ConnectionRequestDialog = ({
       await onSendRequest(message.trim());
       toast({
         title: "Connection request sent!",
-        description: `Your message has been sent to ${profile?.name}`,
+        description: `Your connection request has been sent to ${profile?.name}. They will be notified and can accept or decline your request.`,
       });
       setMessage("");
       onClose();
@@ -100,14 +100,14 @@ const ConnectionRequestDialog = ({
             </div>
           </div>
 
-          {/* Message Input */}
+          {/* Connection Request Message */}
           <div className="space-y-2">
             <label htmlFor="connection-message" className="text-sm font-medium text-gray-700">
               Why would you like to connect with {profile.name.split(' ')[0]}?
             </label>
             <Textarea
               id="connection-message"
-              placeholder={`Hi ${profile.name.split(' ')[0]}, I'd love to connect because...`}
+              placeholder={`Hi ${profile.name.split(' ')[0]}, I'd love to connect with you because...`}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className="min-h-[120px] resize-none"
@@ -116,6 +116,9 @@ const ConnectionRequestDialog = ({
             <div className="text-xs text-gray-500 text-right">
               {message.length}/500 characters
             </div>
+            <p className="text-xs text-gray-500 mt-1">
+              {profile.name} will receive your connection request and can choose to accept or decline it.
+            </p>
           </div>
 
           {/* Action Buttons */}
@@ -134,7 +137,7 @@ const ConnectionRequestDialog = ({
               className="flex-1 bg-momentum-600 hover:bg-momentum-700 text-white"
             >
               {isLoading ? (
-                "Sending..."
+                "Sending Request..."
               ) : (
                 <>
                   <Send className="h-4 w-4 mr-2" />

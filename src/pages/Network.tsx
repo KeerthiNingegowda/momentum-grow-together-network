@@ -15,7 +15,7 @@ const Network = () => {
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleStartConversation = (profile: Profile) => {
+  const handleConnectRequest = (profile: Profile) => {
     setSelectedProfile(profile);
     setIsDialogOpen(true);
   };
@@ -24,7 +24,7 @@ const Network = () => {
     if (!selectedProfile) return;
     
     // TODO: Implement actual connection request logic here
-    // This could involve saving to a connections table in Supabase
+    // This will save the connection request to a database table
     console.log('Sending connection request to:', selectedProfile.name);
     console.log('Message:', message);
     
@@ -142,7 +142,7 @@ const Network = () => {
                 {/* Action Buttons */}
                 <div className="flex space-x-2">
                   <Button 
-                    onClick={() => handleStartConversation(profile)}
+                    onClick={() => handleConnectRequest(profile)}
                     className="flex-1 text-sm bg-momentum-600 hover:bg-momentum-700 text-white"
                   >
                     <UserPlus className="h-4 w-4 mr-2" />
