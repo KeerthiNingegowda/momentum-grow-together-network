@@ -16,14 +16,35 @@ const Jobs = () => {
       type: "Full-time",
       salary: "$120k - $160k",
       posted: "2 days ago",
-      description: "We're looking for a senior data scientist to lead our ML initiatives and drive business insights.",
+      description: "We're looking for a senior data scientist to lead our ML initiatives and drive business insights. You'll work with cross-functional teams to develop predictive models, analyze large datasets, and translate complex findings into actionable business strategies. Experience with deep learning, statistical modeling, and data visualization is essential.",
       complexity: "Medium",
       problemType: "Business Analytics",
       teamSize: "8-12 people",
       techStack: [
-        { category: "ML", technologies: ["TensorFlow", "PyTorch", "Scikit-learn"], color: "#3b82f6" },
-        { category: "Data", technologies: ["Python", "SQL", "Spark"], color: "#10b981" },
-        { category: "Cloud", technologies: ["AWS", "Docker", "Kubernetes"], color: "#f59e0b" }
+        { 
+          category: "Machine Learning", 
+          technologies: ["TensorFlow", "PyTorch", "Scikit-learn", "XGBoost", "Keras"], 
+          color: "#3b82f6",
+          description: "Advanced ML frameworks for model development and training"
+        },
+        { 
+          category: "Data Processing", 
+          technologies: ["Python", "SQL", "Apache Spark", "Pandas", "NumPy"], 
+          color: "#10b981",
+          description: "Core data manipulation and analysis tools"
+        },
+        { 
+          category: "Cloud & Infrastructure", 
+          technologies: ["AWS SageMaker", "Docker", "Kubernetes", "MLflow"], 
+          color: "#f59e0b",
+          description: "Scalable deployment and model management platforms"
+        },
+        { 
+          category: "Visualization", 
+          technologies: ["Tableau", "PowerBI", "Matplotlib", "D3.js"], 
+          color: "#8b5cf6",
+          description: "Data visualization and business intelligence tools"
+        }
       ],
       companyStats: {
         totalPosted: 24,
@@ -61,14 +82,35 @@ const Jobs = () => {
       type: "Contract",
       salary: "$80 - $120/hr",
       posted: "1 week ago",
-      description: "Join our team to build cutting-edge AI solutions for enterprise clients.",
+      description: "Join our team to build cutting-edge AI solutions for enterprise clients. You'll architect and implement computer vision systems, work with large language models, and optimize AI pipelines for production environments. Strong experience in deep learning research and practical AI deployment required.",
       complexity: "Very High",
       problemType: "Computer Vision",
       teamSize: "4-6 people",
       techStack: [
-        { category: "AI", technologies: ["PyTorch", "OpenCV", "Transformers"], color: "#8b5cf6" },
-        { category: "Backend", technologies: ["FastAPI", "Docker", "Redis"], color: "#ef4444" },
-        { category: "Cloud", technologies: ["GCP", "TPU", "Vertex AI"], color: "#f59e0b" }
+        { 
+          category: "AI/ML Frameworks", 
+          technologies: ["PyTorch", "OpenCV", "Transformers", "CUDA", "TensorRT"], 
+          color: "#8b5cf6",
+          description: "Advanced AI frameworks for computer vision and NLP"
+        },
+        { 
+          category: "Backend Systems", 
+          technologies: ["FastAPI", "Docker", "Redis", "PostgreSQL"], 
+          color: "#ef4444",
+          description: "High-performance backend infrastructure"
+        },
+        { 
+          category: "Cloud AI Services", 
+          technologies: ["GCP Vertex AI", "TPU", "Cloud Storage", "BigQuery"], 
+          color: "#f59e0b",
+          description: "Google Cloud AI and data processing services"
+        },
+        { 
+          category: "Development Tools", 
+          technologies: ["Git", "Jupyter", "Weights & Biases", "DVC"], 
+          color: "#06b6d4",
+          description: "Version control and experiment tracking tools"
+        }
       ],
       companyStats: {
         totalPosted: 12,
@@ -106,14 +148,35 @@ const Jobs = () => {
       type: "Full-time",
       salary: "$100k - $140k",
       posted: "3 days ago",
-      description: "Lead a team of data analysts and drive strategic decision-making through data insights.",
+      description: "Lead a team of data analysts and drive strategic decision-making through data insights. You'll oversee dashboard development, establish data governance practices, and collaborate with executive leadership to identify growth opportunities. Strong leadership and business acumen required alongside technical expertise.",
       complexity: "Medium",
       problemType: "Business Analytics",
       teamSize: "12-15 people",
       techStack: [
-        { category: "BI", technologies: ["Tableau", "PowerBI", "Looker"], color: "#06b6d4" },
-        { category: "Data", technologies: ["SQL", "Python", "dbt"], color: "#10b981" },
-        { category: "Platform", technologies: ["Snowflake", "Airflow", "Git"], color: "#6366f1" }
+        { 
+          category: "Business Intelligence", 
+          technologies: ["Tableau", "PowerBI", "Looker", "Google Analytics"], 
+          color: "#06b6d4",
+          description: "Enterprise BI and analytics platforms"
+        },
+        { 
+          category: "Data Engineering", 
+          technologies: ["SQL", "Python", "dbt", "Apache Airflow"], 
+          color: "#10b981",
+          description: "Data transformation and pipeline orchestration"
+        },
+        { 
+          category: "Data Warehouse", 
+          technologies: ["Snowflake", "BigQuery", "Redshift", "S3"], 
+          color: "#6366f1",
+          description: "Cloud data warehousing and storage solutions"
+        },
+        { 
+          category: "Collaboration", 
+          technologies: ["Git", "Slack", "Jira", "Confluence"], 
+          color: "#84cc16",
+          description: "Team collaboration and project management tools"
+        }
       ],
       companyStats: {
         totalPosted: 8,
@@ -244,10 +307,16 @@ const Jobs = () => {
                 </CardHeader>
                 
                 <CardContent className="pt-0">
+                  {/* Job Description - Now prioritized */}
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-gray-900 mb-2">About This Role</h4>
+                    <p className="text-gray-700 leading-relaxed">{job.description}</p>
+                  </div>
+
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                    {/* Tech Stack */}
+                    {/* Enhanced Tech Stack */}
                     <div className="space-y-3">
-                      <h4 className="font-semibold text-gray-900">Tech Stack</h4>
+                      <h4 className="font-semibold text-gray-900">Technical Requirements</h4>
                       <TechStackVisualization techStack={job.techStack} />
                     </div>
 
@@ -287,8 +356,6 @@ const Jobs = () => {
                       </div>
                     </div>
                   </div>
-
-                  <p className="text-gray-700 mb-4">{job.description}</p>
                   
                   <div className="flex gap-3">
                     <Button className="bg-momentum-600 hover:bg-momentum-700">
