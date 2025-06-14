@@ -2,7 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Pen, Camera, Link, Send, Sparkles, Heart } from "lucide-react";
+import { Camera, Link, Send, Sparkles, Heart } from "lucide-react";
 import { useState } from "react";
 
 const PostCreator = () => {
@@ -30,15 +30,15 @@ const PostCreator = () => {
 
   return (
     <Card className="border-0 shadow-lg bg-gradient-to-br from-white via-momentum-25 to-momentum-50 hover-lift">
-      <CardContent className="p-6">
+      <CardContent className="p-4">
         {/* Header with inspiring message */}
-        <div className="flex items-center space-x-3 mb-4">
+        <div className="flex items-center space-x-3 mb-3">
           <div className="bg-gradient-to-br from-momentum-400 to-momentum-600 p-2 rounded-xl">
-            <Sparkles className="h-5 w-5 text-white" />
+            <Sparkles className="h-4 w-4 text-white" />
           </div>
           <div>
-            <h3 className="font-semibold text-gray-800">Share your professional journey</h3>
-            <p className="text-sm text-momentum-600">What's inspiring you today?</p>
+            <h3 className="font-semibold text-gray-800 text-sm">Share your professional journey</h3>
+            <p className="text-xs text-momentum-600">What's inspiring you today?</p>
           </div>
         </div>
 
@@ -48,22 +48,13 @@ const PostCreator = () => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             onFocus={handleFocus}
-            className="min-h-[80px] resize-none border-momentum-200 focus:border-momentum-400 focus:ring-momentum-300 bg-white/60 backdrop-blur-sm placeholder:text-momentum-500 text-gray-800"
+            className="min-h-[60px] resize-none border-momentum-200 focus:border-momentum-400 focus:ring-momentum-300 bg-white/60 backdrop-blur-sm placeholder:text-momentum-500 text-gray-800"
           />
           
-          {!isExpanded && !content && (
-            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-              <div className="flex items-center space-x-2 text-momentum-600">
-                <Pen size={16} />
-                <span className="text-sm">Click to share your thoughts...</span>
-              </div>
-            </div>
-          )}
-          
           {isExpanded && (
-            <div className="mt-4">
+            <div className="mt-3">
               {/* Suggestion pills */}
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap gap-2 mb-3">
                 <button
                   onClick={() => setContent("Today I learned that ")}
                   className="px-3 py-1 bg-momentum-100 text-momentum-700 rounded-full text-xs hover:bg-momentum-200 transition-colors"
@@ -85,7 +76,7 @@ const PostCreator = () => {
               </div>
 
               {/* Action buttons */}
-              <div className="flex items-center justify-between pt-4 border-t border-momentum-100">
+              <div className="flex items-center justify-between pt-3 border-t border-momentum-100">
                 <div className="flex space-x-3">
                   <Button
                     variant="ghost"
@@ -93,7 +84,7 @@ const PostCreator = () => {
                     onClick={handleAttachPhoto}
                     className="text-momentum-600 hover:text-momentum-800 hover:bg-momentum-50"
                   >
-                    <Camera size={16} className="mr-2" />
+                    <Camera size={14} className="mr-2" />
                     Photo
                   </Button>
                   <Button
@@ -102,7 +93,7 @@ const PostCreator = () => {
                     onClick={handleAddLink}
                     className="text-momentum-600 hover:text-momentum-800 hover:bg-momentum-50"
                   >
-                    <Link size={16} className="mr-2" />
+                    <Link size={14} className="mr-2" />
                     Link
                   </Button>
                 </div>
@@ -116,7 +107,7 @@ const PostCreator = () => {
                       : "bg-gray-200 text-gray-400"
                   }`}
                 >
-                  <Send size={16} className="mr-2" />
+                  <Send size={14} className="mr-2" />
                   Share
                 </Button>
               </div>
@@ -126,7 +117,7 @@ const PostCreator = () => {
 
         {/* Inspiration footer */}
         {!isExpanded && (
-          <div className="mt-4 pt-4 border-t border-momentum-100">
+          <div className="mt-3 pt-3 border-t border-momentum-100">
             <div className="flex items-center justify-between text-xs text-momentum-600">
               <div className="flex items-center space-x-1">
                 <Heart size={12} className="text-red-400" />
