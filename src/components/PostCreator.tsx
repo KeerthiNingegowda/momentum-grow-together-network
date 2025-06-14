@@ -13,7 +13,7 @@ const PostCreator = () => {
           placeholder="Share your thoughts..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="min-h-[60px] resize-none border-gray-200 focus:border-momentum-300"
+          className="min-h-[40px] resize-none border-gray-200 focus:border-momentum-300"
         />
       </CardContent>
     </Card>
