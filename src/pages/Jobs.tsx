@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { MapPin, Clock, DollarSign, Building, TrendingUp, Brain, Code, Users, Coffee, Zap, Heart, Star } from "lucide-react";
+import { MapPin, Clock, DollarSign, Building, TrendingUp, Users, Coffee, Zap, Heart, Star } from "lucide-react";
 import { TechStackVisualization } from "@/components/jobs/TechStackVisualization";
 
 const Jobs = () => {
@@ -213,17 +213,10 @@ const Jobs = () => {
                       </div>
                       
                       <div className="flex items-center space-x-4 mb-3">
-                        <div className="flex items-center space-x-1">
-                          {getComplexityIcon(job.complexity)}
-                          <span className="text-sm font-medium">{job.complexity}</span>
-                        </div>
                         <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200">
                           {job.problemType}
                         </Badge>
                         <span className="text-sm text-gray-500">{job.teamSize} team</span>
-                      </div>
-
-                      <div className="flex items-center space-x-3">
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Badge variant="outline" className={getConfidenceBadgeColor(job.companyStats.confidenceScore)}>
@@ -235,9 +228,6 @@ const Jobs = () => {
                             <p>Likelihood of a ghost job based on past hiring.</p>
                           </TooltipContent>
                         </Tooltip>
-                        <span className="text-sm text-gray-500">
-                          {job.companyStats.totalFilled}/{job.companyStats.totalPosted} roles filled
-                        </span>
                       </div>
                     </div>
                     
