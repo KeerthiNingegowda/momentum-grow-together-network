@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import RealCareerMoments from "@/components/RealCareerMoments";
 import CareerCheckIn from "@/components/CareerCheckIn";
@@ -7,7 +6,7 @@ import { BookOpen, Users } from "lucide-react";
 
 const Index = () => {
   const userProfile = {
-    name: "Jessica",
+    name: "Alex Chen",
     roles: ["Data Science", "CX Strategy"]
   };
 
