@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Building, MapPin, DollarSign, Clock, Star } from "lucide-react";
 
 interface JobListing {
-  id: number;
+  id: string;
   title: string;
   company: string;
   location: string;
@@ -12,7 +12,7 @@ interface JobListing {
   salary: string;
   posted: string;
   description: string;
-  problemType: string;
+  problemType?: string;
   companyStats: {
     confidenceScore: number;
   };
@@ -25,7 +25,7 @@ interface JobListing {
 
 interface JobPreviewCardProps {
   job: JobListing;
-  onJobClick: (jobId: number) => void;
+  onJobClick: (jobId: string) => void;
 }
 
 export const JobPreviewCard = ({ job, onJobClick }: JobPreviewCardProps) => {
@@ -68,9 +68,11 @@ export const JobPreviewCard = ({ job, onJobClick }: JobPreviewCardProps) => {
         
         <div className="flex items-center justify-between">
           <div className="flex space-x-2 flex-wrap">
-            <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200 text-xs">
-              {job.problemType}
-            </Badge>
+            {job.problemType && (
+              <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200 text-xs">
+                {job.problemType}
+              </Badge>
+            )}
             <Badge variant="outline" className={`${getConfidenceBadgeColor(job.companyStats.confidenceScore)} text-xs`}>
               {job.companyStats.confidenceScore}% Confidence
             </Badge>

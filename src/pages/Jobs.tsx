@@ -1,17 +1,21 @@
+
 import Navigation from "@/components/Navigation";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useState } from "react";
 import { JobPreviewCard } from "@/components/jobs/JobPreviewCard";
 import { JobFilters } from "@/components/jobs/JobFilters";
 import { JobDetailView } from "@/components/jobs/JobDetailView";
-import { jobListings } from "@/data/jobListings";
+import { useJobs } from "@/hooks/useJobs";
+import { Loader2 } from "lucide-react";
 
 const Jobs = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
   const [salaryFilter, setSalaryFilter] = useState("all");
-  const [selectedJobId, setSelectedJobId] = useState<number | null>(null);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+
+  const { data: jobListings = [], isLoading, error } = useJobs();
 
   // Filter jobs based on search criteria
   const filteredJobs = jobListings.filter(job => {
@@ -23,7 +27,7 @@ const Jobs = () => {
     return matchesSearch && matchesLocation && matchesType;
   });
 
-  const handleJobClick = (jobId: number) => {
+  const handleJobClick = (jobId: string) => {
     setSelectedJobId(jobId);
   };
 
@@ -39,6 +43,40 @@ const Jobs = () => {
   };
 
   const hasActiveFilters = Boolean(searchTerm) || locationFilter !== "all" || typeFilter !== "all" || salaryFilter !== "all";
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <TooltipProvider>
+        <div className="min-h-screen bg-gradient-to-br from-momentum-50 to-white">
+          <Navigation />
+          <div className="flex items-center justify-center min-h-[50vh]">
+            <div className="text-center">
+              <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-momentum-600" />
+              <p className="text-gray-600">Loading jobs...</p>
+            </div>
+          </div>
+        </div>
+      </TooltipProvider>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <TooltipProvider>
+        <div className="min-h-screen bg-gradient-to-br from-momentum-50 to-white">
+          <Navigation />
+          <div className="flex items-center justify-center min-h-[50vh]">
+            <div className="text-center">
+              <p className="text-red-600 mb-2">Error loading jobs</p>
+              <p className="text-gray-600 text-sm">{error.message}</p>
+            </div>
+          </div>
+        </div>
+      </TooltipProvider>
+    );
+  }
 
   // Show detailed view for selected job
   if (selectedJobId) {

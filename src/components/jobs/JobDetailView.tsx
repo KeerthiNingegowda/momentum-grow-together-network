@@ -7,7 +7,7 @@ import { Building, MapPin, Clock, DollarSign, TrendingUp, Star, ArrowLeft } from
 import { TechStackVisualization } from "./TechStackVisualization";
 
 interface JobListing {
-  id: number;
+  id: string;
   title: string;
   company: string;
   location: string;
@@ -15,8 +15,8 @@ interface JobListing {
   salary: string;
   posted: string;
   description: string;
-  problemType: string;
-  teamSize: string;
+  problemType?: string;
+  teamSize?: string;
   techStack: any[];
   companyStats: {
     confidenceScore: number;
@@ -82,10 +82,14 @@ export const JobDetailView = ({ job, onBackClick }: JobDetailViewProps) => {
               </div>
               
               <div className="flex items-center space-x-4 mb-3">
-                <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200">
-                  {job.problemType}
-                </Badge>
-                <span className="text-sm text-gray-500">{job.teamSize} team</span>
+                {job.problemType && (
+                  <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200">
+                    {job.problemType}
+                  </Badge>
+                )}
+                {job.teamSize && (
+                  <span className="text-sm text-gray-500">{job.teamSize} team</span>
+                )}
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Badge variant="outline" className={getConfidenceBadgeColor(job.companyStats.confidenceScore)}>

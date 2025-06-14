@@ -9,7 +9,218 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      job_company_insights: {
+        Row: {
+          category: string
+          color: string
+          created_at: string
+          description: string | null
+          details: string[]
+          id: string
+          job_id: string
+        }
+        Insert: {
+          category: string
+          color: string
+          created_at?: string
+          description?: string | null
+          details: string[]
+          id?: string
+          job_id: string
+        }
+        Update: {
+          category?: string
+          color?: string
+          created_at?: string
+          description?: string | null
+          details?: string[]
+          id?: string
+          job_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_company_insights_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_feedback: {
+        Row: {
+          created_at: string
+          id: string
+          job_id: string
+          rating: number
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          job_id: string
+          rating: number
+          text: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          job_id?: string
+          rating?: number
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_feedback_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_perks: {
+        Row: {
+          created_at: string
+          icon: string
+          id: string
+          job_id: string
+          label: string
+        }
+        Insert: {
+          created_at?: string
+          icon: string
+          id?: string
+          job_id: string
+          label: string
+        }
+        Update: {
+          created_at?: string
+          icon?: string
+          id?: string
+          job_id?: string
+          label?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_perks_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_tech_stack: {
+        Row: {
+          category: string
+          color: string
+          created_at: string
+          description: string | null
+          id: string
+          job_id: string
+          technologies: string[]
+        }
+        Insert: {
+          category: string
+          color: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          job_id: string
+          technologies: string[]
+        }
+        Update: {
+          category?: string
+          color?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          job_id?: string
+          technologies?: string[]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_tech_stack_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          avg_tenure: string | null
+          company: string
+          complexity: string | null
+          confidence_score: number | null
+          created_at: string
+          description: string
+          diversity_score: string | null
+          id: string
+          location: string
+          mentorship_program: boolean | null
+          posted: string
+          problem_type: string | null
+          salary: string
+          satisfaction_score: number | null
+          team_size: string | null
+          title: string
+          type: string
+          updated_at: string
+          values: string[] | null
+          vibe: string | null
+          work_style: string | null
+        }
+        Insert: {
+          avg_tenure?: string | null
+          company: string
+          complexity?: string | null
+          confidence_score?: number | null
+          created_at?: string
+          description: string
+          diversity_score?: string | null
+          id?: string
+          location: string
+          mentorship_program?: boolean | null
+          posted: string
+          problem_type?: string | null
+          salary: string
+          satisfaction_score?: number | null
+          team_size?: string | null
+          title: string
+          type: string
+          updated_at?: string
+          values?: string[] | null
+          vibe?: string | null
+          work_style?: string | null
+        }
+        Update: {
+          avg_tenure?: string | null
+          company?: string
+          complexity?: string | null
+          confidence_score?: number | null
+          created_at?: string
+          description?: string
+          diversity_score?: string | null
+          id?: string
+          location?: string
+          mentorship_program?: boolean | null
+          posted?: string
+          problem_type?: string | null
+          salary?: string
+          satisfaction_score?: number | null
+          team_size?: string | null
+          title?: string
+          type?: string
+          updated_at?: string
+          values?: string[] | null
+          vibe?: string | null
+          work_style?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
