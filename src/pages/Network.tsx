@@ -1,3 +1,4 @@
+
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -5,8 +6,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Search, MessageCircle, UserPlus, Briefcase } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Network = () => {
+  const navigate = useNavigate();
+  
   const profiles = [
     {
       id: 1,
@@ -82,8 +86,19 @@ const Network = () => {
     }
   ];
 
-  const handleStartConversation = () => {
-    window.location.href = "/messages";
+  const handleStartConversation = (profile: typeof profiles[0]) => {
+    // Navigate to messages page with the selected user's ID
+    navigate(`/messages?user=${profile.id}`, { 
+      state: { 
+        selectedUser: {
+          id: profile.id,
+          name: profile.name,
+          title: profile.title,
+          avatar: profile.avatar,
+          initials: profile.initials
+        }
+      }
+    });
   };
 
   return (
@@ -151,7 +166,7 @@ const Network = () => {
                 {/* Action Buttons */}
                 <div className="flex space-x-2">
                   <Button 
-                    onClick={handleStartConversation}
+                    onClick={() => handleStartConversation(profile)}
                     className={`flex-1 text-sm ${
                       profile.isConnected 
                         ? "variant-outline" 

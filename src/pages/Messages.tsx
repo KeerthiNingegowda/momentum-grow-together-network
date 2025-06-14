@@ -1,13 +1,17 @@
+
 import Navigation from "@/components/Navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import ConversationsList from "@/components/messages/ConversationsList";
 import ChatWindow from "@/components/messages/ChatWindow";
 import MobileLayout from "@/components/messages/MobileLayout";
 
 const Messages = () => {
   const { toast } = useToast();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const [selectedConversation, setSelectedConversation] = useState(1);
   const [conversations, setConversations] = useState([
     {
@@ -59,6 +63,39 @@ const Messages = () => {
       archived: false
     }
   ]);
+
+  // Handle navigation from Network page
+  useEffect(() => {
+    const userParam = searchParams.get('user');
+    const selectedUser = location.state?.selectedUser;
+    
+    if (userParam && selectedUser) {
+      const userId = parseInt(userParam);
+      
+      // Check if conversation already exists
+      const existingConversation = conversations.find(conv => conv.id === userId);
+      
+      if (!existingConversation) {
+        // Create new conversation for the selected user
+        const newConversation = {
+          id: userId,
+          name: selectedUser.name,
+          title: selectedUser.title,
+          avatar: selectedUser.avatar,
+          initials: selectedUser.initials,
+          lastMessage: "Start a conversation...",
+          timestamp: "now",
+          unread: false,
+          unreadCount: 0,
+          archived: false
+        };
+        
+        setConversations(prev => [newConversation, ...prev]);
+      }
+      
+      setSelectedConversation(userId);
+    }
+  }, [searchParams, location.state]);
 
   const currentMessages = [
     {
