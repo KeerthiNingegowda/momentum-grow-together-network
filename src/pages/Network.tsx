@@ -159,12 +159,9 @@ const Network = () => {
                       className="flex-1 bg-momentum-600 hover:bg-momentum-700 text-white text-sm"
                     >
                       <UserPlus className="h-4 w-4 mr-2" />
-                      Connect
+                      Start conversation
                     </Button>
                   )}
-                  <Button variant="outline" size="icon">
-                    <MessageCircle className="h-4 w-4" />
-                  </Button>
                 </div>
               </CardContent>
             </Card>
