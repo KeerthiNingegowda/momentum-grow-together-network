@@ -21,7 +21,8 @@ const Network = () => {
       initials: "SC",
       skills: ["Machine Learning", "Computer Vision", "PyTorch"],
       mutualConnections: 12,
-      isConnected: false
+      isConnected: false,
+      pastCompanies: ["ex-OpenAI", "ex-Stanford"]
     },
     {
       id: 6,
@@ -32,7 +33,8 @@ const Network = () => {
       initials: "MR",
       skills: ["Autonomous Systems", "Deep Learning", "Python"],
       mutualConnections: 8,
-      isConnected: false
+      isConnected: false,
+      pastCompanies: ["ex-Waymo", "ex-Uber"]
     },
     {
       id: 7,
@@ -43,7 +45,8 @@ const Network = () => {
       initials: "AP",
       skills: ["AI Ethics", "Policy", "Research"],
       mutualConnections: 15,
-      isConnected: true
+      isConnected: true,
+      pastCompanies: ["ex-Google", "ex-MIT"]
     },
     {
       id: 8,
@@ -54,7 +57,8 @@ const Network = () => {
       initials: "JL",
       skills: ["LLMs", "Distributed Systems", "Rust"],
       mutualConnections: 6,
-      isConnected: false
+      isConnected: false,
+      pastCompanies: ["ex-Anthropic"]
     },
     {
       id: 9,
@@ -65,7 +69,8 @@ const Network = () => {
       initials: "EK",
       skills: ["Robotics", "Control Systems", "C++"],
       mutualConnections: 4,
-      isConnected: false
+      isConnected: false,
+      pastCompanies: ["ex-iRobot", "ex-NASA"]
     },
     {
       id: 10,
@@ -76,7 +81,8 @@ const Network = () => {
       initials: "DK",
       skills: ["Leadership", "AI Safety", "Scaling"],
       mutualConnections: 22,
-      isConnected: false
+      isConnected: false,
+      pastCompanies: ["ex-Lovable", "ex-Meta"]
     }
   ];
 
@@ -133,6 +139,14 @@ const Network = () => {
                     <div className="flex items-center text-sm text-gray-500 mb-2">
                       <Briefcase className="h-3 w-3 mr-1" />
                       <span>{profile.company}</span>
+                    </div>
+                    {/* Past Companies */}
+                    <div className="flex flex-wrap gap-1 mb-2">
+                      {profile.pastCompanies.map((pastCompany, index) => (
+                        <span key={index} className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">
+                          {pastCompany}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
