@@ -14,6 +14,9 @@ const YouTubeChannelManager = () => {
     { id: "3", channel_name: "Programming with Mosh" },
     { id: "4", channel_name: "The Net Ninja" },
     { id: "5", channel_name: "Fireship" },
+    { id: "6", channel_name: "aiDotEngineer" },
+    { id: "7", channel_name: "3blue1brown" },
+    { id: "8", channel_name: "StatQuest" },
   ];
 
   if (isLoading) {
