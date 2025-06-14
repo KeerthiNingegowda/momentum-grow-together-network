@@ -13,19 +13,19 @@ const CareerCheckIn = () => {
 
   const prompts = [
     {
-      question: "What's one thing you want more of in your work this week?",
-      placeholder: "Share what would make your work more fulfilling...",
+      question: "What's one win (big or small) from your work this week?",
+      placeholder: "Document a success, breakthrough, or positive moment...",
+      icon: "🏆"
+    },
+    {
+      question: "What challenge did you face and what did you learn from it?",
+      placeholder: "Reflect on setbacks, mistakes, or difficult situations and your insights...", 
       icon: "🎯"
     },
     {
-      question: "When did you feel most useful in the past month?",
-      placeholder: "Reflect on a moment when you made a real impact...", 
-      icon: "💡"
-    },
-    {
-      question: "Any person you'd like to thank or reconnect with?",
-      placeholder: "Think of someone who helped or inspired you...",
-      icon: "🤝"
+      question: "What do you want to focus on or improve next week?",
+      placeholder: "Think about areas for growth, skills to develop, or goals to pursue...",
+      icon: "🌱"
     }
   ];
 
@@ -125,30 +125,20 @@ const CareerCheckIn = () => {
         </Card>
       )}
 
-      {/* Human Career Buddy */}
-      <Card className="border-momentum-200 bg-momentum-50/30 mb-6">
-        <CardContent className="p-4">
-          <div className="flex items-start space-x-3">
-            <div className="bg-momentum-100 p-2 rounded-full">
-              <Users className="h-4 w-4 text-momentum-600" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-medium text-gray-900 text-sm mb-1">
-                Want a human career buddy too?
-              </h3>
-              <p className="text-gray-600 text-xs leading-relaxed mb-2">
-                Get paired with someone at a similar career stage for monthly check-ins and workplace navigation support.
-              </p>
-              <Button variant="outline" size="sm" className="text-xs">
-                Find a career buddy
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
+      {/* Work Journal Section */}
       <Card className="border-0 shadow-sm bg-white/80 backdrop-blur-sm">
         <CardContent className="p-6">
+          {/* Header */}
+          <div className="mb-6">
+            <h2 className="text-lg font-medium text-gray-900 mb-2">
+              📝 Your Work Journal
+            </h2>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Document your wins and challenges, reflect on your growth, and track your professional journey. 
+              This is your private space for introspection and learning.
+            </p>
+          </div>
+
           {/* Prompt navigation */}
           <div className="flex space-x-2 mb-6">
             {prompts.map((_, index) => (
@@ -162,7 +152,7 @@ const CareerCheckIn = () => {
                 }`}
               >
                 <span className="block text-lg mb-1">{prompts[index].icon}</span>
-                Week {index + 1}
+                Entry {index + 1}
               </button>
             ))}
           </div>
@@ -189,7 +179,7 @@ const CareerCheckIn = () => {
               </Badge>
               
               <Button size="sm" className="text-xs">
-                Save reflection
+                Save entry
               </Button>
             </div>
           </div>
@@ -201,10 +191,10 @@ const CareerCheckIn = () => {
                 <Heart className="h-4 w-4 text-gray-400 mt-0.5" />
                 <div>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Take your time. This is your space to think without judgment.
+                    Take your time to reflect. Every win and challenge is part of your growth story.
                   </p>
                   <p className="text-xs text-gray-500 mt-1">
-                    Your reflections stay private unless you choose to share them.
+                    Your journal entries are completely private and help you track your professional development.
                   </p>
                 </div>
               </div>
