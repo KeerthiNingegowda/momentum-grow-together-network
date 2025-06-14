@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import Messages from "./pages/Messages";
 import Notifications from "./pages/Notifications";
 import Jobs from "./pages/Jobs";
+import Network from "./pages/Network";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/jobs" element={<Jobs />} />
+            <Route path="/network" element={<Network />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/messages" element={<Messages />} />
             <Route path="/notifications" element={<Notifications />} />
