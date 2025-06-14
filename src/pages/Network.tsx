@@ -7,13 +7,32 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Search, UserPlus, Briefcase, Loader2 } from "lucide-react";
 import { useProfiles, Profile } from "@/hooks/useProfiles";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ConnectionRequestDialog from "@/components/network/ConnectionRequestDialog";
 
 const Network = () => {
   const { data: profiles, isLoading, error } = useProfiles();
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Filter profiles based on search query
+  const filteredProfiles = useMemo(() => {
+    if (!profiles || !searchQuery.trim()) {
+      return profiles || [];
+    }
+
+    const query = searchQuery.toLowerCase().trim();
+    
+    return profiles.filter(profile => 
+      profile.name.toLowerCase().includes(query) ||
+      profile.title.toLowerCase().includes(query) ||
+      profile.company.toLowerCase().includes(query) ||
+      profile.location.toLowerCase().includes(query) ||
+      profile.skills.some(skill => skill.toLowerCase().includes(query)) ||
+      profile.pastCompanies.some(company => company.toLowerCase().includes(query))
+    );
+  }, [profiles, searchQuery]);
 
   const handleConnectRequest = (profile: Profile) => {
     setSelectedProfile(profile);
@@ -85,73 +104,87 @@ const Network = () => {
             <Input 
               placeholder="Search professionals..." 
               className="pl-10"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
+          {searchQuery && (
+            <p className="text-sm text-gray-600 mt-2">
+              Found {filteredProfiles.length} professional{filteredProfiles.length !== 1 ? 's' : ''} matching "{searchQuery}"
+            </p>
+          )}
         </div>
 
         {/* Profiles Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {profiles?.map((profile) => (
-            <Card key={profile.id} className="border-0 shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4 mb-4">
-                  <Avatar className="w-16 h-16">
-                    {profile.image_url && (
-                      <AvatarImage src={profile.image_url} alt={profile.name} />
-                    )}
-                    <AvatarFallback className="bg-momentum-100 text-momentum-600 text-lg">
-                      {profile.initials}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-gray-900 text-lg mb-1">{profile.name}</h3>
-                    <p className="text-sm text-gray-600 mb-1">{profile.title}</p>
-                    <div className="flex items-center text-sm text-gray-500 mb-2">
-                      <Briefcase className="h-3 w-3 mr-1" />
-                      <span>{profile.company}</span>
+          {filteredProfiles.length === 0 && searchQuery ? (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-500 text-lg mb-2">No professionals found</p>
+              <p className="text-gray-400">Try adjusting your search terms</p>
+            </div>
+          ) : (
+            filteredProfiles.map((profile) => (
+              <Card key={profile.id} className="border-0 shadow-sm hover:shadow-md transition-shadow">
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <Avatar className="w-16 h-16">
+                      {profile.image_url && (
+                        <AvatarImage src={profile.image_url} alt={profile.name} />
+                      )}
+                      <AvatarFallback className="bg-momentum-100 text-momentum-600 text-lg">
+                        {profile.initials}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-gray-900 text-lg mb-1">{profile.name}</h3>
+                      <p className="text-sm text-gray-600 mb-1">{profile.title}</p>
+                      <div className="flex items-center text-sm text-gray-500 mb-2">
+                        <Briefcase className="h-3 w-3 mr-1" />
+                        <span>{profile.company}</span>
+                      </div>
+                      {/* Past Companies */}
+                      <div className="flex flex-wrap gap-1 mb-2">
+                        {profile.pastCompanies.map((pastCompany, index) => (
+                          <span key={index} className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">
+                            {pastCompany}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    {/* Past Companies */}
-                    <div className="flex flex-wrap gap-1 mb-2">
-                      {profile.pastCompanies.map((pastCompany, index) => (
-                        <span key={index} className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">
-                          {pastCompany}
-                        </span>
+                  </div>
+
+                  {/* Skills */}
+                  <div className="mb-4">
+                    <div className="flex flex-wrap gap-1">
+                      {profile.skills.map((skill, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs">
+                          {skill}
+                        </Badge>
                       ))}
                     </div>
                   </div>
-                </div>
 
-                {/* Skills */}
-                <div className="mb-4">
-                  <div className="flex flex-wrap gap-1">
-                    {profile.skills.map((skill, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs">
-                        {skill}
-                      </Badge>
-                    ))}
+                  {/* Mutual Connections */}
+                  <div className="mb-4">
+                    <p className="text-sm text-gray-600">
+                      {profile.mutual_connections} mutual connections
+                    </p>
                   </div>
-                </div>
 
-                {/* Mutual Connections */}
-                <div className="mb-4">
-                  <p className="text-sm text-gray-600">
-                    {profile.mutual_connections} mutual connections
-                  </p>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex space-x-2">
-                  <Button 
-                    onClick={() => handleConnectRequest(profile)}
-                    className="flex-1 text-sm bg-momentum-600 hover:bg-momentum-700 text-white"
-                  >
-                    <UserPlus className="h-4 w-4 mr-2" />
-                    Connect
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  {/* Action Buttons */}
+                  <div className="flex space-x-2">
+                    <Button 
+                      onClick={() => handleConnectRequest(profile)}
+                      className="flex-1 text-sm bg-momentum-600 hover:bg-momentum-700 text-white"
+                    >
+                      <UserPlus className="h-4 w-4 mr-2" />
+                      Connect
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
       </div>
 
