@@ -11,9 +11,9 @@ import { useState } from "react";
 
 const Jobs = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [locationFilter, setLocationFilter] = useState("");
-  const [typeFilter, setTypeFilter] = useState("");
-  const [salaryFilter, setSalaryFilter] = useState("");
+  const [locationFilter, setLocationFilter] = useState("all");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [salaryFilter, setSalaryFilter] = useState("all");
   const [viewMode, setViewMode] = useState<"detailed" | "preview">("detailed");
 
   const jobListings = [
@@ -300,8 +300,8 @@ const Jobs = () => {
     const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          job.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesLocation = !locationFilter || job.location.includes(locationFilter);
-    const matchesType = !typeFilter || job.type === typeFilter;
+    const matchesLocation = locationFilter === "all" || job.location.includes(locationFilter);
+    const matchesType = typeFilter === "all" || job.type === typeFilter;
     return matchesSearch && matchesLocation && matchesType;
   });
 
@@ -405,7 +405,7 @@ const Jobs = () => {
                   <SelectValue placeholder="Location" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Locations</SelectItem>
+                  <SelectItem value="all">All Locations</SelectItem>
                   <SelectItem value="San Francisco">San Francisco</SelectItem>
                   <SelectItem value="Remote">Remote</SelectItem>
                   <SelectItem value="New York">New York</SelectItem>
@@ -417,7 +417,7 @@ const Jobs = () => {
                   <SelectValue placeholder="Job Type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Types</SelectItem>
+                  <SelectItem value="all">All Types</SelectItem>
                   <SelectItem value="Full-time">Full-time</SelectItem>
                   <SelectItem value="Contract">Contract</SelectItem>
                   <SelectItem value="Part-time">Part-time</SelectItem>
@@ -429,21 +429,21 @@ const Jobs = () => {
                   <SelectValue placeholder="Salary Range" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Ranges</SelectItem>
+                  <SelectItem value="all">All Ranges</SelectItem>
                   <SelectItem value="0-100k">$0 - $100k</SelectItem>
                   <SelectItem value="100k-150k">$100k - $150k</SelectItem>
                   <SelectItem value="150k+">$150k+</SelectItem>
                 </SelectContent>
               </Select>
               
-              {(searchTerm || locationFilter || typeFilter || salaryFilter) && (
+              {(searchTerm || locationFilter !== "all" || typeFilter !== "all" || salaryFilter !== "all") && (
                 <Button
                   variant="ghost"
                   onClick={() => {
                     setSearchTerm("");
-                    setLocationFilter("");
-                    setTypeFilter("");
-                    setSalaryFilter("");
+                    setLocationFilter("all");
+                    setTypeFilter("all");
+                    setSalaryFilter("all");
                   }}
                   className="text-gray-500 hover:text-gray-700"
                 >
