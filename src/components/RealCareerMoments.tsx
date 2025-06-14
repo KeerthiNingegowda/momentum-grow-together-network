@@ -8,7 +8,7 @@ const RealCareerMoments = () => {
     {
       author: "Sarah Chen",
       role: "ML Engineer",
-      timeAgo: "2 hours ago",
+      timeAgo: "2 days ago",
       whySharing: "Want to help others avoid the same mistake I made",
       intent: "Sharing a learning",
       content: "I led my first stakeholder alignment workshop. Took 3 tries, but I finally figured out how to frame trade-offs in plain language. Sharing the 3-slide structure that worked best.",
@@ -25,7 +25,7 @@ const RealCareerMoments = () => {
     {
       author: "Marcus Johnson",
       role: "Data Scientist",
-      timeAgo: "5 hours ago",
+      timeAgo: "5 days ago",
       whySharing: "Looking for different perspectives on this approach",
       intent: "Looking for advice",
       content: "Been experimenting with explaining model predictions to non-technical users. Found that analogies work better than charts, but struggling with complex ensemble models. How do you handle this?",
@@ -42,7 +42,7 @@ const RealCareerMoments = () => {
     {
       author: "Alex Rivera",
       role: "UX Research Lead",
-      timeAgo: "1 day ago",
+      timeAgo: "6 days ago",
       whySharing: "Hoping this helps someone currently struggling with similar challenges",
       intent: "Open to mentor",
       content: "Just wrapped up a 6-month project integrating AI insights into our user research process. Happy to share lessons learned with anyone tackling similar challenges in their org.",

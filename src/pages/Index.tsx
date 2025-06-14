@@ -19,25 +19,25 @@ const Index = () => {
       activity: "Deep-diving into Transformer architectures",
       context: "Understanding attention mechanisms for NLP projects",
       participants: "127 professionals",
-      timeframe: "this week"
+      timeframe: "2 days ago"
     },
     {
       activity: "Exploring ethical AI frameworks", 
       context: "Building responsible AI systems in production",
       participants: "89 professionals",
-      timeframe: "this week"
+      timeframe: "3 days ago"
     },
     {
       activity: "Mastering MLOps best practices",
       context: "Streamlining model deployment and monitoring",
       participants: "156 professionals", 
-      timeframe: "this week"
+      timeframe: "1 day ago"
     },
     {
       activity: "Customer journey mapping with AI insights",
       context: "Leveraging ML to understand user behavior patterns",
       participants: "73 professionals",
-      timeframe: "this week"
+      timeframe: "4 days ago"
     }
   ];
 
