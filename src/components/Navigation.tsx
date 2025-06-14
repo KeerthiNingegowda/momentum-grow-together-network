@@ -8,7 +8,6 @@ const Navigation = () => {
   
   const navItems = [
     { href: "/", label: "Home", icon: Sprout },
-    { href: "/profile", label: "Profile", icon: User },
     { href: "/messages", label: "Messages", icon: MessageCircle },
     { href: "/notifications", label: "Notifications", icon: Bell },
   ];
@@ -21,7 +20,10 @@ const Navigation = () => {
             <div className="bg-momentum-100 p-2 rounded-lg">
               <Sprout className="h-6 w-6 text-momentum-600" />
             </div>
-            <span className="text-xl font-bold gradient-text">Momentum</span>
+            <div>
+              <span className="text-xl font-bold gradient-text">Momentum</span>
+              <p className="text-xs text-gray-600 -mt-1">Grow your career, one real connection at a time</p>
+            </div>
           </div>
           
           <div className="hidden md:flex items-center space-x-1">
@@ -50,11 +52,13 @@ const Navigation = () => {
             <Button variant="ghost" size="icon" className="text-gray-600 hover:text-momentum-600">
               <Search className="h-5 w-5" />
             </Button>
-            <Button variant="outline" className="border-momentum-300 text-momentum-700 hover:bg-momentum-50">
-              Sign In
-            </Button>
-            <Button className="bg-momentum-600 hover:bg-momentum-700 text-white">
-              Join Now
+            <Button
+              variant="ghost"
+              className="flex items-center space-x-2 text-gray-700 hover:text-momentum-600 hover:bg-momentum-50"
+              onClick={() => window.location.href = "/profile"}
+            >
+              <User className="h-4 w-4" />
+              <span>Profile</span>
             </Button>
           </div>
         </div>
