@@ -1,11 +1,9 @@
-
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { MapPin, Clock, DollarSign, Building, TrendingUp, Zap, Brain, Code } from "lucide-react";
-import { SkillRadarChart } from "@/components/jobs/SkillRadarChart";
 import { TechStackVisualization } from "@/components/jobs/TechStackVisualization";
 import { MatchScore } from "@/components/jobs/MatchScore";
 
@@ -20,17 +18,9 @@ const Jobs = () => {
       salary: "$120k - $160k",
       posted: "2 days ago",
       description: "We're looking for a senior data scientist to lead our ML initiatives and drive business insights.",
-      complexity: "High",
-      problemType: "Recommendation Systems",
+      complexity: "Medium",
+      problemType: "Business Analytics",
       teamSize: "8-12 people",
-      skillsRadar: [
-        { skill: "Python", required: 9, userLevel: 8 },
-        { skill: "ML", required: 8, userLevel: 7 },
-        { skill: "SQL", required: 7, userLevel: 9 },
-        { skill: "Stats", required: 8, userLevel: 6 },
-        { skill: "AWS", required: 6, userLevel: 5 },
-        { skill: "TensorFlow", required: 8, userLevel: 7 }
-      ],
       techStack: [
         { category: "ML", technologies: ["TensorFlow", "PyTorch", "Scikit-learn"], color: "#3b82f6" },
         { category: "Data", technologies: ["Python", "SQL", "Spark"], color: "#10b981" },
@@ -63,14 +53,6 @@ const Jobs = () => {
       complexity: "Very High",
       problemType: "Computer Vision",
       teamSize: "4-6 people",
-      skillsRadar: [
-        { skill: "Python", required: 9, userLevel: 8 },
-        { skill: "CV", required: 9, userLevel: 6 },
-        { skill: "PyTorch", required: 8, userLevel: 7 },
-        { skill: "MLOps", required: 7, userLevel: 5 },
-        { skill: "Research", required: 8, userLevel: 7 },
-        { skill: "GPU", required: 7, userLevel: 6 }
-      ],
       techStack: [
         { category: "AI", technologies: ["PyTorch", "OpenCV", "Transformers"], color: "#8b5cf6" },
         { category: "Backend", technologies: ["FastAPI", "Docker", "Redis"], color: "#ef4444" },
@@ -103,14 +85,6 @@ const Jobs = () => {
       complexity: "Medium",
       problemType: "Business Analytics",
       teamSize: "12-15 people",
-      skillsRadar: [
-        { skill: "SQL", required: 9, userLevel: 9 },
-        { skill: "Tableau", required: 8, userLevel: 7 },
-        { skill: "Python", required: 6, userLevel: 8 },
-        { skill: "Leadership", required: 9, userLevel: 5 },
-        { skill: "Statistics", required: 7, userLevel: 6 },
-        { skill: "Strategy", required: 8, userLevel: 6 }
-      ],
       techStack: [
         { category: "BI", technologies: ["Tableau", "PowerBI", "Looker"], color: "#06b6d4" },
         { category: "Data", technologies: ["SQL", "Python", "dbt"], color: "#10b981" },
@@ -136,7 +110,6 @@ const Jobs = () => {
   const getComplexityIcon = (complexity: string) => {
     switch (complexity) {
       case "Very High": return <Brain className="h-4 w-4 text-purple-600" />;
-      case "High": return <Zap className="h-4 w-4 text-orange-600" />;
       case "Medium": return <Code className="h-4 w-4 text-blue-600" />;
       default: return <Code className="h-4 w-4 text-gray-600" />;
     }
@@ -233,25 +206,7 @@ const Jobs = () => {
                 </CardHeader>
                 
                 <CardContent className="pt-0">
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                    {/* Skills Radar */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-gray-900">Skills Match</h4>
-                      <div className="flex justify-center">
-                        <SkillRadarChart skills={job.skillsRadar} />
-                      </div>
-                      <div className="flex justify-center space-x-4 text-xs">
-                        <div className="flex items-center space-x-1">
-                          <div className="w-3 h-3 bg-momentum-600 rounded-full opacity-50"></div>
-                          <span>Required</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <div className="w-3 h-1 bg-red-500 rounded-full"></div>
-                          <span>Your Level</span>
-                        </div>
-                      </div>
-                    </div>
-
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                     {/* Tech Stack */}
                     <div className="space-y-3">
                       <h4 className="font-semibold text-gray-900">Tech Stack</h4>
