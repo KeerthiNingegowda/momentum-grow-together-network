@@ -1,7 +1,13 @@
 
 import { Button } from "@/components/ui/button";
-import { Sprout, User, Bell, MessageCircle, Briefcase, Users } from "lucide-react";
+import { Sprout, User, Bell, MessageCircle, Briefcase, Users, Settings } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navigation = () => {
   const location = useLocation();
@@ -53,14 +59,33 @@ const Navigation = () => {
           </div>
 
           <div className="flex items-center space-x-3">
-            <Button
-              variant="ghost"
-              className="flex items-center space-x-2 text-gray-700 hover:text-momentum-600 hover:bg-momentum-50 transition-all duration-300 hover:shadow-sm"
-              onClick={() => navigate("/profile")}
-            >
-              <User className="h-4 w-4" />
-              <span>Profile</span>
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-momentum-600 hover:bg-momentum-50 transition-all duration-300 hover:shadow-sm"
+                >
+                  <User className="h-4 w-4" />
+                  <span>Profile</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 bg-white border border-gray-200 shadow-lg">
+                <DropdownMenuItem 
+                  onClick={() => navigate("/profile")}
+                  className="cursor-pointer hover:bg-gray-50"
+                >
+                  <User className="h-4 w-4 mr-2" />
+                  View Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => navigate("/preferences")}
+                  className="cursor-pointer hover:bg-gray-50"
+                >
+                  <Settings className="h-4 w-4 mr-2" />
+                  Preferences
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
@@ -69,4 +94,3 @@ const Navigation = () => {
 };
 
 export default Navigation;
-
