@@ -139,9 +139,9 @@ const Notifications = () => {
         <Tabs defaultValue="all" className="space-y-4">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="research">Research</TabsTrigger>
-            <TabsTrigger value="collaborations">Collaborations</TabsTrigger>
+            <TabsTrigger value="reactions">Reactions</TabsTrigger>
             <TabsTrigger value="opportunities">Opportunities</TabsTrigger>
+            <TabsTrigger value="network">Network Activity</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all" className="space-y-4">
@@ -196,53 +196,10 @@ const Notifications = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="research" className="space-y-4">
+          <TabsContent value="reactions" className="space-y-4">
             <Card className="border-0 shadow-sm">
               <CardContent className="p-0">
                 {notifications.filter(n => n.type === 'research' || n.type === 'like' || n.type === 'comment').map((notification, index, filtered) => (
-                  <div 
-                    key={notification.id}
-                    className={`p-4 flex items-start space-x-4 hover:bg-gray-50 cursor-pointer ${
-                      index !== filtered.length - 1 ? 'border-b border-gray-100' : ''
-                    } ${notification.unread ? 'bg-momentum-25' : ''}`}
-                  >
-                    <div className={`p-2 rounded-full ${getIconBg(notification.type)}`}>
-                      <notification.icon className={`h-4 w-4 ${getIconColor(notification.type)}`} />
-                    </div>
-
-                    <Avatar className="w-10 h-10">
-                      <AvatarImage src={notification.user.avatar} />
-                      <AvatarFallback className="bg-momentum-100 text-momentum-600">
-                        {notification.user.initials}
-                      </AvatarFallback>
-                    </Avatar>
-
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-900">
-                        <span className="font-semibold">{notification.user.name}</span>{' '}
-                        {notification.action}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      {notification.unread && (
-                        <div className="w-2 h-2 bg-momentum-600 rounded-full"></div>
-                      )}
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="collaborations" className="space-y-4">
-            <Card className="border-0 shadow-sm">
-              <CardContent className="p-0">
-                {notifications.filter(n => n.type === 'connection' || n.type === 'collaboration').map((notification, index, filtered) => (
                   <div 
                     key={notification.id}
                     className={`p-4 flex items-start space-x-4 hover:bg-gray-50 cursor-pointer ${
@@ -286,6 +243,49 @@ const Notifications = () => {
             <Card className="border-0 shadow-sm">
               <CardContent className="p-0">
                 {notifications.filter(n => n.type === 'job' || n.type === 'event').map((notification, index, filtered) => (
+                  <div 
+                    key={notification.id}
+                    className={`p-4 flex items-start space-x-4 hover:bg-gray-50 cursor-pointer ${
+                      index !== filtered.length - 1 ? 'border-b border-gray-100' : ''
+                    } ${notification.unread ? 'bg-momentum-25' : ''}`}
+                  >
+                    <div className={`p-2 rounded-full ${getIconBg(notification.type)}`}>
+                      <notification.icon className={`h-4 w-4 ${getIconColor(notification.type)}`} />
+                    </div>
+
+                    <Avatar className="w-10 h-10">
+                      <AvatarImage src={notification.user.avatar} />
+                      <AvatarFallback className="bg-momentum-100 text-momentum-600">
+                        {notification.user.initials}
+                      </AvatarFallback>
+                    </Avatar>
+
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gray-900">
+                        <span className="font-semibold">{notification.user.name}</span>{' '}
+                        {notification.action}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      {notification.unread && (
+                        <div className="w-2 h-2 bg-momentum-600 rounded-full"></div>
+                      )}
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="network" className="space-y-4">
+            <Card className="border-0 shadow-sm">
+              <CardContent className="p-0">
+                {notifications.filter(n => n.type === 'connection' || n.type === 'collaboration').map((notification, index, filtered) => (
                   <div 
                     key={notification.id}
                     className={`p-4 flex items-start space-x-4 hover:bg-gray-50 cursor-pointer ${
