@@ -1,8 +1,8 @@
+
 import Navigation from "@/components/Navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { BookOpen, TrendingUp, Users, Lightbulb } from "lucide-react";
+import RealCareerMoments from "@/components/RealCareerMoments";
+import { Card, CardContent } from "@/components/ui/card";
+import { BookOpen, Users } from "lucide-react";
 
 const Index = () => {
   const userProfile = {
@@ -82,6 +82,9 @@ const Index = () => {
             ))}
           </div>
         </div>
+
+        {/* Section 2: Real Career Moments */}
+        <RealCareerMoments />
 
         {/* Placeholder for other sections */}
         <div className="space-y-16">
