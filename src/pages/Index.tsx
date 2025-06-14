@@ -1,14 +1,18 @@
+
 import Navigation from "@/components/Navigation";
 import RealCareerMoments from "@/components/RealCareerMoments";
 import CareerCheckIn from "@/components/CareerCheckIn";
 import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { BookOpen, Users, MessageCircle, PenTool, TrendingUp } from "lucide-react";
 
 const Index = () => {
   const userProfile = {
     name: "Alex Chen",
     roles: ["Data Science", "CX Strategy"]
   };
+
+  const firstName = userProfile.name.split(' ')[0];
 
   const trendingActivities = [
     {
@@ -37,22 +41,58 @@ const Index = () => {
     }
   ];
 
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
       <Navigation />
       
       <div className="max-w-4xl mx-auto px-4 py-12">
-        {/* Section 1: People Like You Are Doing */}
-        <div className="mb-16">
-          <div className="mb-8">
-            <h1 className="text-2xl font-light text-gray-800 mb-2">
-              Welcome back, {userProfile.name}
-            </h1>
-            <p className="text-gray-600 text-lg font-light">
-              Here's what professionals in {userProfile.roles.join(" & ")} are exploring this week
-            </p>
+        {/* Welcome Section */}
+        <div className="mb-8">
+          <h1 className="text-2xl font-light text-gray-800 mb-2">
+            Welcome back, {firstName}
+          </h1>
+          <p className="text-gray-600 text-lg font-light mb-6">
+            Here's what professionals in {userProfile.roles.join(" & ")} are exploring this week
+          </p>
+          
+          {/* Section Navigation Buttons */}
+          <div className="flex flex-wrap gap-3 mb-8">
+            <Button
+              variant="outline"
+              onClick={() => scrollToSection('trending-activities')}
+              className="flex items-center space-x-2 text-momentum-600 border-momentum-200 hover:bg-momentum-50"
+            >
+              <TrendingUp className="h-4 w-4" />
+              <span>Trending Activities</span>
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => scrollToSection('career-moments')}
+              className="flex items-center space-x-2 text-momentum-600 border-momentum-200 hover:bg-momentum-50"
+            >
+              <MessageCircle className="h-4 w-4" />
+              <span>Career Moments</span>
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => scrollToSection('career-checkin')}
+              className="flex items-center space-x-2 text-momentum-600 border-momentum-200 hover:bg-momentum-50"
+            >
+              <PenTool className="h-4 w-4" />
+              <span>Career Check-In</span>
+            </Button>
           </div>
+        </div>
 
+        {/* Section 1: People Like You Are Doing */}
+        <div id="trending-activities" className="mb-16">
           <div className="grid gap-6">
             {trendingActivities.map((item, index) => (
               <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200 bg-white/80 backdrop-blur-sm">
@@ -84,10 +124,14 @@ const Index = () => {
         </div>
 
         {/* Section 2: Real Career Moments */}
-        <RealCareerMoments />
+        <div id="career-moments">
+          <RealCareerMoments />
+        </div>
 
         {/* Section 3: Career Check-In */}
-        <CareerCheckIn />
+        <div id="career-checkin">
+          <CareerCheckIn />
+        </div>
 
         {/* Placeholder for other sections */}
         <div className="space-y-16">
