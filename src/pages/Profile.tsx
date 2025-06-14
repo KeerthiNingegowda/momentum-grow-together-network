@@ -1,3 +1,4 @@
+
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -6,19 +7,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { TrendingUp, Handshake, Target, Zap, MessageCircle, Share2, TwitterIcon, ArrowRight, Brain, BarChart, ExternalLink, Building, GraduationCap, ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { ProfileEditProvider, useProfileEdit } from "@/contexts/ProfileEditContext";
-import EditToolbar from "@/components/profile/EditToolbar";
-import SectionControls from "@/components/profile/SectionControls";
-import ExperienceSection from "@/components/profile/sections/ExperienceSection";
-import EducationSection from "@/components/profile/sections/EducationSection";
-import SkillsSection from "@/components/profile/sections/SkillsSection";
-import ProjectsSection from "@/components/profile/sections/ProjectsSection";
-import AchievementsSection from "@/components/profile/sections/AchievementsSection";
-import CustomSection from "@/components/profile/sections/CustomSection";
 
-const ProfileContent = () => {
+const Profile = () => {
   const [isTestimonialsOpen, setIsTestimonialsOpen] = useState(false);
-  const { isEditMode, sections } = useProfileEdit();
 
   const keyWins = [
     { metric: "$12M", label: "Revenue Impact Generated", icon: TrendingUp },
@@ -65,19 +56,15 @@ const ProfileContent = () => {
     { school: "UC Berkeley", degree: "BS Mathematics" }
   ];
 
-  const visibleSections = sections.filter(section => section.isVisible).sort((a, b) => a.order - b.order);
-
-  const renderSection = (section: any) => {
-    const sectionProps = {
-      className: `relative ${isEditMode ? 'ring-2 ring-momentum-200 ring-opacity-50' : ''}`,
-      style: isEditMode ? { paddingTop: '1rem' } : {}
-    };
-
-    switch (section.type) {
-      case 'hero':
-        return (
-          <div key={section.id} {...sectionProps}>
-            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Navigation />
+      
+      <div className="max-w-6xl mx-auto px-4 py-8 pt-24">
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2">
+            {/* Hero Section */}
             <Card className="shadow-lg border-0 mb-6 bg-gradient-to-br from-momentum-50 to-white">
               <CardContent className="p-8">
                 <div className="flex items-start space-x-6">
@@ -109,13 +96,8 @@ const ProfileContent = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
-        );
 
-      case 'metrics':
-        return (
-          <div key={section.id} {...sectionProps}>
-            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
+            {/* Key Metrics */}
             <div className="grid md:grid-cols-4 gap-4 mb-6">
               {keyWins.map((win, index) => {
                 const Icon = win.icon;
@@ -130,13 +112,8 @@ const ProfileContent = () => {
                 );
               })}
             </div>
-          </div>
-        );
 
-      case 'wins':
-        return (
-          <div key={section.id} {...sectionProps}>
-            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
+            {/* Recent Business Wins */}
             <Card className="shadow-lg border-0 mb-6">
               <CardHeader>
                 <h2 className="text-xl font-bold text-gray-900 flex items-center">
@@ -155,13 +132,8 @@ const ProfileContent = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
-        );
 
-      case 'testimonials':
-        return (
-          <div key={section.id} {...sectionProps}>
-            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
+            {/* Testimonials */}
             <Card className="shadow-lg border-0 mb-6">
               <Collapsible open={isTestimonialsOpen} onOpenChange={setIsTestimonialsOpen}>
                 <CollapsibleTrigger className="w-full">
@@ -225,13 +197,8 @@ const ProfileContent = () => {
                 </CollapsibleContent>
               </Collapsible>
             </Card>
-          </div>
-        );
 
-      case 'cta':
-        return (
-          <div key={section.id} {...sectionProps}>
-            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
+            {/* Call to Action */}
             <Card className="shadow-lg border-0 bg-gradient-to-r from-momentum-600 to-momentum-700 text-white">
               <CardContent className="p-6">
                 <h2 className="text-xl font-bold mb-3">What I'm Looking For Right Now</h2>
@@ -246,72 +213,6 @@ const ProfileContent = () => {
                 </Button>
               </CardContent>
             </Card>
-          </div>
-        );
-
-      case 'experience':
-        return (
-          <div key={section.id} {...sectionProps}>
-            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
-            <ExperienceSection content={section.content} />
-          </div>
-        );
-
-      case 'education':
-        return (
-          <div key={section.id} {...sectionProps}>
-            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
-            <EducationSection content={section.content} />
-          </div>
-        );
-
-      case 'skills':
-        return (
-          <div key={section.id} {...sectionProps}>
-            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
-            <SkillsSection content={section.content} />
-          </div>
-        );
-
-      case 'projects':
-        return (
-          <div key={section.id} {...sectionProps}>
-            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
-            <ProjectsSection content={section.content} />
-          </div>
-        );
-
-      case 'achievements':
-        return (
-          <div key={section.id} {...sectionProps}>
-            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
-            <AchievementsSection content={section.content} />
-          </div>
-        );
-
-      case 'custom':
-        return (
-          <div key={section.id} {...sectionProps}>
-            {isEditMode && <SectionControls sectionId={section.id} isVisible={section.isVisible} />}
-            <CustomSection content={section.content} title={section.title} />
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Navigation />
-      <EditToolbar />
-      
-      <div className="max-w-6xl mx-auto px-4 py-8 pt-24">
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2">
-            {visibleSections.map(renderSection)}
           </div>
 
           {/* Sidebar */}
@@ -404,14 +305,6 @@ const ProfileContent = () => {
         </div>
       </div>
     </div>
-  );
-};
-
-const Profile = () => {
-  return (
-    <ProfileEditProvider>
-      <ProfileContent />
-    </ProfileEditProvider>
   );
 };
 
