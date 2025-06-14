@@ -47,6 +47,30 @@ export const JobDetailView = ({ job, onBackClick }: JobDetailViewProps) => {
     return "bg-red-100 text-red-800 border-red-200";
   };
 
+  // Safe data access with fallbacks
+  const safeJob = {
+    ...job,
+    title: job.title || "N/A",
+    company: job.company || "N/A",
+    location: job.location || "N/A",
+    type: job.type || "N/A",
+    salary: job.salary || "N/A",
+    posted: job.posted || "N/A",
+    description: job.description || "No description available",
+    problemType: job.problemType || null,
+    teamSize: job.teamSize || null,
+    techStack: job.techStack || [],
+    companyStats: {
+      confidenceScore: job.companyStats?.confidenceScore ?? 0
+    },
+    companyProfile: {
+      teamInsights: {
+        satisfactionScore: job.companyProfile?.teamInsights?.satisfactionScore ?? 0
+      },
+      companyInsights: job.companyProfile?.companyInsights || []
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Fixed Back Button */}
@@ -65,56 +89,56 @@ export const JobDetailView = ({ job, onBackClick }: JobDetailViewProps) => {
         <CardHeader className="pb-4">
           <div className="flex justify-between items-start mb-4">
             <div className="flex-1">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{job.title}</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">{safeJob.title}</h3>
               <div className="flex items-center space-x-4 text-gray-600 mb-3">
                 <div className="flex items-center">
                   <Building className="h-4 w-4 mr-1" />
-                  {job.company}
+                  {safeJob.company}
                 </div>
                 <div className="flex items-center">
                   <MapPin className="h-4 w-4 mr-1" />
-                  {job.location}
+                  {safeJob.location}
                 </div>
                 <div className="flex items-center">
                   <Clock className="h-4 w-4 mr-1" />
-                  {job.posted}
+                  {safeJob.posted}
                 </div>
               </div>
               
               <div className="flex items-center space-x-4 mb-3">
-                {job.problemType && (
+                {safeJob.problemType && (
                   <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200">
-                    {job.problemType}
+                    {safeJob.problemType}
                   </Badge>
                 )}
-                {job.teamSize && (
-                  <span className="text-sm text-gray-500">{job.teamSize} team</span>
+                {safeJob.teamSize && (
+                  <span className="text-sm text-gray-500">{safeJob.teamSize} team</span>
                 )}
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Badge variant="outline" className={getConfidenceBadgeColor(job.companyStats.confidenceScore)}>
+                    <Badge variant="outline" className={getConfidenceBadgeColor(safeJob.companyStats.confidenceScore)}>
                       <TrendingUp className="h-3 w-3 mr-1" />
-                      {job.companyStats.confidenceScore}% Confidence
+                      {safeJob.companyStats.confidenceScore || 0}% Confidence
                     </Badge>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Likelihood of a ghost job based on past hiring.</p>
                   </TooltipContent>
                 </Tooltip>
-                <Badge variant="outline" className={getSatisfactionBadgeColor(job.companyProfile.teamInsights.satisfactionScore)}>
+                <Badge variant="outline" className={getSatisfactionBadgeColor(safeJob.companyProfile.teamInsights.satisfactionScore)}>
                   <Star className="h-3 w-3 mr-1" />
-                  {job.companyProfile.teamInsights.satisfactionScore}/5 Satisfaction
+                  {safeJob.companyProfile.teamInsights.satisfactionScore || 0}/5 Satisfaction
                 </Badge>
               </div>
             </div>
             
             <div className="text-right">
               <Badge variant="secondary" className="mb-2">
-                {job.type}
+                {safeJob.type}
               </Badge>
               <div className="flex items-center text-momentum-600 font-semibold">
                 <DollarSign className="h-4 w-4 mr-1" />
-                {job.salary}
+                {safeJob.salary}
               </div>
             </div>
           </div>
@@ -123,18 +147,26 @@ export const JobDetailView = ({ job, onBackClick }: JobDetailViewProps) => {
         <CardContent className="pt-0">
           <div className="mb-6">
             <h4 className="font-semibold text-gray-900 mb-2">About This Role</h4>
-            <p className="text-gray-700 leading-relaxed">{job.description}</p>
+            <p className="text-gray-700 leading-relaxed">{safeJob.description}</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <div className="space-y-3">
               <h4 className="font-semibold text-gray-900">Technical Requirements</h4>
-              <TechStackVisualization techStack={job.techStack} />
+              {safeJob.techStack.length > 0 ? (
+                <TechStackVisualization techStack={safeJob.techStack} />
+              ) : (
+                <p className="text-gray-500 text-sm">No technical requirements specified</p>
+              )}
             </div>
 
             <div className="space-y-3">
               <h4 className="font-semibold text-gray-900">Company Insights</h4>
-              <TechStackVisualization techStack={job.companyProfile.companyInsights} />
+              {safeJob.companyProfile.companyInsights.length > 0 ? (
+                <TechStackVisualization techStack={safeJob.companyProfile.companyInsights} />
+              ) : (
+                <p className="text-gray-500 text-sm">No company insights available</p>
+              )}
             </div>
           </div>
           
