@@ -1,10 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Sprout, User, Bell, MessageCircle, Search, Briefcase, Users } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   
   const navItems = [
     { href: "/jobs", label: "Jobs", icon: Briefcase },
@@ -19,7 +20,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           <div 
             className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity"
-            onClick={() => window.location.href = "/"}
+            onClick={() => navigate("/")}
           >
             <div className="bg-momentum-100 p-2 rounded-lg">
               <Sprout className="h-6 w-6 text-momentum-600" />
@@ -42,7 +43,7 @@ const Navigation = () => {
                       ? "bg-momentum-600 hover:bg-momentum-700 text-white" 
                       : "text-gray-700 hover:text-momentum-600 hover:bg-momentum-50"
                   }`}
-                  onClick={() => window.location.href = item.href}
+                  onClick={() => navigate(item.href)}
                 >
                   <Icon className="h-4 w-4" />
                   <span>{item.label}</span>
@@ -58,7 +59,7 @@ const Navigation = () => {
             <Button
               variant="ghost"
               className="flex items-center space-x-2 text-gray-700 hover:text-momentum-600 hover:bg-momentum-50"
-              onClick={() => window.location.href = "/profile"}
+              onClick={() => navigate("/profile")}
             >
               <User className="h-4 w-4" />
               <span>Profile</span>
