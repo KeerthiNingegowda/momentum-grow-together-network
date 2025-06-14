@@ -1,3 +1,4 @@
+
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -12,7 +13,7 @@ const Notifications = () => {
     {
       id: 1,
       type: "like",
-      icon: Heart,
+      iconType: "Heart",
       user: {
         name: "Dr. Sarah Kim",
         avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
@@ -25,7 +26,7 @@ const Notifications = () => {
     {
       id: 2,
       type: "connection",
-      icon: UserPlus,
+      iconType: "UserPlus",
       user: {
         name: "Alex Chen",
         avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
@@ -38,7 +39,7 @@ const Notifications = () => {
     {
       id: 3,
       type: "comment",
-      icon: MessageCircle,
+      iconType: "MessageCircle",
       user: {
         name: "Dr. Raj Patel",
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
@@ -51,7 +52,7 @@ const Notifications = () => {
     {
       id: 4,
       type: "research",
-      icon: Brain,
+      iconType: "Brain",
       user: {
         name: "Maya Rodriguez",
         avatar: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&h=400&fit=crop&crop=face",
@@ -64,7 +65,7 @@ const Notifications = () => {
     {
       id: 5,
       type: "job",
-      icon: Briefcase,
+      iconType: "Briefcase",
       user: {
         name: "TechCorp AI Lab",
         avatar: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=400&fit=crop",
@@ -77,7 +78,7 @@ const Notifications = () => {
     {
       id: 6,
       type: "event",
-      icon: Calendar,
+      iconType: "Calendar",
       user: {
         name: "NeurIPS Conference",
         avatar: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=400&fit=crop",
@@ -90,7 +91,7 @@ const Notifications = () => {
     {
       id: 7,
       type: "collaboration",
-      icon: Code,
+      iconType: "Code",
       user: {
         name: "Dr. Lisa Zhang",
         avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face",
@@ -120,6 +121,19 @@ const Notifications = () => {
     );
   };
 
+  const getIcon = (iconType: string) => {
+    switch (iconType) {
+      case "Heart": return Heart;
+      case "UserPlus": return UserPlus;
+      case "MessageCircle": return MessageCircle;
+      case "Brain": return Brain;
+      case "Briefcase": return Briefcase;
+      case "Calendar": return Calendar;
+      case "Code": return Code;
+      default: return Heart;
+    }
+  };
+
   const getIconColor = (type: string) => {
     switch (type) {
       case "like": return "text-red-500";
@@ -144,6 +158,47 @@ const Notifications = () => {
       case "collaboration": return "bg-indigo-50";
       default: return "bg-gray-50";
     }
+  };
+
+  const renderNotificationItem = (notification: any, index: number, filtered: any[]) => {
+    const IconComponent = getIcon(notification.iconType);
+    
+    return (
+      <div 
+        key={notification.id}
+        className={`p-4 flex items-start space-x-4 hover:bg-gray-50 cursor-pointer ${
+          index !== filtered.length - 1 ? 'border-b border-gray-100' : ''
+        } ${notification.unread ? 'bg-momentum-25' : ''}`}
+      >
+        <div className={`p-2 rounded-full ${getIconBg(notification.type)}`}>
+          <IconComponent className={`h-4 w-4 ${getIconColor(notification.type)}`} />
+        </div>
+
+        <Avatar className="w-10 h-10">
+          <AvatarImage src={notification.user.avatar} />
+          <AvatarFallback className="bg-momentum-100 text-momentum-600">
+            {notification.user.initials}
+          </AvatarFallback>
+        </Avatar>
+
+        <div className="flex-1 min-w-0">
+          <p className="text-sm text-gray-900">
+            <span className="font-semibold">{notification.user.name}</span>{' '}
+            {notification.action}
+          </p>
+          <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          {notification.unread && (
+            <div className="w-2 h-2 bg-momentum-600 rounded-full"></div>
+          )}
+          <Button variant="ghost" size="icon" className="h-8 w-8">
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -180,42 +235,9 @@ const Notifications = () => {
 
             <Card className="border-0 shadow-sm">
               <CardContent className="p-0">
-                {notifications.map((notification, index) => (
-                  <div 
-                    key={notification.id}
-                    className={`p-4 flex items-start space-x-4 hover:bg-gray-50 cursor-pointer ${
-                      index !== notifications.length - 1 ? 'border-b border-gray-100' : ''
-                    } ${notification.unread ? 'bg-momentum-25' : ''}`}
-                  >
-                    <div className={`p-2 rounded-full ${getIconBg(notification.type)}`}>
-                      <notification.icon className={`h-4 w-4 ${getIconColor(notification.type)}`} />
-                    </div>
-
-                    <Avatar className="w-10 h-10">
-                      <AvatarImage src={notification.user.avatar} />
-                      <AvatarFallback className="bg-momentum-100 text-momentum-600">
-                        {notification.user.initials}
-                      </AvatarFallback>
-                    </Avatar>
-
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-900">
-                        <span className="font-semibold">{notification.user.name}</span>{' '}
-                        {notification.action}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      {notification.unread && (
-                        <div className="w-2 h-2 bg-momentum-600 rounded-full"></div>
-                      )}
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+                {notifications.map((notification, index) => 
+                  renderNotificationItem(notification, index, notifications)
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -223,42 +245,9 @@ const Notifications = () => {
           <TabsContent value="reactions" className="space-y-4">
             <Card className="border-0 shadow-sm">
               <CardContent className="p-0">
-                {notifications.filter(n => n.type === 'research' || n.type === 'like' || n.type === 'comment').map((notification, index, filtered) => (
-                  <div 
-                    key={notification.id}
-                    className={`p-4 flex items-start space-x-4 hover:bg-gray-50 cursor-pointer ${
-                      index !== filtered.length - 1 ? 'border-b border-gray-100' : ''
-                    } ${notification.unread ? 'bg-momentum-25' : ''}`}
-                  >
-                    <div className={`p-2 rounded-full ${getIconBg(notification.type)}`}>
-                      <notification.icon className={`h-4 w-4 ${getIconColor(notification.type)}`} />
-                    </div>
-
-                    <Avatar className="w-10 h-10">
-                      <AvatarImage src={notification.user.avatar} />
-                      <AvatarFallback className="bg-momentum-100 text-momentum-600">
-                        {notification.user.initials}
-                      </AvatarFallback>
-                    </Avatar>
-
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-900">
-                        <span className="font-semibold">{notification.user.name}</span>{' '}
-                        {notification.action}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      {notification.unread && (
-                        <div className="w-2 h-2 bg-momentum-600 rounded-full"></div>
-                      )}
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+                {notifications.filter(n => n.type === 'research' || n.type === 'like' || n.type === 'comment').map((notification, index, filtered) => 
+                  renderNotificationItem(notification, index, filtered)
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -266,42 +255,9 @@ const Notifications = () => {
           <TabsContent value="opportunities" className="space-y-4">
             <Card className="border-0 shadow-sm">
               <CardContent className="p-0">
-                {notifications.filter(n => n.type === 'job' || n.type === 'event').map((notification, index, filtered) => (
-                  <div 
-                    key={notification.id}
-                    className={`p-4 flex items-start space-x-4 hover:bg-gray-50 cursor-pointer ${
-                      index !== filtered.length - 1 ? 'border-b border-gray-100' : ''
-                    } ${notification.unread ? 'bg-momentum-25' : ''}`}
-                  >
-                    <div className={`p-2 rounded-full ${getIconBg(notification.type)}`}>
-                      <notification.icon className={`h-4 w-4 ${getIconColor(notification.type)}`} />
-                    </div>
-
-                    <Avatar className="w-10 h-10">
-                      <AvatarImage src={notification.user.avatar} />
-                      <AvatarFallback className="bg-momentum-100 text-momentum-600">
-                        {notification.user.initials}
-                      </AvatarFallback>
-                    </Avatar>
-
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-900">
-                        <span className="font-semibold">{notification.user.name}</span>{' '}
-                        {notification.action}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      {notification.unread && (
-                        <div className="w-2 h-2 bg-momentum-600 rounded-full"></div>
-                      )}
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+                {notifications.filter(n => n.type === 'job' || n.type === 'event').map((notification, index, filtered) => 
+                  renderNotificationItem(notification, index, filtered)
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -309,42 +265,9 @@ const Notifications = () => {
           <TabsContent value="network" className="space-y-4">
             <Card className="border-0 shadow-sm">
               <CardContent className="p-0">
-                {notifications.filter(n => n.type === 'connection' || n.type === 'collaboration').map((notification, index, filtered) => (
-                  <div 
-                    key={notification.id}
-                    className={`p-4 flex items-start space-x-4 hover:bg-gray-50 cursor-pointer ${
-                      index !== filtered.length - 1 ? 'border-b border-gray-100' : ''
-                    } ${notification.unread ? 'bg-momentum-25' : ''}`}
-                  >
-                    <div className={`p-2 rounded-full ${getIconBg(notification.type)}`}>
-                      <notification.icon className={`h-4 w-4 ${getIconColor(notification.type)}`} />
-                    </div>
-
-                    <Avatar className="w-10 h-10">
-                      <AvatarImage src={notification.user.avatar} />
-                      <AvatarFallback className="bg-momentum-100 text-momentum-600">
-                        {notification.user.initials}
-                      </AvatarFallback>
-                    </Avatar>
-
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-900">
-                        <span className="font-semibold">{notification.user.name}</span>{' '}
-                        {notification.action}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      {notification.unread && (
-                        <div className="w-2 h-2 bg-momentum-600 rounded-full"></div>
-                      )}
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+                {notifications.filter(n => n.type === 'connection' || n.type === 'collaboration').map((notification, index, filtered) => 
+                  renderNotificationItem(notification, index, filtered)
+                )}
               </CardContent>
             </Card>
           </TabsContent>
