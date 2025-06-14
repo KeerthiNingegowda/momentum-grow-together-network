@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Heart, MessageCircle, UserPlus, Briefcase, Users, Calendar, MoreHorizontal, Brain, Code, BookOpen } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Notifications = () => {
   const initialNotifications = [
@@ -102,7 +102,14 @@ const Notifications = () => {
     }
   ];
 
-  const [notifications, setNotifications] = useState(initialNotifications);
+  const [notifications, setNotifications] = useState(() => {
+    const saved = localStorage.getItem('notifications');
+    return saved ? JSON.parse(saved) : initialNotifications;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+  }, [notifications]);
 
   const markAllAsRead = () => {
     setNotifications(prev => 
