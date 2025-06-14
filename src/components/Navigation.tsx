@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Sprout, User, Bell, MessageCircle, Search } from "lucide-react";
+import { Sprout, User, Bell, MessageCircle, Search, Briefcase } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 const Navigation = () => {
@@ -8,6 +8,7 @@ const Navigation = () => {
   
   const navItems = [
     { href: "/", label: "Home", icon: Sprout },
+    { href: "/jobs", label: "Jobs", icon: Briefcase },
     { href: "/messages", label: "Messages", icon: MessageCircle },
     { href: "/notifications", label: "Notifications", icon: Bell },
   ];
