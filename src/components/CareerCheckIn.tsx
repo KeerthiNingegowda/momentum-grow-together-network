@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,19 +12,19 @@ const CareerCheckIn = () => {
 
   const prompts = [
     {
-      question: "What's one win (big or small) from your work this week?",
-      placeholder: "Document a success, breakthrough, or positive moment...",
-      icon: "🏆"
+      question: "What's on your mind about work this week?",
+      placeholder: "Use this space to reflect on whatever feels important to you...",
+      icon: "💭"
     },
     {
-      question: "What challenge did you face and what did you learn from it?",
-      placeholder: "Reflect on setbacks, mistakes, or difficult situations and your insights...", 
-      icon: "🎯"
+      question: "How are you feeling about your professional journey?",
+      placeholder: "Share your thoughts, feelings, or observations about your career path...", 
+      icon: "🌟"
     },
     {
-      question: "What do you want to focus on or improve next week?",
-      placeholder: "Think about areas for growth, skills to develop, or goals to pursue...",
-      icon: "🌱"
+      question: "What would you like to capture or remember?",
+      placeholder: "Document anything meaningful from your work experience...",
+      icon: "📝"
     }
   ];
 
@@ -134,8 +133,7 @@ const CareerCheckIn = () => {
               📝 Your Work Journal
             </h2>
             <p className="text-sm text-gray-600 leading-relaxed">
-              Document your wins and challenges, reflect on your growth, and track your professional journey. 
-              This is your private space for introspection and learning.
+              Your blank canvas for professional reflection. Use these spaces however feels right to you - there's no wrong way to journal.
             </p>
           </div>
 
@@ -191,10 +189,10 @@ const CareerCheckIn = () => {
                 <Heart className="h-4 w-4 text-gray-400 mt-0.5" />
                 <div>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Take your time to reflect. Every win and challenge is part of your growth story.
+                    This is your space. Write whatever comes to mind - there's no pressure to fill everything out.
                   </p>
                   <p className="text-xs text-gray-500 mt-1">
-                    Your journal entries are completely private and help you track your professional development.
+                    Your journal is completely private and yours to use however feels most helpful.
                   </p>
                 </div>
               </div>
