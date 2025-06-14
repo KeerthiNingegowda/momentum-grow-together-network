@@ -221,6 +221,138 @@ export type Database = {
         }
         Relationships: []
       }
+      profile_past_companies: {
+        Row: {
+          company: string
+          created_at: string | null
+          id: string
+          profile_id: string | null
+        }
+        Insert: {
+          company: string
+          created_at?: string | null
+          id?: string
+          profile_id?: string | null
+        }
+        Update: {
+          company?: string
+          created_at?: string | null
+          id?: string
+          profile_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_past_companies_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profile_skills: {
+        Row: {
+          created_at: string | null
+          id: string
+          profile_id: string | null
+          skill: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          profile_id?: string | null
+          skill: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          profile_id?: string | null
+          skill?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_skills_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          company: string
+          created_at: string | null
+          id: string
+          image_url: string | null
+          initials: string
+          location: string
+          mutual_connections: number | null
+          name: string
+          title: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          company: string
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          initials: string
+          location: string
+          mutual_connections?: number | null
+          name: string
+          title: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          company?: string
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          initials?: string
+          location?: string
+          mutual_connections?: number | null
+          name?: string
+          title?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      user_connections: {
+        Row: {
+          connected_profile_id: string | null
+          created_at: string | null
+          id: string
+          is_connected: boolean | null
+          user_id: string | null
+        }
+        Insert: {
+          connected_profile_id?: string | null
+          created_at?: string | null
+          id?: string
+          is_connected?: boolean | null
+          user_id?: string | null
+        }
+        Update: {
+          connected_profile_id?: string | null
+          created_at?: string | null
+          id?: string
+          is_connected?: boolean | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_connections_connected_profile_id_fkey"
+            columns: ["connected_profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

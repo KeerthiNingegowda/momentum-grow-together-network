@@ -5,94 +5,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Search, MessageCircle, UserPlus, Briefcase } from "lucide-react";
+import { Search, MessageCircle, UserPlus, Briefcase, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useProfiles, Profile } from "@/hooks/useProfiles";
 
 const Network = () => {
   const navigate = useNavigate();
-  
-  const profiles = [
-    {
-      id: 5,
-      name: "Dr. Sarah Chen",
-      title: "Senior AI Research Scientist",
-      company: "Google DeepMind",
-      location: "London, UK",
-      initials: "SC",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face",
-      skills: ["Machine Learning", "Computer Vision", "PyTorch"],
-      mutualConnections: 12,
-      isConnected: false,
-      pastCompanies: ["ex-OpenAI", "ex-Stanford"]
-    },
-    {
-      id: 6,
-      name: "Marcus Rodriguez",
-      title: "Principal ML Engineer",
-      company: "Tesla",
-      location: "Austin, TX",
-      initials: "MR",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-      skills: ["Autonomous Systems", "Deep Learning", "Python"],
-      mutualConnections: 8,
-      isConnected: false,
-      pastCompanies: ["ex-Waymo", "ex-Uber"]
-    },
-    {
-      id: 7,
-      name: "Dr. Aisha Patel",
-      title: "Head of AI Ethics",
-      company: "Microsoft",
-      location: "Seattle, WA",
-      initials: "AP",
-      image: "https://images.unsplash.com/photo-1594736797933-d0a71abcbe5a?w=400&h=400&fit=crop&crop=face",
-      skills: ["AI Ethics", "Policy", "Research"],
-      mutualConnections: 15,
-      isConnected: true,
-      pastCompanies: ["ex-Google", "ex-MIT"]
-    },
-    {
-      id: 8,
-      name: "James Liu",
-      title: "Staff Software Engineer",
-      company: "OpenAI",
-      location: "San Francisco, CA",
-      initials: "JL",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-      skills: ["LLMs", "Distributed Systems", "Rust"],
-      mutualConnections: 6,
-      isConnected: false,
-      pastCompanies: ["ex-Anthropic"]
-    },
-    {
-      id: 9,
-      name: "Dr. Elena Kowalski",
-      title: "Robotics Research Lead",
-      company: "Boston Dynamics",
-      location: "Boston, MA",
-      initials: "EK",
-      image: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=400&h=400&fit=crop&crop=face",
-      skills: ["Robotics", "Control Systems", "C++"],
-      mutualConnections: 4,
-      isConnected: false,
-      pastCompanies: ["ex-iRobot", "ex-NASA"]
-    },
-    {
-      id: 10,
-      name: "David Kim",
-      title: "VP of Engineering",
-      company: "Anthropic",
-      location: "San Francisco, CA",
-      initials: "DK",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face",
-      skills: ["Leadership", "AI Safety", "Scaling"],
-      mutualConnections: 22,
-      isConnected: false,
-      pastCompanies: ["ex-Lovable", "ex-Meta"]
-    }
-  ];
+  const { data: profiles, isLoading, error } = useProfiles();
 
-  const handleStartConversation = (profile: typeof profiles[0]) => {
+  const handleStartConversation = (profile: Profile) => {
     // Navigate to messages page with the selected user's ID
     navigate(`/messages?user=${profile.id}`, { 
       state: { 
@@ -105,6 +26,36 @@ const Network = () => {
       }
     });
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Navigation />
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="flex items-center justify-center h-64">
+            <Loader2 className="h-8 w-8 animate-spin text-momentum-600" />
+            <span className="ml-2 text-gray-600">Loading network profiles...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Navigation />
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="flex items-center justify-center h-64">
+            <div className="text-center">
+              <p className="text-red-600 mb-2">Error loading profiles</p>
+              <p className="text-gray-500 text-sm">{error.message}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -130,13 +81,13 @@ const Network = () => {
 
         {/* Profiles Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {profiles.map((profile) => (
+          {profiles?.map((profile) => (
             <Card key={profile.id} className="border-0 shadow-sm hover:shadow-md transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-start space-x-4 mb-4">
                   <Avatar className="w-16 h-16">
-                    {profile.image && (
-                      <AvatarImage src={profile.image} alt={profile.name} />
+                    {profile.image_url && (
+                      <AvatarImage src={profile.image_url} alt={profile.name} />
                     )}
                     <AvatarFallback className="bg-momentum-100 text-momentum-600 text-lg">
                       {profile.initials}
@@ -174,7 +125,7 @@ const Network = () => {
                 {/* Mutual Connections */}
                 <div className="mb-4">
                   <p className="text-sm text-gray-600">
-                    {profile.mutualConnections} mutual connections
+                    {profile.mutual_connections} mutual connections
                   </p>
                 </div>
 
