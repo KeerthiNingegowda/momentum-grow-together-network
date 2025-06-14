@@ -1,13 +1,15 @@
-
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Search, MoreHorizontal, Send } from "lucide-react";
+import { Search, MoreHorizontal, Send, Check, X } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const Messages = () => {
+  const { toast } = useToast();
+
   const conversations = [
     {
       id: 1,
@@ -61,7 +63,8 @@ const Messages = () => {
       sender: "Dr. Emily Zhang",
       content: "Hi! I read your recent paper on few-shot learning techniques. Really impressive work on improving sample efficiency.",
       timestamp: "2:30 PM",
-      isOwn: false
+      isOwn: false,
+      needsResponse: true
     },
     {
       id: 2,
@@ -85,6 +88,21 @@ const Messages = () => {
       isOwn: false
     }
   ];
+
+  const handleAcceptConversation = () => {
+    toast({
+      title: "Connection accepted",
+      description: "You can now continue the conversation freely.",
+    });
+  };
+
+  const handleDeclineConversation = () => {
+    toast({
+      title: "Connection declined",
+      description: "The conversation has been declined.",
+      variant: "destructive",
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -176,23 +194,52 @@ const Messages = () => {
 
                 {/* Messages */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                  {currentMessages.map((message) => (
-                    <div 
-                      key={message.id}
-                      className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                        message.isOwn 
-                          ? 'bg-momentum-600 text-white' 
-                          : 'bg-gray-100 text-gray-900'
-                      }`}>
-                        <p className="text-sm">{message.content}</p>
-                        <p className={`text-xs mt-1 ${
-                          message.isOwn ? 'text-momentum-100' : 'text-gray-500'
+                  {currentMessages.map((message, index) => (
+                    <div key={message.id}>
+                      <div 
+                        className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}
+                      >
+                        <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                          message.isOwn 
+                            ? 'bg-momentum-600 text-white' 
+                            : 'bg-gray-100 text-gray-900'
                         }`}>
-                          {message.timestamp}
-                        </p>
+                          <p className="text-sm">{message.content}</p>
+                          <p className={`text-xs mt-1 ${
+                            message.isOwn ? 'text-momentum-100' : 'text-gray-500'
+                          }`}>
+                            {message.timestamp}
+                          </p>
+                        </div>
                       </div>
+                      
+                      {/* Accept/Decline buttons after first message */}
+                      {index === 0 && message.needsResponse && (
+                        <div className="flex justify-center mt-4">
+                          <div className="flex items-center space-x-3 bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
+                            <p className="text-sm text-gray-600">Accept this conversation?</p>
+                            <div className="flex space-x-2">
+                              <Button
+                                onClick={handleAcceptConversation}
+                                size="sm"
+                                className="bg-green-600 hover:bg-green-700 text-white"
+                              >
+                                <Check className="h-4 w-4 mr-1" />
+                                Accept
+                              </Button>
+                              <Button
+                                onClick={handleDeclineConversation}
+                                size="sm"
+                                variant="outline"
+                                className="border-red-200 text-red-600 hover:bg-red-50"
+                              >
+                                <X className="h-4 w-4 mr-1" />
+                                Decline
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
