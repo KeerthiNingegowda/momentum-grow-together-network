@@ -19,6 +19,7 @@ const Network = () => {
       company: "Google DeepMind",
       location: "London, UK",
       initials: "SC",
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=400&fit=crop&crop=face",
       skills: ["Machine Learning", "Computer Vision", "PyTorch"],
       mutualConnections: 12,
       isConnected: false,
@@ -31,6 +32,7 @@ const Network = () => {
       company: "Tesla",
       location: "Austin, TX",
       initials: "MR",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=400&fit=crop&crop=face",
       skills: ["Autonomous Systems", "Deep Learning", "Python"],
       mutualConnections: 8,
       isConnected: false,
@@ -55,6 +57,7 @@ const Network = () => {
       company: "OpenAI",
       location: "San Francisco, CA",
       initials: "JL",
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=400&fit=crop&crop=face",
       skills: ["LLMs", "Distributed Systems", "Rust"],
       mutualConnections: 6,
       isConnected: false,
@@ -79,6 +82,7 @@ const Network = () => {
       company: "Anthropic",
       location: "San Francisco, CA",
       initials: "DK",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop&crop=face",
       skills: ["Leadership", "AI Safety", "Scaling"],
       mutualConnections: 22,
       isConnected: false,
@@ -129,6 +133,9 @@ const Network = () => {
               <CardContent className="p-6">
                 <div className="flex items-start space-x-4 mb-4">
                   <Avatar className="w-16 h-16">
+                    {profile.image && (
+                      <AvatarImage src={profile.image} alt={profile.name} />
+                    )}
                     <AvatarFallback className="bg-momentum-100 text-momentum-600 text-lg">
                       {profile.initials}
                     </AvatarFallback>
