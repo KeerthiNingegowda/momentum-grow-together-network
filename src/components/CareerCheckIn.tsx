@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Heart, MessageCircle, Users, Bot, Calendar, Target, TrendingUp } from "lucide-react";
+import { Heart, MessageCircle, Users, Bot, Calendar, Target, TrendingUp, Lightbulb, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 const CareerCheckIn = () => {
@@ -46,31 +46,47 @@ const CareerCheckIn = () => {
                 <Bot className="h-5 w-5 text-blue-600" />
               </div>
               <div className="flex-1">
-                <h4 className="font-medium text-gray-900 mb-2">Your AI Career Buddy</h4>
-                <div className="bg-white p-4 rounded-lg border border-blue-200 mb-3">
-                  <p className="text-sm text-gray-700 leading-relaxed">
-                    Hi there! I'm your AI career buddy. I can help you with monthly check-ins, workplace navigation, and career growth insights. 
-                    Based on your reflections, I notice you're focused on {userProfile.roles.join(" & ")}. 
-                    What would you like to explore today?
+                <h4 className="font-medium text-gray-900 mb-2">Your AI Career Insights Assistant</h4>
+                <div className="bg-white p-4 rounded-lg border border-blue-200 mb-4">
+                  <p className="text-sm text-gray-700 leading-relaxed mb-3">
+                    I've analyzed your journal reflections and noticed you're focused on {userProfile.roles.join(" & ")}. 
+                    Based on your entries, here are personalized insights and recommended next steps for your career growth:
                   </p>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-start space-x-2">
+                      <Lightbulb className="h-4 w-4 text-amber-500 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-800">Career Insight</p>
+                        <p className="text-xs text-gray-600">Your reflections show strong analytical thinking - consider leading more cross-functional projects</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <ArrowRight className="h-4 w-4 text-green-500 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-800">Next Best Action</p>
+                        <p className="text-xs text-gray-600">Schedule a 1:1 with your manager to discuss taking on a strategic initiative this quarter</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <Button variant="outline" size="sm" className="text-xs justify-start">
-                    <MessageCircle className="h-3 w-3 mr-2" />
-                    Workplace navigation tips
+                    <Lightbulb className="h-3 w-3 mr-2" />
+                    Get more career insights
+                  </Button>
+                  <Button variant="outline" size="sm" className="text-xs justify-start">
+                    <ArrowRight className="h-3 w-3 mr-2" />
+                    View action plan
                   </Button>
                   <Button variant="outline" size="sm" className="text-xs justify-start">
                     <Target className="h-3 w-3 mr-2" />
-                    Set monthly goals
+                    Set growth goals
                   </Button>
                   <Button variant="outline" size="sm" className="text-xs justify-start">
                     <TrendingUp className="h-3 w-3 mr-2" />
-                    Career growth insights
-                  </Button>
-                  <Button variant="outline" size="sm" className="text-xs justify-start">
-                    <Users className="h-3 w-3 mr-2" />
-                    Networking strategies
+                    Track progress
                   </Button>
                 </div>
               </div>
@@ -136,10 +152,10 @@ const CareerCheckIn = () => {
                   variant="outline" 
                   size="sm" 
                   onClick={() => setShowAIBuddy(!showAIBuddy)}
-                  className="text-xs"
+                  className="text-xs bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200 text-blue-700 hover:from-blue-100 hover:to-purple-100"
                 >
                   <Bot className="h-3 w-3 mr-1" />
-                  {showAIBuddy ? 'Hide AI buddy' : 'Try AI-powered buddy'}
+                  {showAIBuddy ? 'Hide AI insights' : 'Get AI career insights & next steps'}
                 </Button>
               </div>
               
