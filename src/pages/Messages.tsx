@@ -122,7 +122,7 @@ const Messages = () => {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       
-      <div className="max-w-7xl mx-auto px-2 md:px-4 py-4 md:py-6">
+      <div className="max-w-7xl mx-auto px-2 md:px-4 py-4 md:py-6 pt-20">
         {/* Desktop Layout */}
         <div className="hidden lg:grid lg:grid-cols-3 gap-6 h-[calc(100vh-140px)]">
           {/* Conversations List */}
