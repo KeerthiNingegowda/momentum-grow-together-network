@@ -3,9 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { TrendingUp, Users, Target, Zap, MessageCircle, Share2, TwitterIcon, ArrowRight, Brain, BarChart, ExternalLink, Building, GraduationCap } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { TrendingUp, Users, Target, Zap, MessageCircle, Share2, TwitterIcon, ArrowRight, Brain, BarChart, ExternalLink, Building, GraduationCap, ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 const Profile = () => {
+  const [isTestimonialsOpen, setIsTestimonialsOpen] = useState(false);
+
   const keyWins = [
     { metric: "$12M", label: "Revenue Impact Generated", icon: TrendingUp },
     { metric: "67%", label: "Cost Reduction Achieved", icon: Target },
@@ -129,35 +133,68 @@ const Profile = () => {
 
             {/* Client Testimonials */}
             <Card className="shadow-lg border-0 mb-6">
-              <CardHeader>
-                <h2 className="text-xl font-bold text-gray-900 flex items-center">
-                  <Users className="h-6 w-6 text-momentum-600 mr-2" />
-                  What Clients Say
-                </h2>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-1 gap-6">
-                  {testimonials.map((testimonial, index) => (
-                    <div key={index} className="p-4 bg-momentum-50 rounded-lg border-l-4 border-momentum-600">
+              <Collapsible open={isTestimonialsOpen} onOpenChange={setIsTestimonialsOpen}>
+                <CollapsibleTrigger className="w-full">
+                  <CardHeader className="hover:bg-gray-50 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-xl font-bold text-gray-900 flex items-center">
+                        <Users className="h-6 w-6 text-momentum-600 mr-2" />
+                        Voices of Trust
+                      </h2>
+                      <ChevronDown className={`h-5 w-5 text-gray-500 transition-transform ${isTestimonialsOpen ? 'rotate-180' : ''}`} />
+                    </div>
+                  </CardHeader>
+                </CollapsibleTrigger>
+                
+                {/* Preview when collapsed - show only the most recent testimonial */}
+                {!isTestimonialsOpen && (
+                  <CardContent>
+                    <div className="p-4 bg-momentum-50 rounded-lg border-l-4 border-momentum-600">
                       <p className="text-gray-700 italic mb-4 leading-relaxed">
-                        "{testimonial.quote}"
+                        "{testimonials[0].quote}"
                       </p>
                       <div className="flex items-center space-x-3">
                         <Avatar className="w-12 h-12">
-                          <AvatarImage src={testimonial.avatar} />
+                          <AvatarImage src={testimonials[0].avatar} />
                           <AvatarFallback className="bg-momentum-100 text-momentum-600">
-                            {testimonial.author.split(' ').map(n => n[0]).join('')}
+                            {testimonials[0].author.split(' ').map(n => n[0]).join('')}
                           </AvatarFallback>
                         </Avatar>
                         <div>
-                          <div className="font-semibold text-gray-900">{testimonial.author}</div>
-                          <div className="text-sm text-gray-600">{testimonial.title}</div>
+                          <div className="font-semibold text-gray-900">{testimonials[0].author}</div>
+                          <div className="text-sm text-gray-600">{testimonials[0].title}</div>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
+                  </CardContent>
+                )}
+
+                <CollapsibleContent>
+                  <CardContent>
+                    <div className="grid md:grid-cols-1 gap-6">
+                      {testimonials.map((testimonial, index) => (
+                        <div key={index} className="p-4 bg-momentum-50 rounded-lg border-l-4 border-momentum-600">
+                          <p className="text-gray-700 italic mb-4 leading-relaxed">
+                            "{testimonial.quote}"
+                          </p>
+                          <div className="flex items-center space-x-3">
+                            <Avatar className="w-12 h-12">
+                              <AvatarImage src={testimonial.avatar} />
+                              <AvatarFallback className="bg-momentum-100 text-momentum-600">
+                                {testimonial.author.split(' ').map(n => n[0]).join('')}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <div className="font-semibold text-gray-900">{testimonial.author}</div>
+                              <div className="text-sm text-gray-600">{testimonial.title}</div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </CollapsibleContent>
+              </Collapsible>
             </Card>
 
             {/* What I'm Looking For */}
