@@ -14,7 +14,8 @@ const Jobs = () => {
   const [locationFilter, setLocationFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
   const [salaryFilter, setSalaryFilter] = useState("all");
-  const [viewMode, setViewMode] = useState<"detailed" | "preview">("detailed");
+  const [viewMode, setViewMode] = useState<"detailed" | "preview">("preview");
+  const [selectedJobId, setSelectedJobId] = useState<number | null>(null);
 
   const jobListings = [
     {
@@ -317,6 +318,12 @@ const Jobs = () => {
     return "bg-red-100 text-red-800 border-red-200";
   };
 
+  const getSatisfactionBadgeColor = (score: number) => {
+    if (score >= 4.5) return "bg-green-100 text-green-800 border-green-200";
+    if (score >= 4.0) return "bg-yellow-100 text-yellow-800 border-yellow-200";
+    return "bg-red-100 text-red-800 border-red-200";
+  };
+
   const getPerkIcon = (iconName: string) => {
     switch (iconName) {
       case "Coffee": return <Coffee className="h-4 w-4" />;
@@ -327,8 +334,21 @@ const Jobs = () => {
     }
   };
 
+  const handleJobClick = (jobId: number) => {
+    setSelectedJobId(jobId);
+    setViewMode("detailed");
+  };
+
+  const handleBackToPreview = () => {
+    setSelectedJobId(null);
+    setViewMode("preview");
+  };
+
   const JobPreviewCard = ({ job }: { job: typeof jobListings[0] }) => (
-    <Card className="hover:shadow-md transition-shadow cursor-pointer border-l-4 border-l-momentum-500">
+    <Card 
+      className="hover:shadow-md transition-shadow cursor-pointer border-l-4 border-l-momentum-500"
+      onClick={() => handleJobClick(job.id)}
+    >
       <CardContent className="p-4">
         <div className="flex justify-between items-start mb-2">
           <div>
@@ -350,12 +370,16 @@ const Jobs = () => {
         <p className="text-gray-700 text-sm line-clamp-2 mb-3">{job.description}</p>
         
         <div className="flex items-center justify-between">
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 flex-wrap">
             <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200 text-xs">
               {job.problemType}
             </Badge>
             <Badge variant="outline" className={`${getConfidenceBadgeColor(job.companyStats.confidenceScore)} text-xs`}>
               {job.companyStats.confidenceScore}% Confidence
+            </Badge>
+            <Badge variant="outline" className={`${getSatisfactionBadgeColor(job.companyProfile.teamInsights.satisfactionScore)} text-xs`}>
+              <Star className="h-3 w-3 mr-1" />
+              {job.companyProfile.teamInsights.satisfactionScore}/5 Satisfaction
             </Badge>
           </div>
           <div className="flex items-center text-gray-500 text-xs">
@@ -366,6 +390,119 @@ const Jobs = () => {
       </CardContent>
     </Card>
   );
+
+  // Show detailed view for selected job
+  if (viewMode === "detailed" && selectedJobId) {
+    const selectedJob = jobListings.find(job => job.id === selectedJobId);
+    if (!selectedJob) return null;
+
+    return (
+      <TooltipProvider>
+        <div className="min-h-screen bg-gradient-to-br from-momentum-50 to-white">
+          <Navigation />
+          
+          <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="mb-6">
+              <Button 
+                variant="outline" 
+                onClick={handleBackToPreview}
+                className="mb-4"
+              >
+                ← Back to Jobs
+              </Button>
+            </div>
+
+            <Card className="shadow-lg border-0 hover:shadow-xl transition-shadow overflow-hidden">
+              <CardHeader className="pb-4">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{selectedJob.title}</h3>
+                    <div className="flex items-center space-x-4 text-gray-600 mb-3">
+                      <div className="flex items-center">
+                        <Building className="h-4 w-4 mr-1" />
+                        {selectedJob.company}
+                      </div>
+                      <div className="flex items-center">
+                        <MapPin className="h-4 w-4 mr-1" />
+                        {selectedJob.location}
+                      </div>
+                      <div className="flex items-center">
+                        <Clock className="h-4 w-4 mr-1" />
+                        {selectedJob.posted}
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-4 mb-3">
+                      <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200">
+                        {selectedJob.problemType}
+                      </Badge>
+                      <span className="text-sm text-gray-500">{selectedJob.teamSize} team</span>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Badge variant="outline" className={getConfidenceBadgeColor(selectedJob.companyStats.confidenceScore)}>
+                            <TrendingUp className="h-3 w-3 mr-1" />
+                            {selectedJob.companyStats.confidenceScore}% Confidence
+                          </Badge>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Likelihood of a ghost job based on past hiring.</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <Badge variant="outline" className={getSatisfactionBadgeColor(selectedJob.companyProfile.teamInsights.satisfactionScore)}>
+                        <Star className="h-3 w-3 mr-1" />
+                        {selectedJob.companyProfile.teamInsights.satisfactionScore}/5 Satisfaction
+                      </Badge>
+                    </div>
+                  </div>
+                  
+                  <div className="text-right">
+                    <Badge variant="secondary" className="mb-2">
+                      {selectedJob.type}
+                    </Badge>
+                    <div className="flex items-center text-momentum-600 font-semibold">
+                      <DollarSign className="h-4 w-4 mr-1" />
+                      {selectedJob.salary}
+                    </div>
+                  </div>
+                </div>
+              </CardHeader>
+              
+              <CardContent className="pt-0">
+                {/* Job Description - Now prioritized */}
+                <div className="mb-6">
+                  <h4 className="font-semibold text-gray-900 mb-2">About This Role</h4>
+                  <p className="text-gray-700 leading-relaxed">{selectedJob.description}</p>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                  {/* Enhanced Tech Stack */}
+                  <div className="space-y-3">
+                    <h4 className="font-semibold text-gray-900">Technical Requirements</h4>
+                    <TechStackVisualization techStack={selectedJob.techStack} />
+                  </div>
+
+                  {/* Company Insights - Similar format to Tech Stack */}
+                  <div className="space-y-3">
+                    <h4 className="font-semibold text-gray-900">Company Insights</h4>
+                    <TechStackVisualization techStack={selectedJob.companyProfile.companyInsights} />
+                  </div>
+                </div>
+                
+                <div className="flex gap-3">
+                  <Button className="bg-momentum-600 hover:bg-momentum-700">
+                    Apply Now
+                  </Button>
+                  <Button variant="outline">
+                    Save Job
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </TooltipProvider>
+    );
+  }
 
   return (
     <TooltipProvider>
@@ -385,13 +522,6 @@ const Jobs = () => {
                   className="pl-10"
                 />
               </div>
-              <Button
-                variant={viewMode === "preview" ? "default" : "outline"}
-                onClick={() => setViewMode(viewMode === "preview" ? "detailed" : "preview")}
-                className="whitespace-nowrap"
-              >
-                {viewMode === "preview" ? "Detailed View" : "Quick Preview"}
-              </Button>
             </div>
             
             <div className="flex items-center space-x-4">
@@ -461,94 +591,9 @@ const Jobs = () => {
           </div>
 
           {/* Job Listings */}
-          <div className={`grid gap-${viewMode === "preview" ? "4" : "8"}`}>
+          <div className="grid gap-4">
             {filteredJobs.map((job) => (
-              viewMode === "preview" ? (
-                <JobPreviewCard key={job.id} job={job} />
-              ) : (
-                <Card key={job.id} className="shadow-lg border-0 hover:shadow-xl transition-shadow overflow-hidden">
-                  <CardHeader className="pb-4">
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">{job.title}</h3>
-                        <div className="flex items-center space-x-4 text-gray-600 mb-3">
-                          <div className="flex items-center">
-                            <Building className="h-4 w-4 mr-1" />
-                            {job.company}
-                          </div>
-                          <div className="flex items-center">
-                            <MapPin className="h-4 w-4 mr-1" />
-                            {job.location}
-                          </div>
-                          <div className="flex items-center">
-                            <Clock className="h-4 w-4 mr-1" />
-                            {job.posted}
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center space-x-4 mb-3">
-                          <Badge variant="outline" className="bg-momentum-50 text-momentum-700 border-momentum-200">
-                            {job.problemType}
-                          </Badge>
-                          <span className="text-sm text-gray-500">{job.teamSize} team</span>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Badge variant="outline" className={getConfidenceBadgeColor(job.companyStats.confidenceScore)}>
-                                <TrendingUp className="h-3 w-3 mr-1" />
-                                {job.companyStats.confidenceScore}% Confidence
-                              </Badge>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Likelihood of a ghost job based on past hiring.</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </div>
-                      </div>
-                      
-                      <div className="text-right">
-                        <Badge variant="secondary" className="mb-2">
-                          {job.type}
-                        </Badge>
-                        <div className="flex items-center text-momentum-600 font-semibold">
-                          <DollarSign className="h-4 w-4 mr-1" />
-                          {job.salary}
-                        </div>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  
-                  <CardContent className="pt-0">
-                    {/* Job Description - Now prioritized */}
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-gray-900 mb-2">About This Role</h4>
-                      <p className="text-gray-700 leading-relaxed">{job.description}</p>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                      {/* Enhanced Tech Stack */}
-                      <div className="space-y-3">
-                        <h4 className="font-semibold text-gray-900">Technical Requirements</h4>
-                        <TechStackVisualization techStack={job.techStack} />
-                      </div>
-
-                      {/* Company Insights - Similar format to Tech Stack */}
-                      <div className="space-y-3">
-                        <h4 className="font-semibold text-gray-900">Company Insights</h4>
-                        <TechStackVisualization techStack={job.companyProfile.companyInsights} />
-                      </div>
-                    </div>
-                    
-                    <div className="flex gap-3">
-                      <Button className="bg-momentum-600 hover:bg-momentum-700">
-                        Apply Now
-                      </Button>
-                      <Button variant="outline">
-                        Save Job
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              )
+              <JobPreviewCard key={job.id} job={job} />
             ))}
           </div>
         </div>
