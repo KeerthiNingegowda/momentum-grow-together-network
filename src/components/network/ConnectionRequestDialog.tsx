@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Send, X } from "lucide-react";
+import { Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface Profile {
@@ -70,17 +70,30 @@ const ConnectionRequestDialog = ({
 
   if (!profile) return null;
 
-  const firstName = profile.name.split(' ')[0];
+  // Extract first name, skipping titles like "Dr.", "Mr.", "Ms.", etc.
+  const getFirstName = (fullName: string) => {
+    const nameParts = fullName.split(' ');
+    const titles = ['Dr.', 'Mr.', 'Ms.', 'Mrs.', 'Prof.', 'Professor'];
+    
+    // Find the first part that's not a title
+    for (const part of nameParts) {
+      if (!titles.includes(part)) {
+        return part;
+      }
+    }
+    
+    // Fallback to first part if no non-title found
+    return nameParts[0];
+  };
+
+  const firstName = getFirstName(profile.name);
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center justify-between">
-            <span>Send Connection Request</span>
-            <Button variant="ghost" size="icon" onClick={handleClose}>
-              <X className="h-4 w-4" />
-            </Button>
+          <DialogTitle>
+            Send Connection Request
           </DialogTitle>
         </DialogHeader>
         
