@@ -55,7 +55,7 @@ const Profile = () => {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 py-8 pt-24">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Hero Elevator Pitch */}
           <div className="lg:col-span-2">
