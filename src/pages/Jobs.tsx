@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useState } from "react";
@@ -39,7 +38,7 @@ const Jobs = () => {
     setSalaryFilter("all");
   };
 
-  const hasActiveFilters = searchTerm || locationFilter !== "all" || typeFilter !== "all" || salaryFilter !== "all";
+  const hasActiveFilters = Boolean(searchTerm) || locationFilter !== "all" || typeFilter !== "all" || salaryFilter !== "all";
 
   // Show detailed view for selected job
   if (selectedJobId) {
