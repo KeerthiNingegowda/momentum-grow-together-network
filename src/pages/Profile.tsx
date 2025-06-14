@@ -47,8 +47,8 @@ const Profile = () => {
   ];
 
   const education = [
-    { school: "Stanford University", degree: "MS Computer Science", year: "2018" },
-    { school: "UC Berkeley", degree: "BS Mathematics", year: "2016" }
+    { school: "Stanford University", degree: "MS Computer Science" },
+    { school: "UC Berkeley", degree: "BS Mathematics" }
   ];
 
   return (
@@ -188,9 +188,6 @@ const Profile = () => {
                     <span className="font-medium text-gray-900">Based in:</span> Toronto, ON
                   </div>
                   <div className="text-gray-600">
-                    <span className="font-medium text-gray-900">Response time:</span> Same day
-                  </div>
-                  <div className="text-gray-600">
                     <span className="font-medium text-gray-900">Open to:</span> Consulting, Leadership, Advisory
                   </div>
                 </div>
@@ -221,7 +218,7 @@ const Profile = () => {
                     {education.map((edu, index) => (
                       <div key={index} className="text-sm">
                         <div className="font-medium text-gray-900">{edu.school}</div>
-                        <div className="text-gray-600">{edu.degree} • {edu.year}</div>
+                        <div className="text-gray-600">{edu.degree}</div>
                       </div>
                     ))}
                   </div>
