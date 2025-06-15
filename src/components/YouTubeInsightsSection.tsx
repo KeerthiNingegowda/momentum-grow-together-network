@@ -3,41 +3,11 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Youtube, Clock, Eye, RefreshCw } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { useYouTubeInsights, useFetchFreshYouTubeInsights } from "@/hooks/useYouTubeInsights";
 
 const YouTubeInsightsSection = () => {
-  // Static insights data - you can tell me what videos to show here
-  const insights = [
-    {
-      id: "1",
-      video_title: "Learn React Hooks in 30 Minutes",
-      channel_name: "freeCodeCamp.org",
-      upload_time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
-      duration: "32:15",
-      view_count: "125K views",
-      topics: ["React", "JavaScript"],
-      video_url: "https://youtube.com/watch?v=example1"
-    },
-    {
-      id: "2", 
-      video_title: "Modern JavaScript ES2024 Features",
-      channel_name: "Traversy Media",
-      upload_time: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
-      duration: "28:45",
-      view_count: "89K views", 
-      topics: ["JavaScript", "ES2024"],
-      video_url: "https://youtube.com/watch?v=example2"
-    },
-    {
-      id: "3",
-      video_title: "TypeScript Best Practices",
-      channel_name: "Programming with Mosh",
-      upload_time: new Date(Date.now() - 3 * 60 * 60 * 1000), // 3 hours ago
-      duration: "45:20",
-      view_count: "67K views",
-      topics: ["TypeScript", "Best Practices"],
-      video_url: "https://youtube.com/watch?v=example3"
-    }
-  ];
+  const { data: insights = [], isLoading } = useYouTubeInsights();
+  const fetchFreshMutation = useFetchFreshYouTubeInsights();
 
   const handleVideoClick = (videoUrl: string | null) => {
     if (videoUrl) {
@@ -46,9 +16,23 @@ const YouTubeInsightsSection = () => {
   };
 
   const handleRefresh = () => {
-    // Mock refresh action
     console.log("Refreshing insights...");
+    fetchFreshMutation.mutate();
   };
+
+  if (isLoading) {
+    return (
+      <div className="mb-4 p-3 bg-gradient-to-r from-red-50 to-pink-50 rounded-xl border border-red-100">
+        <div className="flex items-center space-x-2 mb-2">
+          <Youtube className="h-4 w-4 text-red-600" />
+          <h3 className="text-sm font-semibold text-gray-800">Loading Learning Channels...</h3>
+        </div>
+        <p className="text-xs text-gray-600">
+          Fetching your latest learning content...
+        </p>
+      </div>
+    );
+  }
 
   if (insights.length === 0) {
     return (
@@ -77,9 +61,10 @@ const YouTubeInsightsSection = () => {
           </Badge>
           <button 
             onClick={handleRefresh}
+            disabled={fetchFreshMutation.isPending}
             className="text-xs text-red-600 hover:text-red-700 font-medium flex items-center"
           >
-            <RefreshCw className="h-3 w-3 mr-1" />
+            <RefreshCw className={`h-3 w-3 mr-1 ${fetchFreshMutation.isPending ? 'animate-spin' : ''}`} />
             Refresh
           </button>
         </div>

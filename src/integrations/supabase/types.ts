@@ -625,14 +625,13 @@ export type Database = {
           },
         ]
       }
-      user_youtube_channels: {
+      youtube_channels: {
         Row: {
           channel_id: string | null
           channel_name: string
           created_at: string
           id: string
           updated_at: string
-          user_id: string
         }
         Insert: {
           channel_id?: string | null
@@ -640,7 +639,6 @@ export type Database = {
           created_at?: string
           id?: string
           updated_at?: string
-          user_id: string
         }
         Update: {
           channel_id?: string | null
@@ -648,43 +646,42 @@ export type Database = {
           created_at?: string
           id?: string
           updated_at?: string
-          user_id?: string
         }
         Relationships: []
       }
       youtube_insights: {
         Row: {
+          ai_summary: string | null
           channel_name: string
           created_at: string
           duration: string | null
           id: string
           topics: string[] | null
           upload_time: string
-          user_id: string
           video_title: string
           video_url: string | null
           view_count: string | null
         }
         Insert: {
+          ai_summary?: string | null
           channel_name: string
           created_at?: string
           duration?: string | null
           id?: string
           topics?: string[] | null
           upload_time: string
-          user_id: string
           video_title: string
           video_url?: string | null
           view_count?: string | null
         }
         Update: {
+          ai_summary?: string | null
           channel_name?: string
           created_at?: string
           duration?: string | null
           id?: string
           topics?: string[] | null
           upload_time?: string
-          user_id?: string
           video_title?: string
           video_url?: string | null
           view_count?: string | null
