@@ -2,21 +2,21 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { BookOpen, Users, ChevronDown } from "lucide-react";
-
-interface TrendingActivity {
-  activity: string;
-  context: string;
-  participants: string;
-  timeframe: string;
-}
+import { useTrendingActivities } from "@/hooks/useTrendingActivities";
+import { formatDistanceToNow } from "date-fns";
 
 interface TrendingActivitiesProps {
   isOpen: boolean;
   onToggle: () => void;
-  activities: TrendingActivity[];
 }
 
-const TrendingActivities = ({ isOpen, onToggle, activities }: TrendingActivitiesProps) => {
+const TrendingActivities = ({ isOpen, onToggle }: TrendingActivitiesProps) => {
+  const { data: trendingActivities = [], isLoading } = useTrendingActivities();
+
+  if (isLoading) {
+    return <div className="text-center py-4">Loading trending activities...</div>;
+  }
+
   return (
     <div id="trending-activities" className="mb-16">
       <Collapsible open={isOpen} onOpenChange={onToggle}>
@@ -37,7 +37,7 @@ const TrendingActivities = ({ isOpen, onToggle, activities }: TrendingActivities
         {/* Preview when collapsed */}
         {!isOpen && (
           <div className="grid gap-4 mb-4">
-            {activities.slice(0, 2).map((item, index) => (
+            {trendingActivities.slice(0, 2).map((item, index) => (
               <Card key={index} className="border-0 shadow-sm bg-white/60 backdrop-blur-sm opacity-75">
                 <CardContent className="p-4">
                   <div className="flex items-start space-x-3">
@@ -51,9 +51,9 @@ const TrendingActivities = ({ isOpen, onToggle, activities }: TrendingActivities
                       <div className="flex items-center space-x-3 text-xs text-gray-500">
                         <span className="flex items-center">
                           <Users className="h-3 w-3 mr-1" />
-                          {item.participants}
+                          {item.participant_count} professionals
                         </span>
-                        <span>{item.timeframe}</span>
+                        <span>{formatDistanceToNow(new Date(item.created_at), { addSuffix: true })}</span>
                       </div>
                     </div>
                   </div>
@@ -65,7 +65,7 @@ const TrendingActivities = ({ isOpen, onToggle, activities }: TrendingActivities
 
         <CollapsibleContent>
           <div className="grid gap-6">
-            {activities.map((item, index) => (
+            {trendingActivities.map((item, index) => (
               <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200 bg-white/80 backdrop-blur-sm">
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
@@ -82,9 +82,9 @@ const TrendingActivities = ({ isOpen, onToggle, activities }: TrendingActivities
                       <div className="flex items-center space-x-4 text-xs text-gray-500">
                         <span className="flex items-center">
                           <Users className="h-3 w-3 mr-1" />
-                          {item.participants}
+                          {item.participant_count} professionals
                         </span>
-                        <span>{item.timeframe}</span>
+                        <span>{formatDistanceToNow(new Date(item.created_at), { addSuffix: true })}</span>
                       </div>
                     </div>
                   </div>

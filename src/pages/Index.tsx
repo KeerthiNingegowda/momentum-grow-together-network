@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import RealCareerMoments from "@/components/RealCareerMoments";
 import CareerCheckIn from "@/components/CareerCheckIn";
@@ -12,7 +11,6 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { Sparkles, TrendingUp, Users } from "lucide-react";
 import { useTrendingActivities } from "@/hooks/useTrendingActivities";
-import { formatDistanceToNow } from "date-fns";
 
 const Index = () => {
   const [openSections, setOpenSections] = useState({
@@ -182,12 +180,6 @@ const Index = () => {
             <TrendingActivities
               isOpen={openSections.trending}
               onToggle={() => toggleSection('trending')}
-              activities={trendingActivities.map(activity => ({
-                activity: activity.activity,
-                context: activity.context,
-                participants: `${activity.participant_count} professionals`,
-                timeframe: formatDistanceToNow(new Date(activity.created_at), { addSuffix: true })
-              }))}
             />
 
             <CollapsibleSection
