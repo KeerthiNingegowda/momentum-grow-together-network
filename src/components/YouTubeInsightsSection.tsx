@@ -4,10 +4,19 @@ import { Badge } from "@/components/ui/badge";
 import { Youtube, Clock, Eye, RefreshCw } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useYouTubeInsights, useFetchFreshYouTubeInsights } from "@/hooks/useYouTubeInsights";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useState } from "react";
 
 const YouTubeInsightsSection = () => {
   const { data: insights = [], isLoading } = useYouTubeInsights();
   const fetchFreshMutation = useFetchFreshYouTubeInsights();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleVideoClick = (videoUrl: string | null) => {
     if (videoUrl) {
@@ -18,6 +27,10 @@ const YouTubeInsightsSection = () => {
   const handleRefresh = () => {
     console.log("Refreshing insights...");
     fetchFreshMutation.mutate();
+  };
+
+  const handleAISummaryClick = () => {
+    setIsDialogOpen(true);
   };
 
   if (isLoading) {
@@ -122,9 +135,41 @@ const YouTubeInsightsSection = () => {
         <button className="text-xs text-red-600 hover:text-red-700 font-medium">
           View all updates ({insights.length})
         </button>
-        <button className="text-xs text-blue-600 hover:text-blue-700 font-medium">
-          AI summary from transcripts →
-        </button>
+        
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <button 
+              onClick={handleAISummaryClick}
+              className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+            >
+              AI summary from transcripts →
+            </button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-lg font-bold text-gray-900 mb-4">
+                AI Summary from Video Transcripts
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-6">
+              {insights.map((video) => (
+                <div key={video.id} className="border-b border-gray-200 pb-4 last:border-b-0">
+                  <div className="mb-3">
+                    <h3 className="font-semibold text-gray-900 text-sm mb-1">
+                      {video.video_title}
+                    </h3>
+                    <p className="text-xs text-red-600 font-medium">
+                      {video.channel_name}
+                    </p>
+                  </div>
+                  <div className="text-sm text-gray-700 leading-relaxed">
+                    {video.ai_summary || "No AI summary available for this video yet."}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
