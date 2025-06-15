@@ -100,9 +100,7 @@ const CareerCheckIn = () => {
             {/* Actions */}
             <div className="flex items-center justify-between pt-4 border-t border-gray-100">
               <div className="flex items-center space-x-3">
-                <Badge className="text-xs px-3 py-1 bg-gray-100 text-gray-600">
-                  Private reflection
-                </Badge>
+                {/* Removed the "Private reflection" badge */}
               </div>
               
               <Button size="sm" className="text-xs">

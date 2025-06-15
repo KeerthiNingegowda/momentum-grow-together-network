@@ -148,7 +148,7 @@ const Index = () => {
                   <TrendingUp className="h-4 w-4 text-momentum-600" />
                   <span className="text-xs font-medium text-gray-700">Trending Topics</span>
                 </div>
-                <p className="text-lg font-bold text-momentum-700 mt-1">{trendingActivities.length}</p>
+                <p className="text-lg font-bold text-momentum-700 mt-1">6</p>
                 <p className="text-xs text-gray-500">Active discussions</p>
               </div>
               <div className="bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-momentum-100">
