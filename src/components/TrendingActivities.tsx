@@ -10,13 +10,69 @@ interface TrendingActivitiesProps {
   onToggle: () => void;
 }
 
+// Mock data for trending activities
+const mockTrendingActivities = [
+  {
+    id: '1',
+    activity: 'Exploring prompt engineering techniques',
+    context: 'Learning advanced strategies for getting better results from AI models like GPT-4, Claude, and local LLMs',
+    participant_count: 342,
+    created_at: '2025-06-13T10:30:00Z',
+    is_active: true
+  },
+  {
+    id: '2',
+    activity: 'Building full-stack applications with Next.js 14',
+    context: 'Diving deep into App Router, Server Components, and modern React patterns for production apps',
+    participant_count: 287,
+    created_at: '2025-06-12T15:45:00Z',
+    is_active: true
+  },
+  {
+    id: '3',
+    activity: 'Mastering data visualization with D3.js',
+    context: 'Creating interactive charts and dashboards that tell compelling stories with complex datasets',
+    participant_count: 156,
+    created_at: '2025-06-12T09:20:00Z',
+    is_active: true
+  },
+  {
+    id: '4',
+    activity: 'Understanding microservices architecture patterns',
+    context: 'Breaking down monoliths and designing scalable distributed systems with proper service boundaries',
+    participant_count: 423,
+    created_at: '2025-06-11T14:15:00Z',
+    is_active: true
+  },
+  {
+    id: '5',
+    activity: 'Learning Rust for systems programming',
+    context: 'Exploring memory safety, performance optimization, and building high-performance applications',
+    participant_count: 198,
+    created_at: '2025-06-11T11:30:00Z',
+    is_active: true
+  },
+  {
+    id: '6',
+    activity: 'Implementing OAuth 2.0 and JWT authentication',
+    context: 'Securing modern web applications with proper token-based authentication and authorization flows',
+    participant_count: 234,
+    created_at: '2025-06-10T16:00:00Z',
+    is_active: true
+  }
+];
+
 const TrendingActivities = ({ isOpen, onToggle }: TrendingActivitiesProps) => {
-  const { data: trendingActivities = [], isLoading, error } = useTrendingActivities();
+  const { data: dbTrendingActivities = [], isLoading, error } = useTrendingActivities();
+
+  // Use database data if available, otherwise use mock data
+  const trendingActivities = dbTrendingActivities.length > 0 ? dbTrendingActivities : mockTrendingActivities;
 
   console.log('TrendingActivities component rendered');
   console.log('isLoading:', isLoading);
-  console.log('trendingActivities:', trendingActivities);
-  console.log('error:', error);
+  console.log('dbTrendingActivities:', dbTrendingActivities);
+  console.log('using mock data:', dbTrendingActivities.length === 0);
+  console.log('final trendingActivities:', trendingActivities);
 
   if (isLoading) {
     return (
@@ -24,26 +80,6 @@ const TrendingActivities = ({ isOpen, onToggle }: TrendingActivitiesProps) => {
         <div className="text-center py-8">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-2 text-gray-600">Loading trending activities...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div id="trending-activities" className="mb-16">
-        <div className="text-center py-8">
-          <p className="text-red-600">Error loading trending activities</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!trendingActivities || trendingActivities.length === 0) {
-    return (
-      <div id="trending-activities" className="mb-16">
-        <div className="text-center py-8">
-          <p className="text-gray-600">No trending activities found</p>
         </div>
       </div>
     );
