@@ -11,10 +11,42 @@ interface TrendingActivitiesProps {
 }
 
 const TrendingActivities = ({ isOpen, onToggle }: TrendingActivitiesProps) => {
-  const { data: trendingActivities = [], isLoading } = useTrendingActivities();
+  const { data: trendingActivities = [], isLoading, error } = useTrendingActivities();
+
+  console.log('TrendingActivities component rendered');
+  console.log('isLoading:', isLoading);
+  console.log('trendingActivities:', trendingActivities);
+  console.log('error:', error);
 
   if (isLoading) {
-    return <div className="text-center py-4">Loading trending activities...</div>;
+    return (
+      <div id="trending-activities" className="mb-16">
+        <div className="text-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-2 text-gray-600">Loading trending activities...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div id="trending-activities" className="mb-16">
+        <div className="text-center py-8">
+          <p className="text-red-600">Error loading trending activities</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!trendingActivities || trendingActivities.length === 0) {
+    return (
+      <div id="trending-activities" className="mb-16">
+        <div className="text-center py-8">
+          <p className="text-gray-600">No trending activities found</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -27,7 +59,7 @@ const TrendingActivities = ({ isOpen, onToggle }: TrendingActivitiesProps) => {
                 Trending Activities
               </h2>
               <p className="text-gray-600 text-sm">
-                What professionals like you are exploring
+                What professionals like you are exploring ({trendingActivities.length} active)
               </p>
             </div>
             <ChevronDown className={`h-5 w-5 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -38,7 +70,7 @@ const TrendingActivities = ({ isOpen, onToggle }: TrendingActivitiesProps) => {
         {!isOpen && (
           <div className="grid gap-4 mb-4">
             {trendingActivities.slice(0, 2).map((item, index) => (
-              <Card key={index} className="border-0 shadow-sm bg-white/60 backdrop-blur-sm opacity-75">
+              <Card key={item.id || index} className="border-0 shadow-sm bg-white/60 backdrop-blur-sm opacity-75">
                 <CardContent className="p-4">
                   <div className="flex items-start space-x-3">
                     <div className="bg-blue-100 p-2 rounded-full">
@@ -66,7 +98,7 @@ const TrendingActivities = ({ isOpen, onToggle }: TrendingActivitiesProps) => {
         <CollapsibleContent>
           <div className="grid gap-6">
             {trendingActivities.map((item, index) => (
-              <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200 bg-white/80 backdrop-blur-sm">
+              <Card key={item.id || index} className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200 bg-white/80 backdrop-blur-sm">
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
                     <div className="bg-blue-100 p-3 rounded-full">
